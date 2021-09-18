@@ -56,8 +56,7 @@ const buildMenu = {
 	/*
 	 * 
 	 */
-	Main: () => {
-		const menu = new Menu()
+	Main: (menu) => {
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
 			label: 'Start at login', type: 'checkbox'
@@ -70,7 +69,6 @@ const buildMenu = {
 		menu.append(new MenuItem({
 			label: 'Close ' + appConfig.name, role: 'quit'
 		}))
-		return menu
 	}
 }
 
@@ -91,13 +89,14 @@ const aboutScriptTray = () => {
  * build the main menu
  */
 const buildScriptTrayMenu = () => {
+	const menu = new Menu()
 	try {
-		var main_menu = buildMenu.Main()
+		buildMenu.Main(menu)
 	} catch(err) {
 		dialog.showErrorBox(appConfig.name, err)
 		app.quit()
 	}
-	return main_menu
+	return menu
 }
 
 /*
