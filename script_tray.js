@@ -69,6 +69,10 @@ const buildMenu = {
 		menu.append(new MenuItem({
 			label: 'Close ' + appConfig.name, role: 'quit'
 		}))
+	},
+
+	Launcher: (menu) => {
+		menu.append(new MenuItem({ type: 'separator' }))
 	}
 }
 
@@ -91,6 +95,7 @@ const aboutScriptTray = () => {
 const buildScriptTrayMenu = () => {
 	const menu = new Menu()
 	try {
+		buildMenu.Launcher(menu)
 		buildMenu.Main(menu)
 	} catch(err) {
 		dialog.showErrorBox(appConfig.name, err)
