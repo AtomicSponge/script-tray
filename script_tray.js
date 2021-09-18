@@ -34,7 +34,7 @@ shell.config.execPath = nodePath
 
 const appList = []
 const launchCommands = [
-	{ label: 'test', cmd: 'test' }
+	{ label: 'sysbak', cmd: 'sysbak' }
 ]
 
 appList.forEach((appCheck) => {
@@ -74,11 +74,15 @@ const buildMenu = {
 		}))
 	},
 
+	//  need to change to async runs
 	Launcher: (menu) => {
 		launchCommands.forEach((cmd) => {
 			menu.append(new MenuItem({
 				label: cmd.label,
-				click() { shell.exec(cmd.cmd) }
+				click() { 
+					const res = shell.exec(cmd.cmd, {silent:true})
+					if(res.code !== 0) throw 'Error: ' + cmd.label + ' command failed'
+				}
 			}))
 		})
 		menu.append(new MenuItem({ type: 'separator' }))
