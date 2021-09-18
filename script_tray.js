@@ -83,6 +83,9 @@ const buildMenu = {
 	},
 
 	//  need to change to async runs
+	/*
+	 * 
+	 */
 	Launcher: (menu) => {
 		launchCommands.forEach((cmd) => {
 			menu.append(new MenuItem({
@@ -96,6 +99,9 @@ const buildMenu = {
 		menu.append(new MenuItem({ type: 'separator' }))
 	},
 
+	/*
+	 * 
+	 */
 	Build: () => {
 		const menu = new Menu()
 		try {
