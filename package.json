@@ -1,0 +1,25 @@
+{
+  "name": "script_tray",
+  "version": "1.0.0",
+  "description": "Script Tray",
+  "main": "script_tray.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "none"
+  ],
+  "author": "Matthew Evans",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^14.0.1"
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.5",
+    "shelljs": "^0.8.4"
+  }
+}

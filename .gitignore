@@ -1,0 +1,5 @@
+node_modules/
+*_bak/
+*.code-workspace
+
+package-lock.json
