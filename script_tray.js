@@ -82,7 +82,6 @@ const buildMenu = {
 		}))
 	},
 
-	//  need to change to async runs
 	/*
 	 * 
 	 */
