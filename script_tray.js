@@ -37,9 +37,14 @@ const launchCommands = [
 	{ label: 'sysbak', cmd: 'sysbak', silent: true, encoding: 'utf8' }
 ]
 
+/*
+ * 
+ */
 appList.forEach((appCheck) => {
 	if(!shell.which(appCheck)) {
-		dialog.showErrorBox(appConfig.name, 'Error:  ' + appCheck + ' not found!')
+		dialog.showErrorBox(
+			appConfig.name,
+			'Error:  ' + appCheck + ' not found!')
 		app.quit()
 	}
 })
@@ -91,9 +96,14 @@ const buildMenu = {
 				label: cmd.label,
 				click() { 
 					shell.exec(cmd.cmd, {
-						silent: cmd.silent, encoding: cmd.encoding, async: true
+						silent: cmd.silent,
+						encoding: cmd.encoding,
+						async: true
 					}, (code, stdout, stderr) => {
-						if(code !== 0) throw 'Error: ' + cmd.label + ': command failed'
+						if(code !== 0)
+							dialog.showErrorBox(
+								appConfig.name,
+								'Error: ' + cmd.label + ': command failed')
 					})
 				}
 			}))
@@ -106,13 +116,8 @@ const buildMenu = {
 	 */
 	Build: () => {
 		const menu = new Menu()
-		try {
-			buildMenu.Launcher(menu)
-			buildMenu.Main(menu)
-		} catch(err) {
-			dialog.showErrorBox(appConfig.name, err)
-			app.quit()
-		}
+		buildMenu.Launcher(menu)
+		buildMenu.Main(menu)
 		return menu
 	}
 }
