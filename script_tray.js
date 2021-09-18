@@ -32,7 +32,10 @@ const { createPublicKey } = require('crypto')
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
-appList = []
+const appList = []
+const launchCommands = [
+	{ label: 'test', cmd: 'test' }
+]
 
 appList.forEach((appCheck) => {
 	if(!shell.which(appCheck)) {
@@ -72,6 +75,12 @@ const buildMenu = {
 	},
 
 	Launcher: (menu) => {
+		launchCommands.forEach((cmd) => {
+			menu.append(new MenuItem({
+				label: cmd.label,
+				click() { shell.exec(cmd.cmd) }
+			}))
+		})
 		menu.append(new MenuItem({ type: 'separator' }))
 	}
 }
