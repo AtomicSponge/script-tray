@@ -15,7 +15,7 @@ const appConfig = {
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
 
-	icon: 'assets/docker.png',
+	icon: 'assets/robot.png',
 	debug: true
 }
 
