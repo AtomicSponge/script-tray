@@ -15,7 +15,7 @@ const appConfig = {
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
 
-	icon: 'assets/.png',
+	icon: 'assets/docker.png',
 	debug: true
 }
 
@@ -39,24 +39,10 @@ if(!shell.which('docker')) {
 /*
  * auto launch
  */
-const dockertrayAutoLauncher = new AutoLaunch({ name: appConfig.name })
-{(dockertrayAutoLauncher.isEnabled()) ?
-	dockertrayAutoLauncher.disable() :
-	dockertrayAutoLauncher.enable()}
-
-/*
- * get docker image list
- */
-const dockerCmds = {
-	/*
-	 *
-	 */
-	getImages: () => {
-		const res = shell.exec('docker images', {silent:true})
-		if(res.code !== 0) throw 'Error: Docker command failed'
-		return res
-	}
-}
+const scripttrayAutoLauncher = new AutoLaunch({ name: appConfig.name })
+{(scripttrayAutoLauncher.isEnabled()) ?
+	scripttrayAutoLauncher.disable() :
+	scripttrayAutoLauncher.enable()}
 
 /*
  * 
@@ -70,40 +56,16 @@ const buildMenu = {
 			{ type: 'separator' },
 			{ label: 'Start at login', type: 'checkbox' },
 			{ type: 'separator' },
-			{ label: 'About Docker Tray', role: 'about' },
-			{ label: 'Close Docker Tray', role: 'quit' }
+			{ label: 'About ' + appConfig.name, role: 'about' },
+			{ label: 'Close ' + appConfig.name, role: 'quit' }
 		]
-	},
-
-	/*
-	 * 
-	 */
-	ImageList: (input) => {
-		let total = []
-		input.substring(input.indexOf('\n') + 1)
-		.split('\n').filter(String).forEach((item) => {
-			item = item.split('   ')
-			let subtotal = []
-			item.forEach((item, index, arr) => { subtotal.push(item.trim()) })
-			let temp = {}
-			temp.label = '   •  ' + subtotal[0]
-			temp.submenu = []
-			total.push(temp)
-		})
-		if(total === undefined || total.length === 0)
-			throw 'Error: Docker Images is empty'
-		let menu = { label: 'Docker Images' }
-		menu['submenu'] = total
-		let res = []
-		res.push(menu)
-		return res
 	}
 }
 
 /*
  * create about window
  */
-const aboutDockerTray = () => {
+const aboutScriptTray = () => {
 	dialog.showMessageBox({
 		type: 'info',
 		title: 'About ' + appConfig.name,
@@ -116,18 +78,18 @@ const aboutDockerTray = () => {
 /*
  * build the main menu
  */
-const buildDockerTrayMenu = () => {
+const buildScriptTrayMenu = () => {
 	try {
 		var mainList = buildMenu.Main()
-		var imgList = buildMenu.ImageList(dockerCmds.getImages())
 	} catch(err) {
 		dialog.showErrorBox(appConfig.name, err)
 		app.quit()
 	}
-	return imgList.concat(mainList)
+	return mainList
+	//return imgList.concat(mainList)
 }
 
-const menu = buildDockerTrayMenu()
+const menu = buildScriptTrayMenu()
 if(appConfig.debug) console.log(menu)
 const contextMenu = Menu.buildFromTemplate(menu)
 
@@ -139,5 +101,5 @@ app.whenReady().then(() => {
 	tray.setToolTip(appConfig.name)
 	tray.setTitle(appConfig.name)
 	tray.setContextMenu(contextMenu)
-	aboutDockerTray()
+	aboutScriptTray()
 })

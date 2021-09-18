@@ -1,20 +1,17 @@
 {
   "name": "script_tray",
   "version": "1.0.0",
-  "description": "Script Tray",
-  "main": "script_tray.js",
-  "scripts": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "none"
-  },
-  "keywords": [
-    "none"
-  ],
+  "description": "Script System Tray Utility",
   "author": "Matthew Evans",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wtfsystems/script_tray"
+  },
+  "main": "script_tray.js",
+  "scripts": {
+    "start": "electron ."
+  },
   "devDependencies": {
     "electron": "^14.0.1"
   },
