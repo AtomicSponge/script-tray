@@ -1,5 +1,5 @@
 /*
- * Filename:  docker_tray.js
+ * Filename:  script_tray.js
  */
 
 /*
