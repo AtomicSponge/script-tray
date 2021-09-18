@@ -67,7 +67,15 @@ const buildMenu = {
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
 			label: 'About ' + appConfig.name,
-			click() { aboutScriptTray() }
+			click() {
+				dialog.showMessageBox({
+					type: 'info',
+					title: 'About ' + appConfig.name,
+					message: appConfig.name + '    ver:  ' + appConfig.version,
+					detail: appConfig.git,
+					icon: appConfig.icon
+				})
+			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Close ' + appConfig.name, role: 'quit'
@@ -87,19 +95,6 @@ const buildMenu = {
 		})
 		menu.append(new MenuItem({ type: 'separator' }))
 	}
-}
-
-/*
- * create about window
- */
-const aboutScriptTray = () => {
-	dialog.showMessageBox({
-		type: 'info',
-		title: 'About ' + appConfig.name,
-		message: appConfig.name + '    ver:  ' + appConfig.version,
-		detail: appConfig.git,
-		icon: appConfig.icon
-	})
 }
 
 /*
