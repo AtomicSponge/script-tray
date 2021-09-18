@@ -25,16 +25,21 @@ const appConfig = {
 const fs = require('fs')
 const shell = require('shelljs')
 const AutoLaunch = require('auto-launch')
-const { app, Menu, Tray, dialog } = require('electron')
+const { app, Menu, Tray, dialog, MenuItem } = require('electron')
 const path = require('path')
+const { createPublicKey } = require('crypto')
 
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
-if(!shell.which('docker')) {
-	dialog.showErrorBox(appConfig.name, 'Error:  Docker not found!')
-	app.quit()
-}
+appList = []
+
+appList.forEach((appCheck) => {
+	if(!shell.which(appCheck)) {
+		dialog.showErrorBox(appConfig.name, 'Error:  ' + appCheck + ' not found!')
+		app.quit()
+	}
+})
 
 /*
  * auto launch
@@ -52,13 +57,20 @@ const buildMenu = {
 	 * 
 	 */
 	Main: () => {
-		return [
-			{ type: 'separator' },
-			{ label: 'Start at login', type: 'checkbox' },
-			{ type: 'separator' },
-			{ label: 'About ' + appConfig.name, role: 'about' },
-			{ label: 'Close ' + appConfig.name, role: 'quit' }
-		]
+		const menu = new Menu()
+		menu.append(new MenuItem({ type: 'separator' }))
+		menu.append(new MenuItem({
+			label: 'Start at login', type: 'checkbox'
+		}))
+		menu.append(new MenuItem({ type: 'separator' }))
+		menu.append(new MenuItem({
+			label: 'About ' + appConfig.name,
+			click() { aboutScriptTray() }
+		}))
+		menu.append(new MenuItem({
+			label: 'Close ' + appConfig.name, role: 'quit'
+		}))
+		return menu
 	}
 }
 
@@ -80,18 +92,13 @@ const aboutScriptTray = () => {
  */
 const buildScriptTrayMenu = () => {
 	try {
-		var mainList = buildMenu.Main()
+		var main_menu = buildMenu.Main()
 	} catch(err) {
 		dialog.showErrorBox(appConfig.name, err)
 		app.quit()
 	}
-	return mainList
-	//return imgList.concat(mainList)
+	return main_menu
 }
-
-const menu = buildScriptTrayMenu()
-if(appConfig.debug) console.log(menu)
-const contextMenu = Menu.buildFromTemplate(menu)
 
 /*
  * run electron app 
@@ -100,6 +107,5 @@ app.whenReady().then(() => {
 	tray = new Tray(appConfig.icon)
 	tray.setToolTip(appConfig.name)
 	tray.setTitle(appConfig.name)
-	tray.setContextMenu(contextMenu)
-	aboutScriptTray()
+	tray.setContextMenu(buildScriptTrayMenu())
 })
