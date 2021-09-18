@@ -91,10 +91,11 @@ const buildMenu = {
 			menu.append(new MenuItem({
 				label: cmd.label,
 				click() { 
-					const res = shell.exec(cmd.cmd, {
-						silent: cmd.silent, encoding: cmd.encoding
-					}, scriptCallback())
-					if(res.code !== 0) throw 'Error: ' + cmd.label + ': command failed'
+					shell.exec(cmd.cmd, {
+						silent: cmd.silent, encoding: cmd.encoding, async: true
+					}, (code, stdout, stderr) => {
+						if(code !== 0) throw 'Error: ' + cmd.label + ': command failed'
+					})
 				}
 			}))
 		})
@@ -115,10 +116,6 @@ const buildMenu = {
 		}
 		return menu
 	}
-}
-
-const scriptCallback = () => {
-	//
 }
 
 /*
