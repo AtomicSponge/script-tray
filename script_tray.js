@@ -94,22 +94,19 @@ const buildMenu = {
 			}))
 		})
 		menu.append(new MenuItem({ type: 'separator' }))
-	}
-}
+	},
 
-/*
- * build the main menu
- */
-const buildScriptTrayMenu = () => {
-	const menu = new Menu()
-	try {
-		buildMenu.Launcher(menu)
-		buildMenu.Main(menu)
-	} catch(err) {
-		dialog.showErrorBox(appConfig.name, err)
-		app.quit()
+	Build: () => {
+		const menu = new Menu()
+		try {
+			buildMenu.Launcher(menu)
+			buildMenu.Main(menu)
+		} catch(err) {
+			dialog.showErrorBox(appConfig.name, err)
+			app.quit()
+		}
+		return menu
 	}
-	return menu
 }
 
 /*
@@ -119,5 +116,5 @@ app.whenReady().then(() => {
 	tray = new Tray(appConfig.icon)
 	tray.setToolTip(appConfig.name)
 	tray.setTitle(appConfig.name)
-	tray.setContextMenu(buildScriptTrayMenu())
+	tray.setContextMenu(buildMenu.Build())
 })
