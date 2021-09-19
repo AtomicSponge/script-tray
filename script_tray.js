@@ -32,10 +32,13 @@ const { createPublicKey } = require('crypto')
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
+/*
+ * 
+ */
 const settings = {
 	encoding: 'utf8',
-	appList: [],
-	launchCommands: [
+	appList: [ 'sysbak' ],
+	launchCmds: [
 		{ label: 'sysbak', cmd: 'sysbak' }
 	]
 }
@@ -79,7 +82,7 @@ const buildMenu = {
 				dialog.showMessageBox({
 					type: 'info',
 					title: `About ${appConfig.name}`,
-					message: `${appConfig.name}    ver:  ${appConfig.version}`,
+					message: `${appConfig.name}\tver:  ${appConfig.version}`,
 					detail:
 						`${appConfig.git}\n\n` +
 						`Author:  ${appConfig.author}\n` +
@@ -92,7 +95,7 @@ const buildMenu = {
 			}
 		}))
 		menu.append(new MenuItem({
-			label: 'Close ' + appConfig.name, role: 'quit'
+			label: `Close ${appConfig.name}`, role: 'quit'
 		}))
 	},
 
@@ -100,7 +103,7 @@ const buildMenu = {
 	 * 
 	 */
 	Launcher: (menu) => {
-		settings.launchCommands.forEach((cmd) => {
+		settings.launchCmds.forEach((cmd) => {
 			menu.append(new MenuItem({
 				label: cmd.label,
 				click() { 
@@ -109,7 +112,7 @@ const buildMenu = {
 						encoding: settings.encoding,
 						async: true
 					}, (code, stdout, stderr) => {
-						if(code !== 0) dialog.showErrorBox(appConfig.name + ' - ' + cmd.label, stderr)
+						if(code !== 0) dialog.showErrorBox(`${appConfig.name} - ${cmd.label}`, stderr)
 						else {
 							// do other stuff
 						}
