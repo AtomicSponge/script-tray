@@ -126,10 +126,13 @@ const buildMenu = {
 	/*
 	 * 
 	 */
-	Launcher: (menu) => {
-		settings.launchCmds.forEach((item) => {
+	Launcher: (menu, collection) => {
+		collection.forEach((item) => {
 			if(Array.isArray(item)) {
-				//
+				const temp_menu = new Menu()
+				// process 1st as new menu
+				buildMenu.Launcher(temp_menu, item.shift())
+				//  Add the generated menu
 			} else {
 				menu.append(new MenuItem({
 					label: item.label,
@@ -156,7 +159,7 @@ const buildMenu = {
 	 */
 	Build: () => {
 		const menu = new Menu()
-		buildMenu.Launcher(menu)
+		buildMenu.Launcher(menu, settings.launchCmds)
 		buildMenu.Main(menu)
 		return menu
 	}
