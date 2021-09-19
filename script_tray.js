@@ -7,7 +7,7 @@
  */
 const appInfo = {
 	name: 'Script Tray',
-	version: '091821',
+	version: '091921',
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
@@ -41,28 +41,24 @@ const settings = {
 	launchCmds: [
 		{
 			label: 'sysbak',
-			cmd: 'sysbak',
-			callback: () => {}
+			cmd: 'sysbak'
 		},
 		[
 			{
-				name: 'test menu'
+				menu: 'test menu'
 			},
 			{
 				label: 'testa',
-				cmd: 'testa',
-				callback: () => {}
+				cmd: 'testa'
 			},
 			{
 				label: 'testb',
-				cmd: 'testb',
-				callback: () => {}
+				cmd: 'testb'
 			}
 		],
 		{
 			label: 'test1',
-			cmd: 'test1',
-			callback: () => {}
+			cmd: 'test1'
 		}
 	],
 	debug: false
@@ -129,10 +125,16 @@ const buildMenu = {
 	Launcher: (menu, collection) => {
 		collection.forEach((item) => {
 			if(Array.isArray(item)) {
-				const temp_menu = new Menu()
-				// process 1st as new menu
-				buildMenu.Launcher(temp_menu, item.shift())
+				const tempMenu = new Menu()
+				const menuTitle = item.shift()
+				console.log(menuTitle)
+				console.log(item)
+				buildMenu.Launcher(tempMenu, item)
 				//  Add the generated menu
+				let tempItem = {}
+				tempItem.label = menuTitle.menu
+				tempItem.submenu = tempMenu
+				menu.append(new MenuItem(tempItem))
 			} else {
 				menu.append(new MenuItem({
 					label: item.label,
@@ -146,7 +148,9 @@ const buildMenu = {
 								dialog.showErrorBox(
 									`${appInfo.name} - ${item.label}`,
 									`Command:  ${item.cmd}\nCode:  ${code}\nError:  ${stderr}`)
-							else item.callback(stdout)
+							else {
+								// do something?
+							}
 						})
 					}
 				}))
