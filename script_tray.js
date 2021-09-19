@@ -40,7 +40,7 @@ const settings = {
 	appList: [ 'sysbak' ],
 	launchCmds: [
 		{
-			label: 'sysbak',
+			label: 'System Backup',
 			cmd: 'sysbak'
 		},
 		[
@@ -59,6 +59,9 @@ const settings = {
 			{
 				label: 'testa',
 				cmd: 'testa'
+			},
+			{
+				separator: null
 			},
 			{
 				label: 'testb',
@@ -133,8 +136,8 @@ const buildMenu = {
 	 */
 	Launcher: (menu, collection) => {
 		collection.forEach((item) => {
-			if(Array.isArray(item)) {
-				const menuTitle = item.shift()
+			if(Array.isArray(item)) {  //  Item is a new menu
+				const menuTitle = item.shift()  //  Get the title item
 				if(menuTitle.menu === undefined) {
 					dialog.showErrorBox(
 						`${appInfo.name}`,
@@ -148,10 +151,10 @@ const buildMenu = {
 				tempItem.label = menuTitle.menu
 				tempItem.submenu = tempMenu
 				menu.append(new MenuItem(tempItem))
-			} else {
-				if(item.type !== undefined) {  //  Item is a seperator
+			} else {  //  Normal item
+				if(item.separator !== undefined) {  //  Item is a seperator
 					menu.append(new MenuItem({ type: 'separator' }))
-					return
+					return  //  Next item
 				}
 				if(item.label !== undefined || item.cmd !== undefined) {  //  Item is a command
 					menu.append(new MenuItem({
@@ -172,14 +175,13 @@ const buildMenu = {
 							})
 						}
 					}))
-					return
+					return  //  Next item
 				}
 				//  Item wasn't processed, so there's a problem with the format.
 				dialog.showErrorBox(
 					`${appInfo.name}`,
 					`Error building menu, incorrect command/separator menu item.\n\n${item}`)
 				app.quit()
-				
 			}
 		})
 	},
