@@ -30,6 +30,8 @@ const { createPublicKey } = require('crypto')
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
+const autoLauncher = new AutoLaunch({ name: appConfig.name })
+
 /*
  * 
  */
@@ -54,14 +56,6 @@ settings.appList.forEach((appCheck) => {
 })
 
 /*
- * auto launch
- */
-const scripttrayAutoLauncher = new AutoLaunch({ name: appConfig.name })
-{(scripttrayAutoLauncher.isEnabled()) ?
-	scripttrayAutoLauncher.disable() :
-	scripttrayAutoLauncher.enable()}
-
-/*
  * 
  */
 const buildMenu = {
@@ -73,11 +67,11 @@ const buildMenu = {
 		menu.append(new MenuItem({
 			label: 'Start at login',
 			type: 'checkbox',
-			checked: (scripttrayAutoLauncher.isEnabled()) ? false : true,
+			checked: (autoLauncher.isEnabled()) ? false : true,
 			click: (item) => {
 				{(item.checked) ?
-					scripttrayAutoLauncher.disable() :
-					scripttrayAutoLauncher.enable()}
+					autoLauncher.disable() :
+					autoLauncher.enable()}
 			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
