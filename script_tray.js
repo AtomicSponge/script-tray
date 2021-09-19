@@ -138,7 +138,7 @@ const buildMenu = {
 				if(menuTitle.menu === undefined) {
 					dialog.showErrorBox(
 						`${appInfo.name}`,
-						`Error building menu, incorrect menu item.\n\n${item}`)
+						`Error building menu, incorrect title menu item.\n\n${item}`)
 					app.quit()
 				}
 				const tempMenu = new Menu()
@@ -149,30 +149,37 @@ const buildMenu = {
 				tempItem.submenu = tempMenu
 				menu.append(new MenuItem(tempItem))
 			} else {
-				if(item.label === undefined || item.cmd === undefined) {
-					dialog.showErrorBox(
-						`${appInfo.name}`,
-						`Error building menu, incorrect command item.\n\n${item}`)
-					app.quit()
+				if(item.type !== undefined) {  //  Item is a seperator
+					menu.append(new MenuItem({ type: 'separator' }))
+					return
 				}
-				menu.append(new MenuItem({
-					label: item.label,
-					click: () => {
-						shell.exec(item.cmd, {
-							silent: !settings.debug,
-							encoding: settings.encoding,
-							async: true
-						}, (code, stdout, stderr) => {
-							if(code !== 0)
-								dialog.showErrorBox(
-									`${appInfo.name} - ${item.label}`,
-									`Command:  ${item.cmd}\nCode:  ${code}\nError:  ${stderr}`)
-							else {
-								// do something?
-							}
-						})
-					}
-				}))
+				if(item.label !== undefined || item.cmd !== undefined) {  //  Item is a command
+					menu.append(new MenuItem({
+						label: item.label,
+						click: () => {
+							shell.exec(item.cmd, {
+								silent: !settings.debug,
+								encoding: settings.encoding,
+								async: true
+							}, (code, stdout, stderr) => {
+								if(code !== 0)
+									dialog.showErrorBox(
+										`${appInfo.name} - ${item.label}`,
+										`Command:  ${item.cmd}\nCode:  ${code}\nError:  ${stderr}`)
+								else {
+									// do something?
+								}
+							})
+						}
+					}))
+					return
+				}
+				//  Item wasn't processed, so there's a problem with the format.
+				dialog.showErrorBox(
+					`${appInfo.name}`,
+					`Error building menu, incorrect command/separator menu item.\n\n${item}`)
+				app.quit()
+				
 			}
 		})
 	},
