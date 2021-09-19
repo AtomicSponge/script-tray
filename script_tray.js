@@ -39,7 +39,11 @@ const settings = {
 	encoding: 'utf8',
 	appList: [ 'sysbak' ],
 	launchCmds: [
-		{ label: 'sysbak', cmd: 'sysbak' }
+		{
+			label: 'sysbak',
+			cmd: 'sysbak',
+			callback: () => {}
+		}
 	]
 }
 
@@ -111,11 +115,11 @@ const buildMenu = {
 						encoding: settings.encoding,
 						async: true
 					}, (code, stdout, stderr) => {
-						if(code !== 0) {
-							dialog.showErrorBox(`${appInfo.name} - ${cmd.label}`, stderr)
-						} else {
-							// do other stuff
-						}
+						if(code !== 0)
+							dialog.showErrorBox(
+								`${appInfo.name} - ${cmd.label}`,
+								`Command:  ${cmd.cmd}\nCode:  ${code}\nError:  ${stderr}`)
+						else cmd.callback(stdout)
 					})
 				}
 			}))
