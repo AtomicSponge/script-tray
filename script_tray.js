@@ -32,19 +32,22 @@ const { createPublicKey } = require('crypto')
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
-const appList = []
-const launchCommands = [
-	{ label: 'sysbak', cmd: 'sysbak', silent: true, encoding: 'utf8' }
-]
+const settings = {
+	encoding: 'utf8',
+	appList: [],
+	launchCommands: [
+		{ label: 'sysbak', cmd: 'sysbak' }
+	]
+}
 
 /*
  * 
  */
-appList.forEach((appCheck) => {
+settings.appList.forEach((appCheck) => {
 	if(!shell.which(appCheck)) {
 		dialog.showErrorBox(
 			appConfig.name,
-			'Error:  ' + appCheck + ' not found!')
+			`Error:  ${appCheck} not found!`)
 		app.quit()
 	}
 })
@@ -75,9 +78,15 @@ const buildMenu = {
 			click() {
 				dialog.showMessageBox({
 					type: 'info',
-					title: 'About ' + appConfig.name,
-					message: appConfig.name + '    ver:  ' + appConfig.version,
-					detail: appConfig.git,
+					title: `About ${appConfig.name}`,
+					message: `${appConfig.name}    ver:  ${appConfig.version}`,
+					detail:
+						`${appConfig.git}\n\n` +
+						`Author:  ${appConfig.author}\n` +
+						`${appConfig.contact}\n` +
+						`${appConfig.website}\n\n` +
+						`License:  ${appConfig.license}\n` +
+						`${appConfig.licenseURL}`,
 					icon: appConfig.icon
 				})
 			}
@@ -91,19 +100,19 @@ const buildMenu = {
 	 * 
 	 */
 	Launcher: (menu) => {
-		launchCommands.forEach((cmd) => {
+		settings.launchCommands.forEach((cmd) => {
 			menu.append(new MenuItem({
 				label: cmd.label,
 				click() { 
 					shell.exec(cmd.cmd, {
-						silent: cmd.silent,
-						encoding: cmd.encoding,
+						silent: true,
+						encoding: settings.encoding,
 						async: true
 					}, (code, stdout, stderr) => {
-						if(code !== 0)
-							dialog.showErrorBox(
-								appConfig.name,
-								'Error: ' + cmd.label + ': command failed')
+						if(code !== 0) dialog.showErrorBox(appConfig.name + ' - ' + cmd.label, stderr)
+						else {
+							// do other stuff
+						}
 					})
 				}
 			}))
