@@ -73,12 +73,18 @@ const buildMenu = {
 	Main: (menu) => {
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
-			label: 'Start at login', type: 'checkbox'
+			label: 'Start at login',
+			type: 'checkbox',
+			click: (item) => {
+				{(item.checked) ?
+					scripttrayAutoLauncher.disable() :
+					scripttrayAutoLauncher.enable()}
+			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
 			label: 'About ' + appConfig.name,
-			click() {
+			click: () => {
 				dialog.showMessageBox({
 					type: 'info',
 					title: `About ${appConfig.name}`,
@@ -106,7 +112,7 @@ const buildMenu = {
 		settings.launchCmds.forEach((cmd) => {
 			menu.append(new MenuItem({
 				label: cmd.label,
-				click() { 
+				click: () => {
 					shell.exec(cmd.cmd, {
 						silent: true,
 						encoding: settings.encoding,
