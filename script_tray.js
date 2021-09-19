@@ -134,7 +134,6 @@ const buildMenu = {
 	Launcher: (menu, collection) => {
 		collection.forEach((item) => {
 			if(Array.isArray(item)) {
-				const tempMenu = new Menu()
 				const menuTitle = item.shift()
 				if(menuTitle.menu === undefined) {
 					dialog.showErrorBox(
@@ -142,6 +141,7 @@ const buildMenu = {
 						`Error building menu, incorrect menu item.\n\n${item}`)
 					app.quit()
 				}
+				const tempMenu = new Menu()
 				buildMenu.Launcher(tempMenu, item)  //  Recursive call to keep building menus
 				//  Add the generated temp menu
 				let tempItem = {}
