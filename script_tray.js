@@ -43,6 +43,26 @@ const settings = {
 			label: 'sysbak',
 			cmd: 'sysbak',
 			callback: () => {}
+		},
+		[
+			{
+				name: 'test menu'
+			},
+			{
+				label: 'testa',
+				cmd: 'testa',
+				callback: () => {}
+			},
+			{
+				label: 'testb',
+				cmd: 'testb',
+				callback: () => {}
+			}
+		],
+		{
+			label: 'test1',
+			cmd: 'test1',
+			callback: () => {}
 		}
 	],
 	debug: false
@@ -107,23 +127,27 @@ const buildMenu = {
 	 * 
 	 */
 	Launcher: (menu) => {
-		settings.launchCmds.forEach((cmd) => {
-			menu.append(new MenuItem({
-				label: cmd.label,
-				click: () => {
-					shell.exec(cmd.cmd, {
-						silent: !settings.debug,
-						encoding: settings.encoding,
-						async: true
-					}, (code, stdout, stderr) => {
-						if(code !== 0)
-							dialog.showErrorBox(
-								`${appInfo.name} - ${cmd.label}`,
-								`Command:  ${cmd.cmd}\nCode:  ${code}\nError:  ${stderr}`)
-						else cmd.callback(stdout)
-					})
-				}
-			}))
+		settings.launchCmds.forEach((item) => {
+			if(Array.isArray(item)) {
+				//
+			} else {
+				menu.append(new MenuItem({
+					label: item.label,
+					click: () => {
+						shell.exec(item.cmd, {
+							silent: !settings.debug,
+							encoding: settings.encoding,
+							async: true
+						}, (code, stdout, stderr) => {
+							if(code !== 0)
+								dialog.showErrorBox(
+									`${appInfo.name} - ${item.label}`,
+									`Command:  ${item.cmd}\nCode:  ${code}\nError:  ${stderr}`)
+							else item.callback(stdout)
+						})
+					}
+				}))
+			}
 		})
 	},
 
