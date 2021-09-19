@@ -136,7 +136,7 @@ const buildMenu = {
 	 */
 	Launcher: (menu, collection) => {
 		collection.forEach((item) => {
-			if(Array.isArray(item)) {  //  Item is a new menu
+			if(Array.isArray(item)) {  //  Item is a sub menu
 				const menuTitle = item.shift()  //  Get the title item
 				if(menuTitle.menu === undefined) {
 					dialog.showErrorBox(
@@ -146,7 +146,7 @@ const buildMenu = {
 				}
 				const tempMenu = new Menu()
 				buildMenu.Launcher(tempMenu, item)  //  Recursive call to keep building menus
-				//  Add the generated temp menu
+				//  Add the generated sub menu
 				let tempItem = {}
 				tempItem.label = menuTitle.menu
 				tempItem.submenu = tempMenu
@@ -157,7 +157,7 @@ const buildMenu = {
 				menu.append(new MenuItem({ type: 'separator' }))
 				return  //  Next item
 			}
-			if(item.label !== undefined || item.cmd !== undefined) {  //  Item is a command
+			if(item.label !== undefined && item.cmd !== undefined) {  //  Item is a command
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
@@ -171,7 +171,7 @@ const buildMenu = {
 									`${appInfo.name} - ${item.label}`,
 									`Command:  ${item.cmd}\nCode:  ${code}\nError:  ${stderr}`)
 							else {
-								// do something?
+								// command executed, do something else?
 							}
 						})
 					}
@@ -181,7 +181,7 @@ const buildMenu = {
 			//  Item wasn't processed, so there's a problem with the format.
 			dialog.showErrorBox(
 				`${appInfo.name}`,
-				`Error building menu, incorrect command/separator menu item.\n\n${item}`)
+				`Error building menu, incorrect menu item.\n\n${item}`)
 			app.quit()
 		})
 	},
