@@ -47,6 +47,15 @@ const settings = {
 			{
 				menu: 'test menu'
 			},
+			[
+				{
+					menu: 'test menu 2'
+				},
+				{
+					label: 'test2',
+					cmd: 'test2'
+				}
+			],
 			{
 				label: 'testa',
 				cmd: 'testa'
@@ -127,9 +136,7 @@ const buildMenu = {
 			if(Array.isArray(item)) {
 				const tempMenu = new Menu()
 				const menuTitle = item.shift()
-				console.log(menuTitle)
-				console.log(item)
-				buildMenu.Launcher(tempMenu, item)
+				buildMenu.Launcher(tempMenu, item)  //  Recursive call to keep building menus
 				//  Add the generated menu
 				let tempItem = {}
 				tempItem.label = menuTitle.menu
