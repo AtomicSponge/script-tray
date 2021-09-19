@@ -14,9 +14,7 @@ const appConfig = {
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
-
-	icon: 'assets/robot.png',
-	debug: true
+	icon: 'assets/robot.png'
 }
 
 /*
@@ -75,6 +73,7 @@ const buildMenu = {
 		menu.append(new MenuItem({
 			label: 'Start at login',
 			type: 'checkbox',
+			checked: (scripttrayAutoLauncher.isEnabled()) ? false : true,
 			click: (item) => {
 				{(item.checked) ?
 					scripttrayAutoLauncher.disable() :
@@ -83,7 +82,7 @@ const buildMenu = {
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
-			label: 'About ' + appConfig.name,
+			label: `About ${appConfig.name}`,
 			click: () => {
 				dialog.showMessageBox({
 					type: 'info',
@@ -126,7 +125,6 @@ const buildMenu = {
 				}
 			}))
 		})
-		menu.append(new MenuItem({ type: 'separator' }))
 	},
 
 	/*
