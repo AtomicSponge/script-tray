@@ -136,13 +136,25 @@ const buildMenu = {
 			if(Array.isArray(item)) {
 				const tempMenu = new Menu()
 				const menuTitle = item.shift()
+				if(menuTitle.menu === undefined) {
+					dialog.showErrorBox(
+						`${appInfo.name}`,
+						`Error building menu, incorrect menu item.\n\n${item}`)
+					app.quit()
+				}
 				buildMenu.Launcher(tempMenu, item)  //  Recursive call to keep building menus
-				//  Add the generated menu
+				//  Add the generated temp menu
 				let tempItem = {}
 				tempItem.label = menuTitle.menu
 				tempItem.submenu = tempMenu
 				menu.append(new MenuItem(tempItem))
 			} else {
+				if(item.label === undefined || item.cmd === undefined) {
+					dialog.showErrorBox(
+						`${appInfo.name}`,
+						`Error building menu, incorrect command item.\n\n${item}`)
+					app.quit()
+				}
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
