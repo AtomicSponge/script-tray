@@ -8,12 +8,12 @@
 const appInfo = {
 	name: 'Script Tray',
 	version: '091821',
-	git: 'https://github.com/wtfsystems/script_tray',
-	license: 'MIT',
-	licenseURL: 'https://mit-license.org',
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
+	git: 'https://github.com/wtfsystems/script_tray',
+	license: 'MIT',
+	licenseURL: 'https://mit-license.org',
 	icon: 'assets/robot.png'
 }
 
@@ -44,7 +44,8 @@ const settings = {
 			cmd: 'sysbak',
 			callback: () => {}
 		}
-	]
+	],
+	debug: false
 }
 
 /*
@@ -111,7 +112,7 @@ const buildMenu = {
 				label: cmd.label,
 				click: () => {
 					shell.exec(cmd.cmd, {
-						silent: true,
+						silent: !settings.debug,
 						encoding: settings.encoding,
 						async: true
 					}, (code, stdout, stderr) => {
