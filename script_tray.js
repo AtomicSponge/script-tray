@@ -5,7 +5,7 @@
 /*
  * app config
  */
-const appConfig = {
+const appInfo = {
 	name: 'Script Tray',
 	version: '091821',
 	git: 'https://github.com/wtfsystems/script_tray',
@@ -30,7 +30,7 @@ const { createPublicKey } = require('crypto')
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
-const autoLauncher = new AutoLaunch({ name: appConfig.name })
+const autoLauncher = new AutoLaunch({ name: appInfo.name })
 
 /*
  * 
@@ -49,7 +49,7 @@ const settings = {
 settings.appList.forEach((appCheck) => {
 	if(!shell.which(appCheck)) {
 		dialog.showErrorBox(
-			appConfig.name,
+			appInfo.name,
 			`Error:  ${appCheck} not found!`)
 		app.quit()
 	}
@@ -76,25 +76,25 @@ const buildMenu = {
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
-			label: `About ${appConfig.name}`,
+			label: `About ${appInfo.name}`,
 			click: () => {
 				dialog.showMessageBox({
 					type: 'info',
-					title: `About ${appConfig.name}`,
-					message: `${appConfig.name}\tver:  ${appConfig.version}`,
+					title: `About ${appInfo.name}`,
+					message: `${appInfo.name}\tver:  ${appInfo.version}`,
 					detail:
-						`${appConfig.git}\n\n` +
-						`Author:  ${appConfig.author}\n` +
-						`${appConfig.contact}\n` +
-						`${appConfig.website}\n\n` +
-						`License:  ${appConfig.license}\n` +
-						`${appConfig.licenseURL}`,
-					icon: appConfig.icon
+						`${appInfo.git}\n\n` +
+						`Author:  ${appInfo.author}\n` +
+						`${appInfo.contact}\n` +
+						`${appInfo.website}\n\n` +
+						`License:  ${appInfo.license}\n` +
+						`${appInfo.licenseURL}`,
+					icon: appInfo.icon
 				})
 			}
 		}))
 		menu.append(new MenuItem({
-			label: `Close ${appConfig.name}`, role: 'quit'
+			label: `Close ${appInfo.name}`, role: 'quit'
 		}))
 	},
 
@@ -111,8 +111,9 @@ const buildMenu = {
 						encoding: settings.encoding,
 						async: true
 					}, (code, stdout, stderr) => {
-						if(code !== 0) dialog.showErrorBox(`${appConfig.name} - ${cmd.label}`, stderr)
-						else {
+						if(code !== 0) {
+							dialog.showErrorBox(`${appInfo.name} - ${cmd.label}`, stderr)
+						} else {
 							// do other stuff
 						}
 					})
@@ -136,8 +137,8 @@ const buildMenu = {
  * run electron app 
  */
 app.whenReady().then(() => {
-	tray = new Tray(appConfig.icon)
-	tray.setToolTip(appConfig.name)
-	tray.setTitle(appConfig.name)
+	tray = new Tray(appInfo.icon)
+	tray.setToolTip(appInfo.name)
+	tray.setTitle(appInfo.name)
 	tray.setContextMenu(buildMenu.Build())
 })
