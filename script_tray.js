@@ -7,7 +7,7 @@
  */
 const appInfo = {
 	name: 'Script Tray',
-	version: '091921',
+	version: '092021',
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
