@@ -166,12 +166,12 @@ const buildMenu = {
 							encoding: settings.encoding,
 							async: true
 						}, (code, stdout, stderr) => {
-							if(code !== 0)
+							if(code !== 0)  //  Error processing command
 								dialog.showErrorBox(
 									`${appInfo.name} - ${item.label}`,
 									`Command:  ${item.cmd}\nCode:  ${code}\nError:  ${stderr}`)
-							else {
-								// command executed, do something else?
+							else {  //  Command executed
+								//  do something else?
 							}
 						})
 					}
