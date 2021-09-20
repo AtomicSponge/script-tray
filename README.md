@@ -7,6 +7,8 @@ Configure and run scripts and programs from a system tray icon.
 - [auto-launch](https://www.npmjs.com/package/auto-launch)
 - [electron-json-storage](https://www.npmjs.com/package/electron-json-storage)
 
+-----
+
 ```
 encoding: 'utf8'
 ```
