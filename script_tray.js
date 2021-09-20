@@ -45,10 +45,10 @@ class Settings {
 			this.appList = []
 			this.launchCmds = []
 			this.debug = false
-		}
-		try { this.load() } catch {
-			dialog.showErrorBox(`${appInfo.name}`,
-				`Error loading settings`)
+			try { this.load() } catch {
+				dialog.showErrorBox(`${appInfo.name}`,
+					`Error loading settings`)
+			}
 		}
 		return Settings.instance
 	}
