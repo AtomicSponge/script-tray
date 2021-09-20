@@ -150,7 +150,32 @@ const createSettingsEditor = (setting) => {
 			preload: path.join(__dirname, 'preload.js')
 		}
 	})
+	
 	win.loadFile('index.html')
+
+	win.on('closed', () => {
+		settings.save()
+		win = null  // ?
+	})
+}
+
+/*
+ *
+ */
+const createAboutBox = () => {
+	dialog.showMessageBox({
+		type: 'info',
+		title: `About ${appInfo.name}`,
+		message: `${appInfo.name}\tver:  ${appInfo.version}`,
+		detail:
+			`${appInfo.git}\n\n` +
+			`Author:  ${appInfo.author}\n` +
+			`${appInfo.contact}\n` +
+			`${appInfo.website}\n\n` +
+			`License:  ${appInfo.license}\n` +
+			`${appInfo.licenseURL}`,
+		icon: appInfo.icon
+	})
 }
 
 /*
@@ -171,21 +196,7 @@ const buildMenu = {
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
 			label: `About ${appInfo.name}`,
-			click: () => {
-				dialog.showMessageBox({
-					type: 'info',
-					title: `About ${appInfo.name}`,
-					message: `${appInfo.name}\tver:  ${appInfo.version}`,
-					detail:
-						`${appInfo.git}\n\n` +
-						`Author:  ${appInfo.author}\n` +
-						`${appInfo.contact}\n` +
-						`${appInfo.website}\n\n` +
-						`License:  ${appInfo.license}\n` +
-						`${appInfo.licenseURL}`,
-					icon: appInfo.icon
-				})
-			}
+			click: () => { createAboutBox() }
 		}))
 		menu.append(new MenuItem({
 			label: `Close ${appInfo.name}`, role: 'quit'
@@ -211,22 +222,19 @@ const buildMenu = {
 		menu.append(new MenuItem({
 			label: 'Change encoding setting',
 			click: () => {
-				//createSettingsEditor(settings.encoding)
-				settings.save()
+				createSettingsEditor(settings.encoding)
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit App Verification List',
 			click: () => {
-				//createSettingsEditor(settings.appList)
-				settings.save()
+				createSettingsEditor(settings.appList)
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit Command Menu',
 			click: () => {
-				//createSettingsEditor(settings.launchCmds)
-				settings.save()
+				createSettingsEditor(settings.launchCmds)
 			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
