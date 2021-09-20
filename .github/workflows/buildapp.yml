@@ -39,15 +39,5 @@ jobs:
     - name: Deploy Built App
       uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
       with:
-        branch: master
+        branch: app
         folder: app
-
-    - name: Prep source
-      run: |
-        rm -rf app/
-
-    - name: Deploy source
-      uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
-      with:
-        branch: source
-        folder: .
