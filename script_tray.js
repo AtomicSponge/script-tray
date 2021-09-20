@@ -29,7 +29,7 @@ const storage = require('electron-json-storage')
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
-const autoLauncher = new AutoLaunch({ name: appInfo.name })
+const autoLauncher = new AutoLaunch({ name: appInfo.name.trim() })
 
 /*
  * Settings class
