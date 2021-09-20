@@ -183,13 +183,25 @@ const buildMenu = {
 	 */
 	Options: (menu) => {
 		menu.append(new MenuItem({
-			label: 'Change encoding setting'
+			label: 'Change encoding setting',
+			click: () => {
+				//
+				settings.save()
+			}
 		}))
 		menu.append(new MenuItem({
-			label: 'Edit App Verification List'
+			label: 'Edit App Verification List',
+			click: () => {
+				//
+				settings.save()
+			}
 		}))
 		menu.append(new MenuItem({
-			label: 'Edit Command Menu'
+			label: 'Edit Command Menu',
+			click: () => {
+				//
+				settings.save()
+			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
@@ -200,6 +212,7 @@ const buildMenu = {
 				(item.checked) ?
 					settings.debug = true :
 					settings.debug = false
+				settings.save()
 			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
