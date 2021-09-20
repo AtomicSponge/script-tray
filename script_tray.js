@@ -140,18 +140,18 @@ settings.appList.forEach((appCheck) => {
 })
 
 /*
- *
+ * Window for the settings editor
  */
 const createSettingsEditor = (setting) => {
 	win = new BrowserWindow({
 		width: 800,
 		height: 600,
 		webPreferences: {
-			preload: path.join(__dirname, 'preload.js')
+			preload: path.join(__dirname, 'assets/preload.js')
 		}
 	})
-	
-	win.loadFile('index.html')
+
+	win.loadFile('assets/index.html')
 
 	win.on('closed', () => {
 		settings.save()
@@ -160,7 +160,7 @@ const createSettingsEditor = (setting) => {
 }
 
 /*
- *
+ * About message box
  */
 const createAboutBox = () => {
 	dialog.showMessageBox({
