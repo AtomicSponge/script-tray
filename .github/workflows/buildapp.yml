@@ -31,15 +31,21 @@ jobs:
         #sed '/api/d' .gitignore > temp && mv temp .gitignore
         #echo 'src/' >> .gitignore
 
-    #- name: Deploy Built App
-      #uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
-      #with:
-        #branch: master
-        #folder: .
+    - name: Prep App
+      run: |
+        mkdir app
+        cd app
+        echo 'test' >> README.md
+
+    - name: Deploy Built App
+      uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
+      with:
+        branch: master
+        folder: app
 
     - name: Prep source
       run: |
-        rm -rf .github/
+        rm -rf app/
 
     - name: Deploy source
       uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
