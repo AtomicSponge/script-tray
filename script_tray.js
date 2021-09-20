@@ -3,7 +3,7 @@
  */
 
 /*
- * app config
+ * App Information
  */
 const appInfo = {
 	name: 'Script Tray',
@@ -18,14 +18,13 @@ const appInfo = {
 }
 
 /*
- * imports
+ * Imports
  */
-const fs = require('fs')
 const shell = require('shelljs')
 const AutoLaunch = require('auto-launch')
 const { app, Menu, Tray, dialog, MenuItem } = require('electron')
+const storage = require('electron-json-storage')
 const path = require('path')
-const { createPublicKey } = require('crypto')
 
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
@@ -35,49 +34,83 @@ const autoLauncher = new AutoLaunch({ name: appInfo.name })
 /*
  * 
  */
-const settings = {
-	encoding: 'utf8',
-	appList: [ 'sysbak' ],
-	launchCmds: [
-		{
-			label: 'System Backup',
-			cmd: 'sysbak'
-		},
-		[
-			{
-				menu: 'test menu'
-			},
-			[
-				{
-					menu: 'test menu 2'
-				},
-				{
-					label: 'test2',
-					cmd: 'test2'
-				}
-			],
-			{
-				label: 'testa',
-				cmd: 'testa'
-			},
-			{
-				separator: null
-			},
-			{
-				label: 'testb',
-				cmd: 'testb'
-			}
-		],
-		{
-			label: 'test1',
-			cmd: 'test1'
-		}
-	],
-	debug: false
+class Settings {
+	/*
+	 *
+	 */
+	constructor() {
+		storage.setDataPath()
+		this.encoding = 'utf8'
+		this.appList = []
+		this.launchCmds = []
+		this.debug = false
+		this.load()
+	}
+
+	/*
+	 *
+	 */
+	load() {
+		storage.has('encoding', (error, hasKey) => {
+			if(error) throw error;
+			if(hasKey) 
+				storage.get('encoding', (error, data) => {
+					if(error) throw error
+					this.encoding = data
+				})
+		})
+		storage.has('appList', (error, hasKey) => {
+			if(error) throw error
+			if(hasKey) 
+				storage.get('appList', (error, data) => {
+					if(error) throw error
+					this.appList = data
+				})
+		})
+		storage.has('launchCmds', (error, hasKey) => {
+			if(error) throw error
+			if(hasKey) 
+				storage.get('launchCmds', (error, data) => {
+					if(error) throw error
+					this.launchCmds = data
+				})
+		})
+		storage.has('debug', (error, hasKey) => {
+			if(error) throw error
+			if(hasKey) 
+				storage.get('debug', (error, data) => {
+					if(error) throw error
+					this.debug = data
+				})
+		})
+	}
+
+	/*
+	 *
+	 */
+	save() {
+		storage.set('encoding', this.encoding, (error) => { if(error) throw error })
+		storage.set('appList', this.appList, (error) => { if(error) throw error })
+		storage.set('launchCmds', this.launchCmds, (error) => { if(error) throw error })
+		storage.set('debug', this.debug, (error) => { if(error) throw error })
+	}
+
+	/*
+	 *
+	 */
+	reset() {
+		storage.clear(function(error) { if (error) throw error })
+		this.encoding = 'utf8'
+		this.appList = []
+		this.launchCmds = []
+		this.debug = false
+	}
 }
 
+const settings = new Settings()
+
 /*
- * 
+ * Verify apps exist
  */
 settings.appList.forEach((appCheck) => {
 	if(!shell.which(appCheck)) {
@@ -93,7 +126,7 @@ settings.appList.forEach((appCheck) => {
  */
 const buildMenu = {
 	/*
-	 * 
+	 * Build the main menu part 
 	 */
 	Main: (menu) => {
 		menu.append(new MenuItem({ type: 'separator' }))
@@ -132,7 +165,7 @@ const buildMenu = {
 	},
 
 	/*
-	 * 
+	 * Build the launcher menu part
 	 */
 	Launcher: (menu, collection) => {
 		collection.forEach((item) => {
@@ -188,7 +221,7 @@ const buildMenu = {
 	},
 
 	/*
-	 * 
+	 * Generate the complete menu
 	 */
 	Build: () => {
 		const menu = new Menu()
@@ -199,7 +232,12 @@ const buildMenu = {
 }
 
 /*
- * run electron app 
+ * Save settings on exit
+ */
+app.on('quit', () => { settings.save() })
+
+/*
+ * Run the Electron app 
  */
 app.whenReady().then(() => {
 	tray = new Tray(appInfo.icon)
