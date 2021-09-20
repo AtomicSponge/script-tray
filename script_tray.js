@@ -44,7 +44,7 @@ class Settings {
 		this.launchCmds = []
 		this.debug = false
 		try { this.load() } catch {
-			dialog.showErrorBox(appInfo.name,
+			dialog.showErrorBox(`${appInfo.name}`,
 				`Error loading settings`)
 		}
 	}
@@ -210,7 +210,7 @@ const buildMenu = {
 				}))
 				return  //  Next item
 			}
-			//  Item wasn't processed, so there's a problem with the format.
+			//  Item wasn't processed, so there's a problem with the format
 			dialog.showErrorBox(`${appInfo.name}`,
 				`Error building menu, incorrect menu item.\n\n` +
 				`${Object.keys(item)}\n${Object.values(item)}`)
