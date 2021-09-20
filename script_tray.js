@@ -24,7 +24,6 @@ const shell = require('shelljs')
 const AutoLaunch = require('auto-launch')
 const { app, Menu, Tray, dialog, MenuItem } = require('electron')
 const storage = require('electron-json-storage')
-const path = require('path')
 
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
@@ -44,7 +43,10 @@ class Settings {
 		this.appList = []
 		this.launchCmds = []
 		this.debug = false
-		this.load()
+		try { this.load() } catch {
+			dialog.showErrorBox(appInfo.name,
+				`Error loading settings`)
+		}
 	}
 
 	/*
@@ -114,8 +116,7 @@ const settings = new Settings()
  */
 settings.appList.forEach((appCheck) => {
 	if(!shell.which(appCheck)) {
-		dialog.showErrorBox(
-			appInfo.name,
+		dialog.showErrorBox(appInfo.name,
 			`Error:  ${appCheck} not found!`)
 		app.quit()
 	}
@@ -172,8 +173,7 @@ const buildMenu = {
 			if(Array.isArray(item)) {  //  Item is a sub menu
 				const menuTitle = item.shift()  //  Get the title item
 				if(menuTitle.menu === undefined) {
-					dialog.showErrorBox(
-						`${appInfo.name}`,
+					dialog.showErrorBox(`${appInfo.name}`,
 						`Error building menu, incorrect title menu item.\n\n${item}`)
 					app.quit()
 				}
@@ -200,8 +200,7 @@ const buildMenu = {
 							async: true
 						}, (code, stdout, stderr) => {
 							if(code !== 0)  //  Error processing command
-								dialog.showErrorBox(
-									`${appInfo.name} - ${item.label}`,
+								dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
 									`Command:  ${item.cmd}\nCode:  ${code}\nError:  ${stderr}`)
 							else {  //  Command executed
 								//  do something else?
@@ -212,8 +211,7 @@ const buildMenu = {
 				return  //  Next item
 			}
 			//  Item wasn't processed, so there's a problem with the format.
-			dialog.showErrorBox(
-				`${appInfo.name}`,
+			dialog.showErrorBox(`${appInfo.name}`,
 				`Error building menu, incorrect menu item.\n\n` +
 				`${Object.keys(item)}\n${Object.values(item)}`)
 			app.quit()
