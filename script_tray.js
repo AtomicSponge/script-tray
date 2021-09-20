@@ -142,7 +142,7 @@ settings.appList.forEach((appCheck) => {
 /*
  *
  */
-const createSettingsEditor = () => {
+const createSettingsEditor = (setting) => {
 	win = new BrowserWindow({
 		width: 800,
 		height: 600,
@@ -211,21 +211,21 @@ const buildMenu = {
 		menu.append(new MenuItem({
 			label: 'Change encoding setting',
 			click: () => {
-				//createSettingsEditor
+				//createSettingsEditor(settings.encoding)
 				settings.save()
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit App Verification List',
 			click: () => {
-				//createSettingsEditor
+				//createSettingsEditor(settings.appList)
 				settings.save()
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit Command Menu',
 			click: () => {
-				//createSettingsEditor
+				//createSettingsEditor(settings.launchCmds)
 				settings.save()
 			}
 		}))
