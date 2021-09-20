@@ -151,7 +151,7 @@ const buildMenu = {
 				tempItem.label = menuTitle.menu
 				tempItem.submenu = tempMenu
 				menu.append(new MenuItem(tempItem))
-				return
+				return  //  Next item
 			}
 			if(item.separator !== undefined) {  //  Item is a seperator
 				menu.append(new MenuItem({ type: 'separator' }))
@@ -181,7 +181,8 @@ const buildMenu = {
 			//  Item wasn't processed, so there's a problem with the format.
 			dialog.showErrorBox(
 				`${appInfo.name}`,
-				`Error building menu, incorrect menu item.\n\n${item}`)
+				`Error building menu, incorrect menu item.\n\n` +
+				`${Object.keys(item)}\n${Object.values(item)}`)
 			app.quit()
 		})
 	},
