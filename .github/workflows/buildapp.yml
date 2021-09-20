@@ -4,9 +4,9 @@ on:
   push:
     branches: [ master ]
 
-#jobs:
-  #build:
-    #runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -21,48 +21,25 @@ on:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build App
-      run: |
-        npm ci
-        npm run build --if-present
+    #- name: Build App
+      #run: |
+        #npm ci
+        #npm run build --if-present
 
-    - name: Build Posts API
-      run: |
-        mkdir api
-        npx m2j _posts/*.md -c -o api/posts.json
+    #- name: Modify .gitignore
+      #run: |
+        #sed '/api/d' .gitignore > temp && mv temp .gitignore
+        #echo 'src/' >> .gitignore
 
-    - name: Modify .gitignore
-      run: |
-        sed '/scripts.html/d' .gitignore > temp && mv temp .gitignore
-        sed '/api/d' .gitignore > temp && mv temp .gitignore
-        sed '/dist/d' .gitignore > temp && mv temp .gitignore
-        echo 'src/' >> .gitignore
-        echo '.babelrc' >> .gitignore
-        echo 'LICENSE' >> .gitignore
-        echo 'LICENSE.md' >> .gitignore
-        echo 'package-lock.json' >> .gitignore
-        echo 'package.json' >> .gitignore
-        echo 'webpack.config.babel.js' >> .gitignore
-
-    - name: Deploy Built App
-      uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
-      with:
-        branch: master
-        folder: .
+    #- name: Deploy Built App
+      #uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
+      #with:
+        #branch: master
+        #folder: .
 
     - name: Prep source
       run: |
-        rm -rf _posts/
-        rm -rf api/
-        rm -rf node_modules/
-        rm -rf dist/
-        rm -rf docs/
-        rm -rf donger_api/
-        rm -rf assets/img/
-        rm .gitignore
-        rm CNAME
-        rm package-lock.json
-        rm _includes/scripts.html
+        rm -rf .github/
 
     - name: Deploy source
       uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
