@@ -38,15 +38,19 @@ class Settings {
 	 *
 	 */
 	constructor() {
-		storage.setDataPath()
-		this.encoding = 'utf8'
-		this.appList = []
-		this.launchCmds = []
-		this.debug = false
+		if(!Settings.instance) {
+			Settings.instance = this
+			storage.setDataPath()
+			this.encoding = 'utf8'
+			this.appList = []
+			this.launchCmds = []
+			this.debug = false
+		}
 		try { this.load() } catch {
 			dialog.showErrorBox(`${appInfo.name}`,
 				`Error loading settings`)
 		}
+		return Settings.instance
 	}
 
 	/*
