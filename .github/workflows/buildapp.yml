@@ -34,8 +34,7 @@ jobs:
     - name: Prep App
       run: |
         mkdir app
-        cd app
-        echo 'test' >> README.md
+        cp README.md app/
 
     - name: Deploy Built App
       uses: JamesIves/github-pages-deploy-action@4.1.1  #  https://github.com/marketplace/actions/deploy-to-github-pages
