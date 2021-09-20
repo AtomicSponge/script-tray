@@ -183,13 +183,34 @@ const buildMenu = {
 	 */
 	Options: (menu) => {
 		menu.append(new MenuItem({
+			label: 'test'
+		}))
+		menu.append(new MenuItem({
+			label: 'test'
+		}))
+		menu.append(new MenuItem({
+			label: 'test'
+		}))
+		menu.append(new MenuItem({ type: 'separator' }))
+		menu.append(new MenuItem({
 			label: 'Start at login',
 			type: 'checkbox',
 			checked: (autoLauncher.isEnabled()) ? false : true,
 			click: (item) => {
-				{(item.checked) ?
+				(item.checked) ?
 					autoLauncher.disable() :
-					autoLauncher.enable()}
+					autoLauncher.enable()
+			}
+		}))
+		menu.append(new MenuItem({ type: 'separator' }))
+		menu.append(new MenuItem({
+			label: 'Start at login',
+			type: 'checkbox',
+			checked: (settings.debug) ? false : true,
+			click: (item) => {
+				(item.checked) ?
+					settings.debug = false :
+					settings.debug = true
 			}
 		}))
 	},
@@ -254,6 +275,7 @@ const buildMenu = {
 		const menu = new Menu()
 		buildMenu.Launcher(menu, settings.launchCmds)
 		buildMenu.Main(menu)
+		if(settings.debug) console.log(menu)
 		return menu
 	}
 }
