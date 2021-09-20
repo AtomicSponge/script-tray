@@ -174,7 +174,7 @@ const buildMenu = {
 				const menuTitle = item.shift()  //  Get the title item
 				if(menuTitle.menu === undefined) {
 					dialog.showErrorBox(`${appInfo.name}`,
-						`Error building menu, incorrect title menu item.\n\n${item}`)
+						`Error building menu, incorrect title menu item.\n\n${Object.keys(item)}`)
 					app.quit()
 				}
 				const tempMenu = new Menu()
