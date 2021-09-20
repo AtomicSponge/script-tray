@@ -25,17 +25,18 @@ const AutoLaunch = require('auto-launch')
 const { app, Menu, Tray, dialog, MenuItem } = require('electron')
 const storage = require('electron-json-storage')
 
+//  Set path to node for shelljs
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
 const autoLauncher = new AutoLaunch({ name: appInfo.name })
 
 /*
- * 
+ * Settings class
  */
 class Settings {
 	/*
-	 *
+	 * Construct Settings object
 	 */
 	constructor() {
 		if(!Settings.instance) {
@@ -51,7 +52,7 @@ class Settings {
 	}
 
 	/*
-	 *
+	 * Load settings
 	 */
 	load() {
 		try {
@@ -94,7 +95,7 @@ class Settings {
 	}
 
 	/*
-	 *
+	 * Save settings
 	 */
 	save() {
 		try {
@@ -109,7 +110,7 @@ class Settings {
 	}
 
 	/*
-	 *
+	 * Reset settings
 	 */
 	reset() {
 		try {
