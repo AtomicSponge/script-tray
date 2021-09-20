@@ -148,16 +148,12 @@ const buildMenu = {
 	 */
 	Main: (menu) => {
 		menu.append(new MenuItem({ type: 'separator' }))
-		menu.append(new MenuItem({
-			label: 'Start at login',
-			type: 'checkbox',
-			checked: (autoLauncher.isEnabled()) ? false : true,
-			click: (item) => {
-				{(item.checked) ?
-					autoLauncher.disable() :
-					autoLauncher.enable()}
-			}
-		}))
+		{const optionsMenu = new Menu()
+		buildMenu.Options(optionsMenu)
+		let tempItem = {}
+		tempItem.label = 'Options'
+		tempItem.submenu = optionsMenu
+		menu.append(new MenuItem(tempItem))}
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
 			label: `About ${appInfo.name}`,
@@ -179,6 +175,22 @@ const buildMenu = {
 		}))
 		menu.append(new MenuItem({
 			label: `Close ${appInfo.name}`, role: 'quit'
+		}))
+	},
+
+	/*
+	 * Build the options menu part
+	 */
+	Options: (menu) => {
+		menu.append(new MenuItem({
+			label: 'Start at login',
+			type: 'checkbox',
+			checked: (autoLauncher.isEnabled()) ? false : true,
+			click: (item) => {
+				{(item.checked) ?
+					autoLauncher.disable() :
+					autoLauncher.enable()}
+			}
 		}))
 	},
 
