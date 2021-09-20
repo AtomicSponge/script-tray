@@ -45,10 +45,7 @@ class Settings {
 			this.appList = []
 			this.launchCmds = []
 			this.debug = false
-			try { this.load() } catch {
-				dialog.showErrorBox(`${appInfo.name}`,
-					`Error loading settings`)
-			}
+			this.load()
 		}
 		return Settings.instance
 	}
@@ -57,55 +54,70 @@ class Settings {
 	 *
 	 */
 	load() {
-		storage.has('encoding', (error, hasKey) => {
-			if(error) throw error
-			if(hasKey) 
-				storage.get('encoding', (error, data) => {
-					if(error) throw error
-					this.encoding = data
-				})
-		})
-		storage.has('appList', (error, hasKey) => {
-			if(error) throw error
-			if(hasKey) 
-				storage.get('appList', (error, data) => {
-					if(error) throw error
-					this.appList = data
-				})
-		})
-		storage.has('launchCmds', (error, hasKey) => {
-			if(error) throw error
-			if(hasKey) 
-				storage.get('launchCmds', (error, data) => {
-					if(error) throw error
-					this.launchCmds = data
-				})
-		})
-		storage.has('debug', (error, hasKey) => {
-			if(error) throw error
-			if(hasKey) 
-				storage.get('debug', (error, data) => {
-					if(error) throw error
-					this.debug = data
-				})
-		})
+		try {
+			storage.has('encoding', (error, hasKey) => {
+				if(error) throw error
+				if(hasKey) 
+					storage.get('encoding', (error, data) => {
+						if(error) throw error
+						this.encoding = data
+					})
+			})
+			storage.has('appList', (error, hasKey) => {
+				if(error) throw error
+				if(hasKey) 
+					storage.get('appList', (error, data) => {
+						if(error) throw error
+						this.appList = data
+					})
+			})
+			storage.has('launchCmds', (error, hasKey) => {
+				if(error) throw error
+				if(hasKey) 
+					storage.get('launchCmds', (error, data) => {
+						if(error) throw error
+						this.launchCmds = data
+					})
+			})
+			storage.has('debug', (error, hasKey) => {
+				if(error) throw error
+				if(hasKey) 
+					storage.get('debug', (error, data) => {
+						if(error) throw error
+						this.debug = data
+					})
+			})
+		} catch(error) {
+			dialog.showErrorBox(`${appInfo.name}`,
+				`Error loading settings.\n\n${error}`)
+		}
 	}
 
 	/*
 	 *
 	 */
 	save() {
-		storage.set('encoding', this.encoding, (error) => { if(error) throw error })
-		storage.set('appList', this.appList, (error) => { if(error) throw error })
-		storage.set('launchCmds', this.launchCmds, (error) => { if(error) throw error })
-		storage.set('debug', this.debug, (error) => { if(error) throw error })
+		try {
+			storage.set('encoding', this.encoding, (error) => { if(error) throw error })
+			storage.set('appList', this.appList, (error) => { if(error) throw error })
+			storage.set('launchCmds', this.launchCmds, (error) => { if(error) throw error })
+			storage.set('debug', this.debug, (error) => { if(error) throw error })
+		} catch(error) {
+			dialog.showErrorBox(`${appInfo.name}`,
+				`Error saving settings.\n\n${error}`)
+		}
 	}
 
 	/*
 	 *
 	 */
 	reset() {
-		storage.clear(function(error) { if (error) throw error })
+		try {
+			storage.clear(function(error) { if (error) throw error })
+		} catch(error) {
+			dialog.showErrorBox(`${appInfo.name}`,
+				`Error clearing settings.\n\n${error}`)
+		}
 		this.encoding = 'utf8'
 		this.appList = []
 		this.launchCmds = []
