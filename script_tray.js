@@ -183,6 +183,18 @@ const buildMenu = {
 	 */
 	Options: (menu) => {
 		menu.append(new MenuItem({
+			label: 'Enable debugging',
+			type: 'checkbox',
+			checked: (settings.debug) ? true : false,
+			click: (item) => {
+				(item.checked) ?
+					settings.debug = true :
+					settings.debug = false
+				settings.save()
+			}
+		}))
+		menu.append(new MenuItem({ type: 'separator' }))
+		menu.append(new MenuItem({
 			label: 'Change encoding setting',
 			click: () => {
 				//
@@ -200,18 +212,6 @@ const buildMenu = {
 			label: 'Edit Command Menu',
 			click: () => {
 				//
-				settings.save()
-			}
-		}))
-		menu.append(new MenuItem({ type: 'separator' }))
-		menu.append(new MenuItem({
-			label: 'Enable debugging',
-			type: 'checkbox',
-			checked: (settings.debug) ? true : false,
-			click: (item) => {
-				(item.checked) ?
-					settings.debug = true :
-					settings.debug = false
 				settings.save()
 			}
 		}))
