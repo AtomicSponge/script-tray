@@ -52,7 +52,7 @@ class Settings {
 	 */
 	load() {
 		storage.has('encoding', (error, hasKey) => {
-			if(error) throw error;
+			if(error) throw error
 			if(hasKey) 
 				storage.get('encoding', (error, data) => {
 					if(error) throw error
