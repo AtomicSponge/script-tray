@@ -22,7 +22,7 @@ const appInfo = {
  */
 const shell = require('shelljs')
 const AutoLaunch = require('auto-launch')
-const { app, Menu, Tray, dialog, MenuItem } = require('electron')
+const { app, dialog, Tray, Menu, MenuItem, BrowserWindow } = require('electron')
 const storage = require('electron-json-storage')
 
 //  Set path to node for shelljs
@@ -140,6 +140,20 @@ settings.appList.forEach((appCheck) => {
 })
 
 /*
+ *
+ */
+const createSettingsEditor = () => {
+	win = new BrowserWindow({
+		width: 800,
+		height: 600,
+		webPreferences: {
+			preload: path.join(__dirname, 'preload.js')
+		}
+	})
+	win.loadFile('index.html')
+}
+
+/*
  * 
  */
 const buildMenu = {
@@ -197,21 +211,21 @@ const buildMenu = {
 		menu.append(new MenuItem({
 			label: 'Change encoding setting',
 			click: () => {
-				//
+				//createSettingsEditor
 				settings.save()
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit App Verification List',
 			click: () => {
-				//
+				//createSettingsEditor
 				settings.save()
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit Command Menu',
 			click: () => {
-				//
+				//createSettingsEditor
 				settings.save()
 			}
 		}))
