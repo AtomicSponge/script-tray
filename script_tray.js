@@ -183,34 +183,34 @@ const buildMenu = {
 	 */
 	Options: (menu) => {
 		menu.append(new MenuItem({
-			label: 'test'
+			label: 'Change encoding setting'
 		}))
 		menu.append(new MenuItem({
-			label: 'test'
+			label: 'Edit App Verification List'
 		}))
 		menu.append(new MenuItem({
-			label: 'test'
+			label: 'Edit Command Menu'
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
-			label: 'Start at login',
+			label: 'Enable debugging',
 			type: 'checkbox',
-			checked: (autoLauncher.isEnabled()) ? false : true,
+			checked: (settings.debug) ? true : false,
 			click: (item) => {
 				(item.checked) ?
-					autoLauncher.disable() :
-					autoLauncher.enable()
+					settings.debug = true :
+					settings.debug = false
 			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
 			label: 'Start at login',
 			type: 'checkbox',
-			checked: (settings.debug) ? false : true,
+			checked: (autoLauncher.isEnabled()) ? true : false,
 			click: (item) => {
 				(item.checked) ?
-					settings.debug = false :
-					settings.debug = true
+					autoLauncher.enable() :
+					autoLauncher.disable()
 			}
 		}))
 	},
