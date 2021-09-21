@@ -20,6 +20,7 @@ const appInfo = {
 /*
  * Imports
  */
+const path = require('path')
 const shell = require('shelljs')
 const AutoLaunch = require('auto-launch')
 const { app, dialog, Tray, Menu, MenuItem, BrowserWindow } = require('electron')
@@ -142,6 +143,7 @@ settings.appList.forEach((appCheck) => {
 /*
  * Window for the settings editor
  */
+let win = {}
 const createSettingsEditor = (setting) => {
 	win = new BrowserWindow({
 		width: 800,
