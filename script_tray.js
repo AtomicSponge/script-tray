@@ -153,7 +153,7 @@ const createSettingsEditor = (data) => {
 			preload: path.join(__dirname, 'assets/preload.js')
 		}
 	})
-
+	win.show()	
 	win.loadFile('assets/index.html')
 	win.webContents.on('did-finish-load', () => {
 		win.webContents.send('jsondata', data)
@@ -161,21 +161,23 @@ const createSettingsEditor = (data) => {
 	if(settings.debug) win.webContents.openDevTools()
 
 	win.on('close', (evt) => {
-		evt.preventDefault();
-		win = null  // ?
+		evt.preventDefault()
+		win.hide()
 		var returned_data = 'nope'
 		if(data !== returned_data) {
-			const res = dialog.showMessageBox({
+			const res = dialog.showMessageBox(win, {
+				type: 'question',
+				title: 'Confirm',
 				buttons: ['Yes', 'No'],
 				message: "Save changes?"
 			})
-			if(res === 0) settings.save()
+			res.then((res) => { if(res === 0) console.log(res) })
 		}
 	})
 
 	win.on('closed', () => {
-		settings.save()
-		win = null  // ?
+		//settings.save()
+		//win = null  // ?
 	})
 }
 
