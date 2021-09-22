@@ -10,3 +10,41 @@ Uses the following packages:
 - [electron-json-storage](https://www.npmjs.com/package/electron-json-storage)
 
 -----
+
+```
+[
+    {
+        label: 'System Backup',
+        cmd: 'sysbak'
+    },
+    [
+        {
+            menu: 'test menu'
+        },
+        [
+            {
+                menu: 'test menu 2'
+            },
+            {
+                label: 'test2',
+                cmd: 'test2'
+            }
+        ],
+        {
+            label: 'testa',
+            cmd: 'testa'
+        },
+        {
+            separator: null
+        },
+        {
+            label: 'testb',
+            cmd: 'testb'
+        }
+    ],
+    {
+        label: 'test1',
+        cmd: 'test1'
+    }
+]
+```

@@ -201,7 +201,7 @@ const createAboutBox = () => {
 }
 
 /*
- * 
+ * Menu creation functions
  */
 const buildMenu = {
 	/*
