@@ -160,6 +160,19 @@ const createSettingsEditor = (data) => {
 	})
 	if(settings.debug) win.webContents.openDevTools()
 
+	win.on('close', (evt) => {
+		evt.preventDefault();
+		win = null  // ?
+		var returned_data = 'nope'
+		if(data !== returned_data) {
+			const res = dialog.showMessageBox({
+				buttons: ['Yes', 'No'],
+				message: "Save changes?"
+			})
+			if(res === 0) settings.save()
+		}
+	})
+
 	win.on('closed', () => {
 		settings.save()
 		win = null  // ?
