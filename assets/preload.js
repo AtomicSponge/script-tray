@@ -1,3 +1,3 @@
-//const editor = new JSONEditor(document.getElementById("jsonEditor"), {})
-//editor.set(data)
-//editor.get()
+require('electron').ipcRenderer.on('jsondata', (event, message) => {
+    console.log(message)
+})

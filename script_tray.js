@@ -123,7 +123,7 @@ class Settings {
 		this.encoding = 'utf8'
 		this.appList = []
 		this.launchCmds = []
-		this.debug = false
+		this.debug = true
 	}
 }
 
@@ -144,16 +144,21 @@ settings.appList.forEach((appCheck) => {
  * Window for the settings editor
  */
 let win = {}
-const createSettingsEditor = (setting) => {
+const createSettingsEditor = (data) => {
 	win = new BrowserWindow({
 		width: 800,
 		height: 600,
 		webPreferences: {
+			nativeWindowOpen: true,
 			preload: path.join(__dirname, 'assets/preload.js')
 		}
 	})
 
 	win.loadFile('assets/index.html')
+	win.webContents.on('did-finish-load', () => {
+		win.webContents.send('jsondata', data)
+	})
+	if(settings.debug) win.webContents.openDevTools()
 
 	win.on('closed', () => {
 		settings.save()
@@ -288,9 +293,9 @@ const buildMenu = {
 						}, (code, stdout, stderr) => {
 							if(code !== 0)  //  Error processing command
 								dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
-									`Command:  ${item.cmd}\nCode:  ${code}\nError:  ${stderr}`)
+									`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}`)
 							else {  //  Command executed
-								//  do something else?
+								//  do something else?  ¯\_(ツ)_/¯
 							}
 						})
 					}
