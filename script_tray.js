@@ -200,16 +200,16 @@ const createAboutBox = () => {
 }
 
 /*
- * Menu creation functions
+ * Generate the complete menu
  */
-const buildMenu = {
+const buildMenu = () => {
 	/*
 	 * Build the main menu part 
 	 */
-	Main: (menu) => {
+	const Main = (menu) => {
 		menu.append(new MenuItem({ type: 'separator' }))
 		{const optionsMenu = new Menu()
-		buildMenu.Options(optionsMenu)
+		Options(optionsMenu)
 		let tempItem = {}
 		tempItem.label = 'Options'
 		tempItem.submenu = optionsMenu
@@ -222,12 +222,12 @@ const buildMenu = {
 		menu.append(new MenuItem({
 			label: `Close ${appInfo.name}`, role: 'quit'
 		}))
-	},
+	}
 
 	/*
 	 * Build the options menu part
 	 */
-	Options: (menu) => {
+	const Options = (menu) => {
 		menu.append(new MenuItem({
 			label: 'Enable debugging',
 			type: 'checkbox',
@@ -269,12 +269,12 @@ const buildMenu = {
 					autoLauncher.disable()
 			}
 		}))
-	},
+	}
 
 	/*
 	 * Build the launcher menu part
 	 */
-	Launcher: (menu, collection) => {
+	const Launcher = (menu, collection) => {
 		collection.forEach((item) => {
 			if(Array.isArray(item)) {  //  Item is a sub menu
 				const menuTitle = item.shift()  //  Get the title item
@@ -322,18 +322,14 @@ const buildMenu = {
 				`${Object.keys(item)}\n${Object.values(item)}`)
 			app.quit()
 		})
-	},
-
-	/*
-	 * Generate the complete menu
-	 */
-	Build: () => {
-		const menu = new Menu()
-		buildMenu.Launcher(menu, settings.launchCmds)
-		buildMenu.Main(menu)
-		if(settings.debug) console.log(menu)
-		return menu
 	}
+
+	const menu = new Menu()
+	Launcher(menu, settings.launchCmds)
+	Main(menu)
+	if(settings.debug) console.log(menu)
+	return menu
+
 }
 
 /*
@@ -351,7 +347,7 @@ app.whenReady().then(() => {
 	tray = new Tray(appInfo.icon)
 	tray.setToolTip(appInfo.name)
 	tray.setTitle(appInfo.name)
-	tray.setContextMenu(buildMenu.Build())
+	tray.setContextMenu(buildMenu())
 	win = new BrowserWindow({
 		width: 800,
 		height: 600,
