@@ -144,27 +144,31 @@ settings.appList.forEach((appCheck) => {
  * Window for the settings editor
  */
 let win = {}
+let isQuitting = false
 const createSettingsEditor = (data) => {
 	win.loadFile('assets/index.html')
 	win.webContents.on('did-finish-load', () => {
 		win.webContents.send('jsondata', data)
+		win.show()
 	})
 	if(settings.debug) win.webContents.openDevTools()
-	win.show()
 
 	win.on('close', (evt) => {
-		evt.preventDefault()
-		var returned_data = 'nope'
-		if(data !== returned_data) {
-			const res = dialog.showMessageBox(win, {
-				type: 'question',
-				title: 'Confirm',
-				buttons: ['Yes', 'No'],
-				message: "Save changes?"
-			})
-			res.then((res) => { if(res === 0) console.log(res) })
+		console.log(isQuitting)
+		if(!isQuitting) {
+			evt.preventDefault()
+			var returned_data = 'nope'
+			if(data !== returned_data) {
+				const res = dialog.showMessageBox(win, {
+					type: 'question',
+					title: 'Confirm',
+					buttons: ['Yes', 'No'],
+					message: "Save changes?"
+				})
+				res.finally((res) => { if(res === 0) console.log(res) })
+			}
+			win.hide()
 		}
-		win.hide()
 	})
 
 	//win.on('closed', () => {
@@ -335,7 +339,10 @@ const buildMenu = {
 /*
  * Save settings on exit
  */
-app.on('quit', () => { win.destroy() })
+app.on('quit', () => { 
+	isQuitting = true
+	win.destroy()
+})
 
 /*
  * Run the Electron app 
