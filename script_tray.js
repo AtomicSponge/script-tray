@@ -115,7 +115,7 @@ class Settings {
 	 */
 	reset() {
 		try {
-			storage.clear(function(error) { if (error) throw error })
+			storage.clear((error) => { if(error) throw error })
 		} catch(error) {
 			dialog.showErrorBox(`${appInfo.name}`,
 				`Error clearing settings.\n\n${error}`)
@@ -123,7 +123,7 @@ class Settings {
 		this.encoding = 'utf8'
 		this.appList = []
 		this.launchCmds = []
-		this.debug = true
+		this.debug = false
 	}
 }
 
