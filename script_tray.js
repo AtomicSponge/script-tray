@@ -145,7 +145,7 @@ settings.appList.forEach((appCheck) => {
  */
 let win = {}
 let isQuitting = false
-const createSettingsEditor = (data) => {
+const showSettingsEditor = (data) => {
 	win.loadFile('assets/index.html')
 	win.webContents.on('did-finish-load', () => {
 		win.webContents.send('jsondata', data)
@@ -183,7 +183,7 @@ const createSettingsEditor = (data) => {
 /*
  * About message box
  */
-const createAboutBox = () => {
+const showAboutBox = () => {
 	dialog.showMessageBox({
 		type: 'info',
 		title: `About ${appInfo.name}`,
@@ -217,7 +217,7 @@ const buildMenu = () => {
 		menu.append(new MenuItem({ type: 'separator' }))
 		menu.append(new MenuItem({
 			label: `About ${appInfo.name}`,
-			click: () => { createAboutBox() }
+			click: () => { showAboutBox() }
 		}))
 		menu.append(new MenuItem({
 			label: `Close ${appInfo.name}`, role: 'quit'
@@ -243,19 +243,19 @@ const buildMenu = () => {
 		menu.append(new MenuItem({
 			label: 'Change encoding setting',
 			click: () => {
-				createSettingsEditor(settings.encoding)
+				showSettingsEditor(settings.encoding)
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit App Verification List',
 			click: () => {
-				createSettingsEditor(settings.appList)
+				showSettingsEditor(settings.appList)
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit Command Menu',
 			click: () => {
-				createSettingsEditor(settings.launchCmds)
+				showSettingsEditor(settings.launchCmds)
 			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
@@ -329,7 +329,6 @@ const buildMenu = () => {
 	Main(menu)
 	if(settings.debug) console.log(menu)
 	return menu
-
 }
 
 /*
