@@ -145,24 +145,15 @@ settings.appList.forEach((appCheck) => {
  */
 let win = {}
 const createSettingsEditor = (data) => {
-	win = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-			nativeWindowOpen: true,
-			preload: path.join(__dirname, 'assets/preload.js')
-		}
-	})
-	win.show()	
 	win.loadFile('assets/index.html')
 	win.webContents.on('did-finish-load', () => {
 		win.webContents.send('jsondata', data)
 	})
 	if(settings.debug) win.webContents.openDevTools()
+	win.show()
 
 	win.on('close', (evt) => {
 		evt.preventDefault()
-		win.hide()
 		var returned_data = 'nope'
 		if(data !== returned_data) {
 			const res = dialog.showMessageBox(win, {
@@ -173,11 +164,15 @@ const createSettingsEditor = (data) => {
 			})
 			res.then((res) => { if(res === 0) console.log(res) })
 		}
+		win.hide()
 	})
 
-	win.on('closed', () => {
-		//settings.save()
-		//win = null  // ?
+	//win.on('closed', () => {
+		//win.destroy()
+	//})
+
+	win.on('session-end', () => {
+		//
 	})
 }
 
@@ -340,7 +335,7 @@ const buildMenu = {
 /*
  * Save settings on exit
  */
-app.on('quit', () => { settings.save() })
+app.on('quit', () => { win.destroy() })
 
 /*
  * Run the Electron app 
@@ -350,4 +345,14 @@ app.whenReady().then(() => {
 	tray.setToolTip(appInfo.name)
 	tray.setTitle(appInfo.name)
 	tray.setContextMenu(buildMenu.Build())
+	win = new BrowserWindow({
+		width: 800,
+		height: 600,
+		show: false,
+		webPreferences: {
+			nativeWindowOpen: true,
+			preload: path.join(__dirname, 'assets/preload.js')
+		}
+	})
+	win.hide()
 })
