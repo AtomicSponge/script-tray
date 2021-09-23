@@ -144,7 +144,6 @@ settings.appList.forEach((appCheck) => {
  * Window for the settings editor
  */
 let win = {}
-let isQuitting = false
 const showSettingsEditor = (data) => {
 	win.loadFile('assets/index.html')
 	win.webContents.on('did-finish-load', () => {
@@ -154,21 +153,18 @@ const showSettingsEditor = (data) => {
 	if(settings.debug) win.webContents.openDevTools()
 
 	win.on('close', (evt) => {
-		console.log(isQuitting)
-		if(!isQuitting) {
-			evt.preventDefault()
-			var returned_data = 'nope'
-			if(data !== returned_data) {
-				const res = dialog.showMessageBox(win, {
-					type: 'question',
-					title: 'Confirm',
-					buttons: ['Yes', 'No'],
-					message: "Save changes?"
-				})
-				res.finally((res) => { if(res === 0) console.log(res) })
-			}
-			win.hide()
+		evt.preventDefault()
+		var returned_data = 'nope'
+		if(data !== returned_data) {
+			const res = dialog.showMessageBox(win, {
+				type: 'question',
+				title: 'Confirm',
+				buttons: ['Yes', 'No'],
+				message: "Save changes?"
+			})
+			res.finally((res) => { if(res === 0) console.log(res) })
 		}
+		win.hide()
 	})
 
 	//win.on('closed', () => {
@@ -284,7 +280,7 @@ const buildMenu = () => {
 					app.quit()
 				}
 				const tempMenu = new Menu()
-				buildMenu.Launcher(tempMenu, item)  //  Recursive call to keep building menus
+				Launcher(tempMenu, item)  //  Recursive call to keep building menus
 				//  Add the generated sub menu
 				let tempItem = {}
 				tempItem.label = menuTitle.menu
