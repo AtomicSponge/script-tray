@@ -161,30 +161,27 @@ const showSettingsEditor = (data) => {
 	if(settings.debug) win.webContents.openDevTools()
 
 	// todo:  implement saving
-
-	var returned_data = 'nope'
-	if(data !== returned_data) {
-		const res = dialog.showMessageBoxSync(win, {
-			type: 'question',
-			title: 'Confirm',
-			buttons: ['Yes', 'No'],
-			message: "Save changes?"
-		})
-		if(res === 0) {
-			settings.save()
-			appTray.setContextMenu(buildMenu())
+	ipcMain.handle('recieve-data', async(data) => {
+		var returned_data = 'nope'
+		if(data !== returned_data) {
+			const res = dialog.showMessageBoxSync(win, {
+				type: 'question',
+				title: 'Confirm',
+				buttons: ['Yes', 'No'],
+				message: "Save changes?"
+			})
+			if(res === 0) {
+				settings.save()
+				appTray.setContextMenu(buildMenu())
+			}
 		}
-	}
 
+		win.hide()
+	})
+
+	// todo:  remove
 	win.hide()
 }
-
-/*
- *
- */
-ipcMain.handle('recieve-data', async(data) => {
-	//
-})
 
 /*
  * About message box
