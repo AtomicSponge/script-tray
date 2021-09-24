@@ -198,7 +198,7 @@ const showAboutBox = () => {
 }
 
 /*
- * Generate the complete menu
+ * Builds the system tray menu
  */
 const buildMenu = () => {
 	/*
@@ -320,6 +320,9 @@ const buildMenu = () => {
 		})
 	}
 
+	/*
+	 * Generate the complete menu
+	 */
 	const menu = new Menu()
 	Launcher(menu, settings.launchCmds)
 	Main(menu)
@@ -328,14 +331,14 @@ const buildMenu = () => {
 }
 
 /*
- * Save settings on exit
+ * Close tray on exit
  */
 app.on('quit', () => { 
-	//win.destroy()
+	appTray.destroy()
 })
 
 /*
- * Run the Electron app 
+ * Run the Script Tray Electron app 
  */
 app.whenReady().then(() => {
 	appTray = new Tray(appInfo.icon)
