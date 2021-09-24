@@ -156,13 +156,12 @@ const showSettingsEditor = (data) => {
 	})
 	win.loadFile('assets/index.html')
 	win.webContents.on('did-finish-load', () => {
-		win.webContents.send('send-data', data)
+		win.webContents.send('send-json-data', data)
 	})
 	if(settings.debug) win.webContents.openDevTools()
 
 	// todo:  implement saving
-	ipcMain.handle('recieve-data', async(data) => {
-		var returned_data = 'nope'
+	ipcMain.handle('recieve-json-data', async(returned_data) => {
 		if(data !== returned_data) {
 			const res = dialog.showMessageBoxSync(win, {
 				type: 'question',
@@ -180,7 +179,7 @@ const showSettingsEditor = (data) => {
 	})
 
 	// todo:  remove
-	win.hide()
+	//win.hide()
 }
 
 /*
