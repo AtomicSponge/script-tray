@@ -144,8 +144,9 @@ settings.appList.forEach((appCheck) => {
  * Window for the settings editor
  */
 let appTray = null
+let settingsWin = null
 const showSettingsEditor = (data) => {
-	const win = new BrowserWindow({
+	settingsWin = new BrowserWindow({
 		width: 800,
 		height: 600,
 		webPreferences: {
@@ -154,11 +155,11 @@ const showSettingsEditor = (data) => {
 			preload: path.join(__dirname, 'assets/preload.js')
 		}
 	})
-	win.loadFile('assets/index.html')
-	win.webContents.on('did-finish-load', () => {
-		win.webContents.send('send-json-data', data)
+	settingsWin.loadFile('assets/index.html')
+	settingsWin.webContents.on('did-finish-load', () => {
+		settingsWin.webContents.send('send-json-data', data)
 	})
-	if(settings.debug) win.webContents.openDevTools()
+	if(settings.debug) settingsWin.webContents.openDevTools()
 
 	// todo:  remove
 	//win.hide()
@@ -180,8 +181,7 @@ ipcMain.handle('recieve-json-data', async(returned_data) => {
 			appTray.setContextMenu(buildMenu())
 		}
 	}
-
-	win.hide()
+	settingsWin.hide()
 })
 
 /*

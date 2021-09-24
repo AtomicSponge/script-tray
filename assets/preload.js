@@ -4,10 +4,10 @@ document.onload = () => {
     require('electron').ipcRenderer.on('send-json-data', (event, message) => {
         editor.set(message)
     })
-}
 
-/*document.querySelector('#donebtn').addEventListener('click', () => {
-    require('electron').ipcRenderer.invoke('recieve-json-data', (event, message) => {
-        console.log(message)
+    document.querySelector('#donebtn').addEventListener('click', () => {
+        require('electron').ipcRenderer.invoke('recieve-json-data', arg).then((result) => {
+            result = editor.get()
+        })
     })
-})*/
+}
