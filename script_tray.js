@@ -297,9 +297,9 @@ const buildMenu = () => {
 					label: item.label,
 					click: () => {
 						let runCmd = item.cmd
-						item.args.forEach((item) => {
+						item.args.forEach((arg) => {
 							// prompt for args
-							runCmd += ' something'
+							runCmd += ' ' + arg
 						})
 						shell.exec(runCmd, {
 							silent: !settings.debug,
