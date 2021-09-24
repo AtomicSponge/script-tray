@@ -143,12 +143,18 @@ settings.appList.forEach((appCheck) => {
 /*
  * Window for the settings editor
  */
-let win = {}
 const showSettingsEditor = (data) => {
+	const win = new BrowserWindow({
+		width: 800,
+		height: 600,
+		webPreferences: {
+			nativeWindowOpen: true,
+			preload: path.join(__dirname, 'assets/preload.js')
+		}
+	})
 	win.loadFile('assets/index.html')
 	win.webContents.on('did-finish-load', () => {
 		win.webContents.send('jsondata', data)
-		win.show()
 	})
 	if(settings.debug) win.webContents.openDevTools()
 
@@ -162,9 +168,9 @@ const showSettingsEditor = (data) => {
 				buttons: ['Yes', 'No'],
 				message: "Save changes?"
 			})
-			if(res === 0) console.log(res)
+			if(res === 0) settings.save()
 		}
-		win.hide()
+		win.destroy()
 	})
 }
 
@@ -288,12 +294,7 @@ const buildMenu = () => {
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
-						let runCmd = item.cmd
-						item.args.forEach((arg) => {
-							// prompt for args
-							runCmd += ' ' + arg
-						})
-						shell.exec(runCmd, {
+						shell.exec(item.cmd, {
 							silent: !settings.debug,
 							encoding: settings.encoding,
 							async: true
@@ -328,8 +329,7 @@ const buildMenu = () => {
  * Save settings on exit
  */
 app.on('quit', () => { 
-	isQuitting = true
-	win.destroy()
+	//win.destroy()
 })
 
 /*
@@ -340,14 +340,4 @@ app.whenReady().then(() => {
 	tray.setToolTip(appInfo.name)
 	tray.setTitle(appInfo.name)
 	tray.setContextMenu(buildMenu())
-	win = new BrowserWindow({
-		width: 800,
-		height: 600,
-		show: false,
-		webPreferences: {
-			nativeWindowOpen: true,
-			preload: path.join(__dirname, 'assets/preload.js')
-		}
-	})
-	win.hide()
 })
