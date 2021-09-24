@@ -6,8 +6,8 @@ document.onload = () => {
     })
 
     document.querySelector('#donebtn').addEventListener('click', () => {
-        require('electron').ipcRenderer.invoke('recieve-json-data', arg).then((result) => {
-            result = editor.get()
+        require('electron').ipcRenderer.invoke('recieve-json-data', message).then((result) => {
+            message = editor.get()
         })
     })
 }

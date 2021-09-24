@@ -146,23 +146,12 @@ settings.appList.forEach((appCheck) => {
 let appTray = null
 let settingsWin = null
 const showSettingsEditor = (data) => {
-	settingsWin = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-			contextIsolation: true,
-			nativeWindowOpen: true,
-			preload: path.join(__dirname, 'assets/preload.js')
-		}
-	})
 	settingsWin.loadFile('assets/index.html')
 	settingsWin.webContents.on('did-finish-load', () => {
 		settingsWin.webContents.send('send-json-data', data)
 	})
 	if(settings.debug) settingsWin.webContents.openDevTools()
-
-	// todo:  remove
-	//win.hide()
+	settingsWin.show()
 }
 
 /*
@@ -351,4 +340,15 @@ app.whenReady().then(() => {
 	appTray.setToolTip(appInfo.name)
 	appTray.setTitle(appInfo.name)
 	appTray.setContextMenu(buildMenu())
+	settingsWin = new BrowserWindow({
+		width: 800,
+		height: 600,
+		show: false,
+		webPreferences: {
+			contextIsolation: true,
+			nativeWindowOpen: true,
+			preload: path.join(__dirname, 'assets/preload.js')
+		}
+	})
+	settingsWin.hide()
 })
