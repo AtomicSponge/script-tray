@@ -296,11 +296,11 @@ const buildMenu = () => {
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
-						var runCmd = ''
-						if(!item.args.length) {
+						let runCmd = item.cmd
+						item.args.forEach((item) => {
 							// prompt for args
-							runCmd = 'something'
-						} else runCmd = item.cmd
+							runCmd += ' something'
+						})
 						shell.exec(runCmd, {
 							silent: !settings.debug,
 							encoding: settings.encoding,
