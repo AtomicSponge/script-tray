@@ -143,6 +143,7 @@ settings.appList.forEach((appCheck) => {
 /*
  * Window for the settings editor
  */
+let appTray = null
 const showSettingsEditor = (data) => {
 	const win = new BrowserWindow({
 		width: 800,
@@ -169,7 +170,10 @@ const showSettingsEditor = (data) => {
 			buttons: ['Yes', 'No'],
 			message: "Save changes?"
 		})
-		if(res === 0) settings.save()
+		if(res === 0) {
+			settings.save()
+			appTray.setContextMenu(buildMenu())
+		}
 	}*/
 }
 
@@ -335,8 +339,8 @@ app.on('quit', () => {
  * Run the Electron app 
  */
 app.whenReady().then(() => {
-	tray = new Tray(appInfo.icon)
-	tray.setToolTip(appInfo.name)
-	tray.setTitle(appInfo.name)
-	tray.setContextMenu(buildMenu())
+	appTray = new Tray(appInfo.icon)
+	appTray.setToolTip(appInfo.name)
+	appTray.setTitle(appInfo.name)
+	appTray.setContextMenu(buildMenu())
 })
