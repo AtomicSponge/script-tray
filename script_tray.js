@@ -155,9 +155,10 @@ const showSettingsEditor = (data) => {
 }
 
 /*
- *
+ * Event handler for receiving saved settings
  */
 ipcMain.handle('recieve-json-data', async(returned_data) => {
+	let data = ''
 	if(data !== returned_data) {
 		const res = dialog.showMessageBoxSync(win, {
 			type: 'question',
