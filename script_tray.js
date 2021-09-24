@@ -156,23 +156,15 @@ const showSettingsEditor = (data) => {
 		evt.preventDefault()
 		var returned_data = 'nope'
 		if(data !== returned_data) {
-			const res = dialog.showMessageBox(win, {
+			const res = dialog.showMessageBoxSync(win, {
 				type: 'question',
 				title: 'Confirm',
 				buttons: ['Yes', 'No'],
 				message: "Save changes?"
 			})
-			res.finally((res) => { if(res === 0) console.log(res) })
+			if(res === 0) console.log(res)
 		}
 		win.hide()
-	})
-
-	//win.on('closed', () => {
-		//win.destroy()
-	//})
-
-	win.on('session-end', () => {
-		//
 	})
 }
 
