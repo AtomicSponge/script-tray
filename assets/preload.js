@@ -1,11 +1,7 @@
-const JSONEditor = require('../node_modules/jsoneditor/dist/jsoneditor.min.js')
+const editor = new JSONEditor(document.getElementById("jsonEditor"), {})
 
 require('electron').ipcRenderer.on('send-json-data', (event, message) => {
-    const container = document.getElementById("jsonEditor")
-    const options = {}
-    const editor = new JSONEditor(container, options)
-
-    editor.set(message)
+    editor.set(JSON.parse(message))
 })
 
 /*document.querySelector('#donebtn').addEventListener('click', () => {
