@@ -23,7 +23,7 @@ const appInfo = {
 const path = require('path')
 const shell = require('shelljs')
 const AutoLaunch = require('auto-launch')
-const { app, dialog, Tray, Menu, MenuItem, BrowserWindow } = require('electron')
+const { app, dialog, ipcMain, Tray, Menu, MenuItem, BrowserWindow } = require('electron')
 const storage = require('electron-json-storage')
 
 //  Set path to node for shelljs
@@ -149,13 +149,14 @@ const showSettingsEditor = (data) => {
 		width: 800,
 		height: 600,
 		webPreferences: {
+			contextIsolation: true,
 			nativeWindowOpen: true,
 			preload: path.join(__dirname, 'assets/preload.js')
 		}
 	})
 	win.loadFile('assets/index.html')
 	win.webContents.on('did-finish-load', () => {
-		win.webContents.send('jsondata', data)
+		win.webContents.send('send-data', data)
 	})
 	if(settings.debug) win.webContents.openDevTools()
 
@@ -177,6 +178,13 @@ const showSettingsEditor = (data) => {
 
 	win.hide()
 }
+
+/*
+ *
+ */
+ipcMain.handle('recieve-data', async(data) => {
+	//
+})
 
 /*
  * About message box
