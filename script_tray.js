@@ -296,7 +296,12 @@ const buildMenu = () => {
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
-						shell.exec(item.cmd, {
+						var runCmd = ''
+						if(!item.args.length) {
+							// prompt for args
+							runCmd = 'something'
+						} else runCmd = item.cmd
+						shell.exec(runCmd, {
 							silent: !settings.debug,
 							encoding: settings.encoding,
 							async: true

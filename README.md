@@ -16,6 +16,7 @@ Uses the following packages:
     {
         label: 'System Backup',
         cmd: 'sysbak'
+        args: [ 'arg1', 'arg2']
     },
     [
         {
