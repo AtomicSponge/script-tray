@@ -146,7 +146,7 @@ settings.appList.forEach((appCheck) => {
 let appTray = null
 let settingsWin = null
 const showSettingsEditor = (data) => {
-	settingsWin.loadFile('assets/index.html')
+	settingsWin.loadFile('assets/settings.html')
 	settingsWin.webContents.on('did-finish-load', () => {
 		settingsWin.webContents.send('send-json-data', data)
 	})
@@ -329,6 +329,7 @@ const buildMenu = () => {
  * Close tray on exit
  */
 app.on('quit', () => { 
+	settingsWin.destroy()
 	appTray.destroy()
 })
 
