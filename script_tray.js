@@ -160,9 +160,8 @@ const showSettingsEditor = (data) => {
 	if(settings.debug) win.webContents.openDevTools()
 
 	// todo:  implement saving
-	win.hide()
 
-	/*var returned_data = 'nope'
+	var returned_data = 'nope'
 	if(data !== returned_data) {
 		const res = dialog.showMessageBoxSync(win, {
 			type: 'question',
@@ -174,7 +173,9 @@ const showSettingsEditor = (data) => {
 			settings.save()
 			appTray.setContextMenu(buildMenu())
 		}
-	}*/
+	}
+
+	win.hide()
 }
 
 /*
@@ -230,9 +231,7 @@ const buildMenu = () => {
 			type: 'checkbox',
 			checked: (settings.debug) ? true : false,
 			click: (item) => {
-				(item.checked) ?
-					settings.debug = true :
-					settings.debug = false
+				(item.checked) ? settings.debug = true : settings.debug = false
 				settings.save()
 			}
 		}))
