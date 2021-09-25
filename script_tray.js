@@ -20,18 +20,19 @@ const appInfo = {
 }
 
 /*
- * Imports
+ * Imports & initialization
  */
 const path = require('path')
 const shell = require('shelljs')
 const AutoLaunch = require('auto-launch')
-const { app, dialog, ipcMain, Tray, Menu, MenuItem, BrowserWindow } = require('electron')
 const storage = require('electron-json-storage')
+const { app, dialog, ipcMain, Tray, Menu, MenuItem, BrowserWindow } = require('electron')
 
 //  Set path to node for shelljs
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
+//  Configure autolauncher
 const autoLauncher = new AutoLaunch({ name: appInfo.name.trim() })
 
 /*
@@ -129,7 +130,7 @@ class Settings {
 	}
 }
 
-const settings = new Settings()
+const settings = new Settings()  //  Create settings object
 
 /*
  * Verify apps exist
@@ -161,6 +162,7 @@ const showSettingsEditor = (data) => {
 let appTray = null
 ipcMain.on('recieve-json-data', (event, data) => {
 	if(data.old !== data.new) {
+		//  Ask to save if data changed
 		const res = dialog.showMessageBoxSync(settingsWin, {
 			type: 'question',
 			title: 'Confirm',
@@ -334,7 +336,7 @@ const buildMenu = () => {
 }
 
 /*
- * Close tray on exit
+ * Close tray and windows on exit
  */
 app.on('before-quit', () => { 
 	settingsWin.destroy()
@@ -345,10 +347,13 @@ app.on('before-quit', () => {
  * Run the Script Tray Electron app 
  */
 app.whenReady().then(() => {
+	//  Set up App Tray
 	appTray = new Tray(appInfo.icon)
 	appTray.setToolTip(appInfo.name)
 	appTray.setTitle(appInfo.name)
 	appTray.setContextMenu(buildMenu())
+
+	//  Set up settings window
 	settingsWin = new BrowserWindow({
 		width: 800,
 		height: 600,
