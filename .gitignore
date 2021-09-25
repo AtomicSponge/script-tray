@@ -2,5 +2,3 @@ node_modules/
 *_bak/
 out/
 *.code-workspace
-
-package-lock.json
