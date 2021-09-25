@@ -11,7 +11,7 @@ Run scripts or programs from a system tray icon.
 - Launch at system start
 - Debug mode
 
-#### Package Requirements:
+#### Requirements:
 - [electron](https://www.npmjs.com/package/electron)
 - [shelljs](https://www.npmjs.com/package/shelljs)
 - [auto-launch](https://www.npmjs.com/package/auto-launch)
@@ -19,6 +19,8 @@ Run scripts or programs from a system tray icon.
 - [electron-json-storage](https://www.npmjs.com/package/electron-json-storage)
 
 -----
+
+### Menu Format
 
 ```
 [
