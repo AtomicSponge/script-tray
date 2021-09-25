@@ -4,7 +4,14 @@
 
 Run scripts or programs from a system tray icon.
 
-Uses the following packages:
+#### Features:
+- Custom menus and sub menus via json
+- Runs from the system tray
+- Run any command using [shelljs](https://www.npmjs.com/package/shelljs)
+- Launch at system start
+- Debug mode
+
+#### Package Requirements:
 - [electron](https://www.npmjs.com/package/electron)
 - [shelljs](https://www.npmjs.com/package/shelljs)
 - [auto-launch](https://www.npmjs.com/package/auto-launch)
