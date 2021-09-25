@@ -157,9 +157,9 @@ const showSettingsEditor = (data) => {
  * Event handler for receiving saved settings
  */
 let appTray = null
-ipcMain.handle('recieve-json-data', async(returned_data) => {
-	let data = ''
-	if(data !== returned_data) {
+ipcMain.on('recieve-json-data', (event, data) => {
+	let old_data = ''
+	if(data !== old_data) {
 		const res = dialog.showMessageBoxSync(settingsWin, {
 			type: 'question',
 			title: 'Confirm',
