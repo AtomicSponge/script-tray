@@ -364,7 +364,7 @@ app.whenReady().then(() => {
 		webPreferences: {
 			contextIsolation: true,
 			nativeWindowOpen: true,
-			preload: path.join(__dirname, 'assets/preload.js')
+			preload: path.join(__dirname, 'assets/settings.js')
 		}
 	})
 	settingsWin.hide()
