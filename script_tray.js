@@ -143,7 +143,6 @@ settings.appList.forEach((appCheck) => {
 /*
  * Window for the settings editor
  */
-let appTray = null
 let settingsWin = null
 const showSettingsEditor = (data) => {
 	settingsWin.loadFile('assets/settings.html')
@@ -157,10 +156,11 @@ const showSettingsEditor = (data) => {
 /*
  * Event handler for receiving saved settings
  */
+let appTray = null
 ipcMain.handle('recieve-json-data', async(returned_data) => {
 	let data = ''
 	if(data !== returned_data) {
-		const res = dialog.showMessageBoxSync(win, {
+		const res = dialog.showMessageBoxSync(settingsWin, {
 			type: 'question',
 			title: 'Confirm',
 			buttons: ['Yes', 'No'],
