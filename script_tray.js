@@ -336,7 +336,7 @@ const buildMenu = () => {
 /*
  * Close tray on exit
  */
-app.on('quit', () => { 
+app.on('before-quit', () => { 
 	settingsWin.destroy()
 	appTray.destroy()
 })
@@ -353,6 +353,9 @@ app.whenReady().then(() => {
 		width: 800,
 		height: 600,
 		show: false,
+		fullscreen: false,
+		fullscreenable: false,
+		autoHideMenuBar: true,
 		webPreferences: {
 			contextIsolation: true,
 			nativeWindowOpen: true,
@@ -360,4 +363,7 @@ app.whenReady().then(() => {
 		}
 	})
 	settingsWin.hide()
+	settingsWin.on('close', (event) => {
+		event.preventDefault()
+	})
 })
