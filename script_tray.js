@@ -1,5 +1,7 @@
 /*
  * Filename:  script_tray.js
+ * See README.md for usage information.
+ * See LICENSE.md for copyright information.
  */
 
 /*

@@ -1,3 +1,9 @@
+/*
+ * Filename:  preload.js
+ * See README.md for usage information.
+ * See LICENSE.md for copyright information.
+ */
+
 const { contextBridge, ipcRenderer } = require('electron')
 //const fs = require('fs')
 
