@@ -11,7 +11,6 @@ let data = {}
 ipcRenderer.on('send-json-data', (event, message) => {
     data.label = message.label
     data.old = message.json
-    console.log(data)
 })
 
 contextBridge.exposeInMainWorld(
