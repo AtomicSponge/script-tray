@@ -146,7 +146,7 @@ settings.appList.forEach((appCheck) => {
 let settingsWin = null
 const showSettingsEditor = (data) => {
 	settingsWin.loadFile('assets/settings.html')
-	settingsWin.webContents.on('dom-ready', () => {
+	settingsWin.webContents.on('did-finish-load', () => {
 		settingsWin.webContents.send('send-json-data', data)
 	})
 	if(settings.debug) settingsWin.webContents.openDevTools()
