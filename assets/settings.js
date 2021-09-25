@@ -7,11 +7,15 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 let data = {}
+let dataPromise = {}
 
 ipcRenderer.on('send-json-data', (event, message) => {
     data.label = message.label
     data.old = message.json
     //  Trigger json data set
+    dataPromise = new Promise((resolve, reject) => {
+        resolve = () => { return message.json }
+    })
 })
 
 contextBridge.exposeInMainWorld(
@@ -22,6 +26,6 @@ contextBridge.exposeInMainWorld(
             ipcRenderer.send('recieve-json-data', data)
         },
 
-        jsonData: data.old
+        jsonPromise: dataPromise
     }
 )

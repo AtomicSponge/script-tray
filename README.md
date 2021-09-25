@@ -1,8 +1,8 @@
 ##  Script Tray
 
-wip - finishing some things up & testing
+*wip* - finishing some things up & testing
 
-Configure and run scripts and programs from a system tray icon.
+Run scripts or programs from a system tray icon.
 
 Uses the following packages:
 - [electron](https://www.npmjs.com/package/electron)
