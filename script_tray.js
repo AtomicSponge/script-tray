@@ -158,8 +158,7 @@ const showSettingsEditor = (data) => {
  */
 let appTray = null
 ipcMain.on('recieve-json-data', (event, data) => {
-	let old_data = ''
-	if(data !== old_data) {
+	if(data.old !== data.new) {
 		const res = dialog.showMessageBoxSync(settingsWin, {
 			type: 'question',
 			title: 'Confirm',
@@ -235,19 +234,25 @@ const buildMenu = () => {
 		menu.append(new MenuItem({
 			label: 'Change encoding setting',
 			click: () => {
-				showSettingsEditor(settings.encoding)
+				showSettingsEditor({
+					label: 'encoding', json: settings.encoding
+				})
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit App Verification List',
 			click: () => {
-				showSettingsEditor(settings.appList)
+				showSettingsEditor({
+					label: 'appList', json: settings.appList
+				})
 			}
 		}))
 		menu.append(new MenuItem({
 			label: 'Edit Command Menu',
 			click: () => {
-				showSettingsEditor(settings.launchCmds)
+				showSettingsEditor({
+					label: 'launchCmds', json: settings.launchCmds
+				})
 			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
