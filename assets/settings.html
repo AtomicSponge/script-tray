@@ -13,8 +13,13 @@
 <body>
     <div id="jsonEditor" style="width: 400px; height: 400px;"></div>
     <div id="buttonDiv">
-        <button id="donebtn" onclick="window.settingsEditor.submit()">Done</button>
+        <button id="donebtn" onclick="window.settingsEditor.submit(editor.get())">Done</button>
     </div>
+
+    <script>
+        const editor = new JSONEditor(document.getElementById("jsonEditor"), {})
+        editor.set(window.settingsEditor.jsonData)
+    </script>
 </body>
 
 </html>
