@@ -1,5 +1,7 @@
 ##  Script Tray
 
+wip - finishing some things up & testing
+
 Configure and run scripts and programs from a system tray icon.
 
 Uses the following packages:
@@ -16,7 +18,6 @@ Uses the following packages:
     {
         label: 'System Backup',
         cmd: 'sysbak'
-        args: [ 'arg1', 'arg2']
     },
     [
         {
