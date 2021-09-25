@@ -152,7 +152,7 @@ const showSettingsEditor = (data) => {
 	settingsWin.webContents.on('did-finish-load', () => {
 		settingsWin.webContents.send('send-json-data', data)
 	})
-	if(settings.debug) settingsWin.webContents.openDevTools()
+	settingsWin.webContents.openDevTools()
 	settingsWin.show()
 }
 
@@ -301,6 +301,15 @@ const buildMenu = () => {
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
+						if(settings.debug) {
+							dialog.showMessageBox({
+								type: 'info',
+								title: appInfo.name,
+								message: `Running command ${item.label}`,
+								detail: `Command:  ${item.cmd}`,
+								icon: appInfo.icon
+							})
+						}
 						shell.exec(item.cmd, {
 							silent: !settings.debug,
 							encoding: settings.encoding,
