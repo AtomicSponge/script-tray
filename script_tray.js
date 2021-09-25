@@ -158,7 +158,6 @@ const showSettingsEditor = (data) => {
  */
 let appTray = null
 ipcMain.on('recieve-json-data', (event, data) => {
-	console.log(data)
 	if(data.old !== data.new) {
 		const res = dialog.showMessageBoxSync(settingsWin, {
 			type: 'question',
