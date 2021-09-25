@@ -146,7 +146,7 @@ settings.appList.forEach((appCheck) => {
 let settingsWin = null
 const showSettingsEditor = (data) => {
 	settingsWin.loadFile('assets/settings.html')
-	settingsWin.webContents.on('did-finish-load', () => {
+	settingsWin.webContents.on('dom-ready', () => {
 		settingsWin.webContents.send('send-json-data', data)
 	})
 	if(settings.debug) settingsWin.webContents.openDevTools()
@@ -158,12 +158,13 @@ const showSettingsEditor = (data) => {
  */
 let appTray = null
 ipcMain.on('recieve-json-data', (event, data) => {
+	console.log(data)
 	if(data.old !== data.new) {
 		const res = dialog.showMessageBoxSync(settingsWin, {
 			type: 'question',
 			title: 'Confirm',
 			buttons: ['Yes', 'No'],
-			message: "Save changes?"
+			message: 'Save changes?'
 		})
 		if(res === 0) {
 			settings.save()
