@@ -163,13 +163,12 @@ let appTray = null
 ipcMain.on('recieve-json-data', (event, data) => {
 	if(data.old !== data.new) {
 		//  Ask to save if data changed
-		const res = dialog.showMessageBoxSync(settingsWin, {
+		if(dialog.showMessageBoxSync(settingsWin, {
 			type: 'question',
 			title: 'Confirm',
 			buttons: ['Yes', 'No'],
 			message: 'Save changes?'
-		})
-		if(res === 0) {
+		}) === 0) {
 			settings.save()
 			appTray.setContextMenu(buildMenu())
 		}
@@ -208,7 +207,7 @@ const buildMenu = () => {
 		{const optionsMenu = new Menu()
 		Options(optionsMenu)
 		let tempItem = {}
-		tempItem.label = 'Options'
+		tempItem.label = 'Settings'
 		tempItem.submenu = optionsMenu
 		menu.append(new MenuItem(tempItem))}
 		menu.append(new MenuItem({ type: 'separator' }))
@@ -222,15 +221,29 @@ const buildMenu = () => {
 	}
 
 	/*
-	 * Build the options menu part
+	 * Build the options (settings) menu part
 	 */
 	const Options = (menu) => {
+		menu.append(new MenuItem({
+			label: 'Reset settings',
+			click: () => {
+				if(dialog.showMessageBoxSync({
+					type: 'question',
+					title: `${appInfo.name} - Confirm`,
+					buttons: ['Yes', 'No'],
+					message: 'Are you sure you want to reset settings?'
+				}) === 0) {
+					settings.reset()
+					appTray.setContextMenu(buildMenu())
+				}
+			}
+		}))
 		menu.append(new MenuItem({
 			label: 'Enable debugging',
 			type: 'checkbox',
 			checked: (settings.debug) ? true : false,
 			click: (item) => {
-				(item.checked) ? settings.debug = true : settings.debug = false
+				{ (item.checked) ? settings.debug = true : settings.debug = false }
 				settings.save()
 			}
 		}))
