@@ -145,6 +145,9 @@ ipcMain.on('recieve-json-data', (event, data) => {
 			buttons: ['Yes', 'No'],
 			message: 'Save changes?'
 		}) === 0) {
+			if(data.label === 'encoding') Settings.encoding = data.new
+			if(data.label === 'appList') Settings.appList = data.new
+			if(data.label === 'launchCmds') Settings.launchCmds = data.new
 			Settings.save()
 			appTray.setContextMenu(buildMenu())
 		}
@@ -290,11 +293,11 @@ const buildMenu = () => {
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
-						if(settings.debug) {
+						if(Settings.debug) {
 							dialog.showMessageBox({
 								type: 'info',
 								title: appInfo.name,
-								message: `Running command ${item.label}`,
+								message: `Running command '${item.label}'`,
 								detail: `Command:  ${item.cmd}`,
 								icon: appInfo.icon
 							})
