@@ -39,13 +39,7 @@ storage.setDataPath()
  * Settings class
  */
 const Settings = class {
-	/*
-	 * Construct Settings object (singleton)
-	 */
-	constructor() {
-		if(!Settings.instance) Settings.instance = this
-		return Settings.instance
-	}
+	constructor() { app.quit() }  //  Prevent constructing the class
 
 	static encoding = 'utf8'
 	static appList = []
