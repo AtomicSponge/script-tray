@@ -32,8 +32,8 @@ const { app, dialog, ipcMain, Tray, Menu, MenuItem, BrowserWindow } = require('e
 const nodePath = (shell.which('node').toString())
 shell.config.execPath = nodePath
 
-//  Configure autolauncher
 const autoLauncher = new AutoLaunch({ name: appInfo.name.trim() })
+storage.setDataPath()
 
 /*
  * Settings class
@@ -43,11 +43,7 @@ const Settings = class {
 	 * Construct Settings object (singleton)
 	 */
 	constructor() {
-		if(!Settings.instance) {
-			Settings.instance = this
-			storage.setDataPath()
-			this.load()
-		}
+		if(!Settings.instance) Settings.instance = this
 		return Settings.instance
 	}
 
