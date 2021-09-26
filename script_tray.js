@@ -38,34 +38,35 @@ const autoLauncher = new AutoLaunch({ name: appInfo.name.trim() })
 /*
  * Settings class
  */
-class Settings {
+const Settings = class {
 	/*
-	 * Construct Settings object
+	 * Construct Settings object (singleton)
 	 */
 	constructor() {
 		if(!Settings.instance) {
 			Settings.instance = this
 			storage.setDataPath()
-			this.encoding = 'utf8'
-			this.appList = []
-			this.launchCmds = []
-			this.debug = false
 			this.load()
 		}
 		return Settings.instance
 	}
 
+	static encoding = 'utf8'
+	static appList = []
+	static launchCmds = []
+	static debug = false
+
 	/*
 	 * Load settings
 	 */
-	load() {
+	static load() {
 		try {
 			storage.has('encoding', (error, hasKey) => {
 				if(error) throw error
 				if(hasKey) 
 					storage.get('encoding', (error, data) => {
 						if(error) throw error
-						this.encoding = data
+						Settings.encoding = data
 					})
 			})
 			storage.has('appList', (error, hasKey) => {
@@ -73,7 +74,7 @@ class Settings {
 				if(hasKey) 
 					storage.get('appList', (error, data) => {
 						if(error) throw error
-						this.appList = data
+						Settings.appList = data
 					})
 			})
 			storage.has('launchCmds', (error, hasKey) => {
@@ -81,7 +82,7 @@ class Settings {
 				if(hasKey) 
 					storage.get('launchCmds', (error, data) => {
 						if(error) throw error
-						this.launchCmds = data
+						Settings.launchCmds = data
 					})
 			})
 			storage.has('debug', (error, hasKey) => {
@@ -89,7 +90,7 @@ class Settings {
 				if(hasKey) 
 					storage.get('debug', (error, data) => {
 						if(error) throw error
-						this.debug = data
+						Settings.debug = data
 					})
 			})
 		} catch(error) {
@@ -101,12 +102,12 @@ class Settings {
 	/*
 	 * Save settings
 	 */
-	save() {
+	static save() {
 		try {
-			storage.set('encoding', this.encoding, (error) => { if(error) throw error })
-			storage.set('appList', this.appList, (error) => { if(error) throw error })
-			storage.set('launchCmds', this.launchCmds, (error) => { if(error) throw error })
-			storage.set('debug', this.debug, (error) => { if(error) throw error })
+			storage.set('encoding', Settings.encoding, (error) => { if(error) throw error })
+			storage.set('appList', Settings.appList, (error) => { if(error) throw error })
+			storage.set('launchCmds', Settings.launchCmds, (error) => { if(error) throw error })
+			storage.set('debug', Settings.debug, (error) => { if(error) throw error })
 		} catch(error) {
 			dialog.showErrorBox(`${appInfo.name}`,
 				`Error saving settings.\n\n${error}`)
@@ -116,32 +117,19 @@ class Settings {
 	/*
 	 * Reset settings
 	 */
-	reset() {
+	static reset() {
 		try {
 			storage.clear((error) => { if(error) throw error })
 		} catch(error) {
 			dialog.showErrorBox(`${appInfo.name}`,
 				`Error clearing settings.\n\n${error}`)
 		}
-		this.encoding = 'utf8'
-		this.appList = []
-		this.launchCmds = []
-		this.debug = false
+		Settings.encoding = 'utf8'
+		Settings.appList = []
+		Settings.launchCmds = []
+		Settings.debug = false
 	}
 }
-
-const settings = new Settings()  //  Create settings object
-
-/*
- * Verify apps exist
- */
-settings.appList.forEach((appCheck) => {
-	if(!shell.which(appCheck)) {
-		dialog.showErrorBox(appInfo.name,
-			`Error:  ${appCheck} not found!`)
-		app.quit()
-	}
-})
 
 /*
  * Window for the settings editor
@@ -169,7 +157,7 @@ ipcMain.on('recieve-json-data', (event, data) => {
 			buttons: ['Yes', 'No'],
 			message: 'Save changes?'
 		}) === 0) {
-			settings.save()
+			Settings.save()
 			appTray.setContextMenu(buildMenu())
 		}
 	}
@@ -233,7 +221,7 @@ const buildMenu = () => {
 					buttons: ['Yes', 'No'],
 					message: 'Are you sure you want to reset settings?'
 				}) === 0) {
-					settings.reset()
+					Settings.reset()
 					appTray.setContextMenu(buildMenu())
 				}
 			}
@@ -241,10 +229,10 @@ const buildMenu = () => {
 		menu.append(new MenuItem({
 			label: 'Enable debugging',
 			type: 'checkbox',
-			checked: (settings.debug) ? true : false,
+			checked: (Settings.debug) ? true : false,
 			click: (item) => {
-				{ (item.checked) ? settings.debug = true : settings.debug = false }
-				settings.save()
+				{ (item.checked) ? Settings.debug = true : Settings.debug = false }
+				Settings.save()
 			}
 		}))
 		menu.append(new MenuItem({ type: 'separator' }))
@@ -252,7 +240,7 @@ const buildMenu = () => {
 			label: 'Change encoding setting',
 			click: () => {
 				showSettingsEditor({
-					label: 'encoding', json: settings.encoding
+					label: 'encoding', json: Settings.encoding
 				})
 			}
 		}))
@@ -260,7 +248,7 @@ const buildMenu = () => {
 			label: 'Edit App Verification List',
 			click: () => {
 				showSettingsEditor({
-					label: 'appList', json: settings.appList
+					label: 'appList', json: Settings.appList
 				})
 			}
 		}))
@@ -268,7 +256,7 @@ const buildMenu = () => {
 			label: 'Edit Command Menu',
 			click: () => {
 				showSettingsEditor({
-					label: 'launchCmds', json: settings.launchCmds
+					label: 'launchCmds', json: Settings.launchCmds
 				})
 			}
 		}))
@@ -324,8 +312,8 @@ const buildMenu = () => {
 							})
 						}
 						shell.exec(item.cmd, {
-							silent: !settings.debug,
-							encoding: settings.encoding,
+							silent: !Settings.debug,
+							encoding: Settings.encoding,
 							async: true
 						}, (code, stdout, stderr) => {
 							if(code !== 0)  //  Error processing command
@@ -351,9 +339,9 @@ const buildMenu = () => {
 	 * Generate the complete menu
 	 */
 	const menu = new Menu()
-	Launcher(menu, settings.launchCmds)
+	Launcher(menu, Settings.launchCmds)
 	Main(menu)
-	if(settings.debug) console.log(menu)
+	if(Settings.debug) console.log(menu)
 	return menu
 }
 
@@ -369,7 +357,16 @@ app.on('before-quit', () => {
  * Run the Script Tray Electron app 
  */
 app.whenReady().then(() => {
-	//  Set up App Tray
+	//  Load settings & verify apps exist
+	Settings.load()
+	Settings.appList.forEach((appCheck) => {
+		if(!shell.which(appCheck)) {
+			dialog.showErrorBox(appInfo.name,
+				`Error:  ${appCheck} not found!`)
+			app.quit()
+		}
+	})
+	//  Set up app tray
 	appTray = new Tray(appInfo.icon)
 	appTray.setToolTip(appInfo.name)
 	appTray.setTitle(appInfo.name)
