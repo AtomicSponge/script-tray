@@ -36,20 +36,18 @@ const autoLauncher = new AutoLaunch({ name: appInfo.name.trim() })
 storage.setDataPath()
 
 /*
- * Settings class
+ * Settings
  */
-const Settings = class {
-	constructor() { app.quit() }  //  Prevent constructing the class
-
-	static encoding = 'utf8'
-	static appList = []
-	static launchCmds = []
-	static debug = false
+const Settings = {
+	encoding: 'utf8',
+	appList: [],
+	launchCmds: [],
+	debug: false,
 
 	/*
 	 * Load settings
 	 */
-	static load() {
+	load: () => {
 		try {
 			storage.has('encoding', (error, hasKey) => {
 				if(error) throw error
@@ -87,12 +85,12 @@ const Settings = class {
 			dialog.showErrorBox(`${appInfo.name}`,
 				`Error loading settings.\n\n${error}`)
 		}
-	}
+	},
 
 	/*
 	 * Save settings
 	 */
-	static save() {
+	save: () => {
 		try {
 			storage.set('encoding', Settings.encoding, (error) => { if(error) throw error })
 			storage.set('appList', Settings.appList, (error) => { if(error) throw error })
@@ -102,12 +100,12 @@ const Settings = class {
 			dialog.showErrorBox(`${appInfo.name}`,
 				`Error saving settings.\n\n${error}`)
 		}
-	}
+	},
 
 	/*
 	 * Reset settings
 	 */
-	static reset() {
+	reset: () => {
 		try {
 			storage.clear((error) => { if(error) throw error })
 		} catch(error) {
