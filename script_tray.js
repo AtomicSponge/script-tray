@@ -116,6 +116,7 @@ const Settings = {
 		Settings.appList = []
 		Settings.launchCmds = []
 		Settings.debug = false
+		Settings.save()
 	}
 }
 
