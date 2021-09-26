@@ -17,9 +17,8 @@
     </div>
 
     <script>
-        const editor = new JSONEditor(document.getElementById("jsonEditor"), {})
-        
-        window.settingsEditor.jsonPromise.then((jsonData) => { editor.set(jsonData) })
+        const editor = new JSONEditor(document.getElementById("jsonEditor"), {})        
+        const setterCallbak = (jsonData) => { editor.set(jsonData) }
     </script>
 </body>
 

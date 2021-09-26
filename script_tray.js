@@ -126,7 +126,7 @@ const Settings = {
 let settingsWin = null
 const showSettingsEditor = (data) => {
 	settingsWin.loadFile('assets/settings.html')
-	settingsWin.webContents.on('did-finish-load', () => {
+	settingsWin.webContents.on('dom-ready', () => {
 		settingsWin.webContents.send('send-json-data', data)
 	})
 	settingsWin.webContents.openDevTools()
