@@ -173,6 +173,12 @@ ipcMain.on('recieve-json-data', (event, data) => {
  * Window for a simple input box
  */
 let inputWin = null
+let promiseResolver = {}
+let promiseRejecter = {}
+let dataPromise = new Promise((resolve, reject) => {
+	promiseResolver = resolve
+	promiseRejecter = reject
+})
 const showInputWindow = (data) => {
 	inputWin = new BrowserWindow({
 		title: `${appInfo.name}`,
@@ -188,7 +194,7 @@ const showInputWindow = (data) => {
 		}
 	})
 	inputWin.on('close', (event) => {
-		//  need to be able to abort command?
+		promiseRejecter('closed')
 		inputWin.destroy()
 	})
 	inputWin.webContents.on('dom-ready', () => {
@@ -212,7 +218,11 @@ ipcMain.on('recieve-input-data', (event, data) => {
 			Settings.save()
 		}
 	} else {
-		// process arg
+		promiseResolver(data)
+		dataPromise = new Promise((resolve, reject) => {
+			promiseResolver = resolve
+			promiseRejecter = reject
+		})
 	}
 	inputWin.destroy()
 })
@@ -363,6 +373,12 @@ const buildMenu = () => {
 								detail: `Command:  ${item.cmd}`,
 								icon: appInfo.icon
 							})
+						}
+						if(item.args !== undefined) {
+							item.args.forEach((arg) => {
+								//showInputWindow
+							})
+							//dataPromise.then()
 						}
 						shell.exec(item.cmd, {
 							silent: !Settings.debug,
