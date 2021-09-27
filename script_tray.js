@@ -208,16 +208,20 @@ const showInputWindow = (data) => {
  * Event handler for receiving data from the input box
  */
 ipcMain.on('recieve-input-data', (event, data) => {
-	if(data.label === 'encoding' && data.old !== data.new) {
-		if(dialog.showMessageBoxSync(settingsWin, {
-			type: 'question',
-			title: 'Confirm',
-			buttons: ['Yes', 'No'],
-			message: 'Save changes?'
-		}) === 0) {
-			Settings.encoding = data.new
-			Settings.save()
+	if(data.label === 'encoding') {
+		if(data.old !== data.new) {
+			if(dialog.showMessageBoxSync(settingsWin, {
+				type: 'question',
+				title: 'Confirm',
+				buttons: ['Yes', 'No'],
+				message: 'Save changes?'
+			}) === 0) {
+				Settings.encoding = data.new
+				Settings.save()
+			}
 		}
+		promiseRejecter('na')
+		dataPromise.then(() => {}, () => {})
 	} else {
 		promiseResolver(data)
 	}
@@ -375,7 +379,7 @@ const buildMenu = () => {
 						item.args.forEach((arg) => {
 							showInputWindow({ label: arg, command: item.cmd })
 							dataPromise.then(
-								(data) => { runCmd += ' ' += data.new },  // resolved
+								(data) => { runCmd += ' ' + data.new },  // resolved
 								() => { return }                          // rejected
 							)
 						})
