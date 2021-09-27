@@ -34,7 +34,7 @@ ipcRenderer.on('send-json-data', (event, message) => {
  * Send data to renderer
  */
 contextBridge.exposeInMainWorld(
-    'settingsEditor',
+    'settingsBridge',
     {
         /*
          * Receive data from renderer and send to main app

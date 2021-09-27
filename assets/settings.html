@@ -11,12 +11,12 @@
 <body>
     <div id="jsonEditor" style="width: 580px; height: 560px;"></div>
     <div id="buttonDiv">
-        <button id="donebtn" onclick="window.settingsEditor.submit(editor.get())">Done</button>
+        <button id="donebtn" onclick="window.settingsBridge.submit(editor.get())">Done</button>
     </div>
 
     <script>
-        const editor = new JSONEditor(document.getElementById("jsonEditor"), {})
-        window.settingsEditor.jsonPromise.then((jsonData) => { editor.set(jsonData) })
+        const editor = new JSONEditor(document.getElementById('jsonEditor'), {})
+        window.settingsBridge.jsonPromise.then((jsonData) => { editor.set(jsonData) })
     </script>
 </body>
 

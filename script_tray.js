@@ -141,10 +141,10 @@ const showSettingsEditor = (data) => {
 	settingsWin.on('close', (event) => {
 		settingsWin.destroy()
 	})
-	settingsWin.loadFile('assets/settings.html')
 	settingsWin.webContents.on('dom-ready', () => {
 		settingsWin.webContents.send('send-json-data', data)
 	})
+	settingsWin.loadFile('assets/settings.html')
 }
 
 let appTray = null
@@ -160,7 +160,6 @@ ipcMain.on('recieve-json-data', (event, data) => {
 			buttons: ['Yes', 'No'],
 			message: 'Save changes?'
 		}) === 0) {
-			if(data.label === 'encoding') Settings.encoding = data.new
 			if(data.label === 'appList') Settings.appList = data.new
 			if(data.label === 'launchCmds') Settings.launchCmds = data.new
 			Settings.save()
@@ -168,6 +167,49 @@ ipcMain.on('recieve-json-data', (event, data) => {
 		}
 	}
 	settingsWin.destroy()
+})
+
+/*
+ * Window for a simple input box
+ */
+let inputWin = null
+const showInputWindow = (data) => {
+	inputWin = new BrowserWindow({
+		title: `${appInfo.name}`,
+		width: 400,
+		height: 100,
+		fullscreen: false,
+		fullscreenable: false,
+		autoHideMenuBar: true,
+		webPreferences: {
+			contextIsolation: true,
+			nativeWindowOpen: true,
+			preload: path.join(__dirname, 'assets/inputbox.js')
+		}
+	})
+	inputWin.on('close', (event) => {
+		//  need to be able to abort command?
+		inputWin.destroy()
+	})
+	inputWin.webContents.on('dom-ready', () => {
+		inputWin.webContents.send('send-input-data', data)
+	})
+	inputWin.loadFile('assets/inputbox.html')
+}
+
+/*
+ * Event handler for receiving data from the input box
+ */
+ipcMain.on('recieve-input-data', (event, data) => {
+	if(data.label === 'encoding' && data.old !== data.new) {
+		if(dialog.showMessageBoxSync(settingsWin, {
+			type: 'question',
+			title: 'Confirm',
+			buttons: ['Yes', 'No'],
+			message: 'Save changes?'
+		}) === 0) Settings.encoding = data.new
+	}
+	inputWin.destroy()
 })
 
 /*
@@ -245,8 +287,8 @@ const buildMenu = () => {
 		menu.append(new MenuItem({
 			label: 'Change encoding setting',
 			click: () => {
-				showSettingsEditor({
-					label: 'encoding', json: Settings.encoding
+				showInputWindow({
+					label: 'encoding', data: Settings.encoding
 				})
 			}
 		}))
@@ -356,6 +398,7 @@ const buildMenu = () => {
  */
 app.on('before-quit', () => { 
 	settingsWin.destroy()
+	inputWin.destroy()
 	appTray.destroy()
 })
 

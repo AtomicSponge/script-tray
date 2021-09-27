@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+
+<body>
+    <div id="inputDiv">
+        <input type="text" id="indata" name="indata" size="20" required>
+        <button id="donebtn" onclick="window.inputBridge.submit(document.getElementById('indata').value)">Done</button>
+    </div>
+
+    <script>
+        window.inputBridge.inputPromise.then((data) => { document.getElementById('indata').value = data })
+    </script>
+</body>
+
+</html>
