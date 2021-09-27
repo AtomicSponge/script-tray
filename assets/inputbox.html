@@ -16,7 +16,7 @@
     <script>
         window.inputBridge.inputPromise.then((data) => {
             let labelStr = ''
-            {if(data.command !== undefined) labelStr = data.command + ' - '
+            {if(data.command !== undefined) labelStr = '<strong>' + data.command + '</strong> - '
             labelStr += 'Enter value for ' + data.label + ':'}
             document.getElementById('inputLabel').innerText = labelStr
             document.getElementById('indata').value = data.old
