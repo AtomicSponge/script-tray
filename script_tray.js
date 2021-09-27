@@ -126,6 +126,7 @@ const Settings = {
 let settingsWin = null
 const showSettingsEditor = (data) => {
 	settingsWin = new BrowserWindow({
+		title: `${appInfo.name} - Editing ${data.label}`,
 		width: 600,
 		height: 600,
 		fullscreen: false,
