@@ -380,7 +380,7 @@ const buildMenu = () => {
 							showInputWindow({ label: arg, command: item.cmd })
 							dataPromise.then(
 								(data) => { runCmd += ' ' + data.new },  // resolved
-								() => { return }                          // rejected
+								() => { return }                         // rejected
 							)
 						})
 						shell.exec(runCmd, {
