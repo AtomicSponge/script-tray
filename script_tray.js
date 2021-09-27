@@ -374,13 +374,12 @@ const buildMenu = () => {
 								icon: appInfo.icon
 							})
 						}
-						if(item.args !== undefined) {
-							item.args.forEach((arg) => {
-								//showInputWindow
-							})
+						let runCmd = item.cmd
+						item.args.forEach((arg) => {
+							showInputWindow({ label: arg.label })
 							//dataPromise.then()
-						}
-						shell.exec(item.cmd, {
+						})
+						shell.exec(runCmd, {
 							silent: !Settings.debug,
 							encoding: Settings.encoding,
 							async: true
