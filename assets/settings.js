@@ -27,7 +27,6 @@ ipcRenderer.on('send-json-data', (event, message) => {
     data.label = message.label
     //{ (isJson(message.json)) ? data.old = message.json : data.old = [] }
     data.old = message.json
-    //  Trigger json data set
     promiseFiller(data.old)
 })
 
@@ -41,7 +40,8 @@ contextBridge.exposeInMainWorld(
          * Receive data from renderer and send to main app
          */
         submit: (jsonData) => {
-            { (isJson(jsonData)) ? data.new = jsonData : data.new = data.old }
+            //{ (isJson(jsonData)) ? data.new = jsonData : data.new = data.old }
+            data.new = jsonData
             ipcRenderer.send('recieve-json-data', data)
         },
 

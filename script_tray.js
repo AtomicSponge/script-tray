@@ -125,6 +125,23 @@ const Settings = {
  */
 let settingsWin = null
 const showSettingsEditor = (data) => {
+	settingsWin = new BrowserWindow({
+		width: 800,
+		height: 600,
+		//show: false,
+		fullscreen: false,
+		fullscreenable: false,
+		autoHideMenuBar: true,
+		webPreferences: {
+			contextIsolation: true,
+			nativeWindowOpen: true,
+			preload: path.join(__dirname, 'assets/settings.js')
+		}
+	})
+	//settingsWin.hide()
+	settingsWin.on('close', (event) => {
+		event.preventDefault()
+	})
 	settingsWin.loadFile('assets/settings.html')
 	settingsWin.webContents.on('dom-ready', () => {
 		settingsWin.webContents.send('send-json-data', data)
@@ -363,23 +380,4 @@ app.whenReady().then(() => {
 	appTray.setToolTip(appInfo.name)
 	appTray.setTitle(appInfo.name)
 	appTray.setContextMenu(buildMenu())
-
-	//  Set up settings window
-	settingsWin = new BrowserWindow({
-		width: 800,
-		height: 600,
-		show: false,
-		fullscreen: false,
-		fullscreenable: false,
-		autoHideMenuBar: true,
-		webPreferences: {
-			contextIsolation: true,
-			nativeWindowOpen: true,
-			preload: path.join(__dirname, 'assets/settings.js')
-		}
-	})
-	settingsWin.hide()
-	settingsWin.on('close', (event) => {
-		event.preventDefault()
-	})
 })
