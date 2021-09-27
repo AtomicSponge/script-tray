@@ -175,11 +175,12 @@ ipcMain.on('recieve-json-data', (event, data) => {
 let inputWin = null
 let promiseResolver = {}
 let promiseRejecter = {}
-let dataPromise = new Promise((resolve, reject) => {
-	promiseResolver = resolve
-	promiseRejecter = reject
-})
+let dataPromise = {}
 const showInputWindow = (data) => {
+	dataPromise = new Promise((resolve, reject) => {
+		promiseResolver = resolve
+		promiseRejecter = reject
+	})
 	inputWin = new BrowserWindow({
 		title: `${appInfo.name} - ${data.label}`,
 		width: 400,
@@ -219,10 +220,6 @@ ipcMain.on('recieve-input-data', (event, data) => {
 		}
 	} else {
 		promiseResolver(data)
-		dataPromise = new Promise((resolve, reject) => {
-			promiseResolver = resolve
-			promiseRejecter = reject
-		})
 	}
 	inputWin.destroy()
 })
