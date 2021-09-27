@@ -149,7 +149,7 @@ const showSettingsEditor = (data) => {
 
 let appTray = null
 /*
- * Event handler for receiving saved settings
+ * Event handler for receiving settings
  */
 ipcMain.on('recieve-json-data', (event, data) => {
 	if(data.old !== data.new) {
