@@ -7,9 +7,9 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 let data = {}
-let promiseFiller = {}
+let promiseResolver = {}
 const dataPromise = new Promise((resolve, reject) => {
-    promiseFiller = resolve
+    promiseResolver = resolve
 })
 
 /*
@@ -27,7 +27,7 @@ ipcRenderer.on('send-json-data', (event, message) => {
     data.label = message.label
     //{ (isJson(message.json)) ? data.old = message.json : data.old = [] }
     data.old = message.json
-    promiseFiller(data.old)
+    promiseResolver(data.old)
 })
 
 /*

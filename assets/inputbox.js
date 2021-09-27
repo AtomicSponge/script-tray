@@ -7,9 +7,9 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 let data = {}
-let promiseFiller = {}
+let promiseResolver = {}
 const dataPromise = new Promise((resolve, reject) => {
-    promiseFiller = resolve
+    promiseResolver = resolve
 })
 
 /*
@@ -19,7 +19,7 @@ ipcRenderer.on('send-input-data', (event, message) => {
     { (message.label === undefined) ? data.label = 'arg' : data.label = message.label }
     { (message.command === undefined) ? data.command = undefined : data.command = message.command }
     { (message.data === undefined) ? data.old = '' : data.old = message.data }
-    promiseFiller(data)
+    promiseResolver(data)
 })
 
 /*
