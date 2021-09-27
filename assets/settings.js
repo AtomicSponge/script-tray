@@ -8,7 +8,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 let data = {}
 let promiseFiller = {}
-let dataPromise = new Promise((resolve, reject) => {
+const dataPromise = new Promise((resolve, reject) => {
     promiseFiller = resolve
 })
 

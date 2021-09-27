@@ -126,9 +126,8 @@ const Settings = {
 let settingsWin = null
 const showSettingsEditor = (data) => {
 	settingsWin = new BrowserWindow({
-		width: 800,
+		width: 600,
 		height: 600,
-		//show: false,
 		fullscreen: false,
 		fullscreenable: false,
 		autoHideMenuBar: true,
@@ -138,16 +137,13 @@ const showSettingsEditor = (data) => {
 			preload: path.join(__dirname, 'assets/settings.js')
 		}
 	})
-	//settingsWin.hide()
 	settingsWin.on('close', (event) => {
-		event.preventDefault()
+		settingsWin.destroy()
 	})
 	settingsWin.loadFile('assets/settings.html')
 	settingsWin.webContents.on('dom-ready', () => {
 		settingsWin.webContents.send('send-json-data', data)
 	})
-	settingsWin.webContents.openDevTools()
-	settingsWin.show()
 }
 
 /*
@@ -170,7 +166,7 @@ ipcMain.on('recieve-json-data', (event, data) => {
 			appTray.setContextMenu(buildMenu())
 		}
 	}
-	settingsWin.hide()
+	settingsWin.destroy()
 })
 
 /*
@@ -360,6 +356,13 @@ const buildMenu = () => {
 app.on('before-quit', () => { 
 	settingsWin.destroy()
 	appTray.destroy()
+})
+
+/*
+ * Make sure app doesn't quit when no windows are open
+ */
+app.on('window-all-closed', () => {
+	//
 })
 
 /*
