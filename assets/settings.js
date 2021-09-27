@@ -24,9 +24,9 @@ ipcRenderer.on('send-json-data', (event, message) => {
     data.label = message.label
     { (isJson(message.json)) ? data.old = message.json : data.old = [] }
     //  Trigger json data set
-    dataPromise = new Promise((resolve, reject) => {
-        resolve = () => { return message.json }
-    })
+    //dataPromise = new Promise((resolve, reject) => {
+        //resolve = () => { return message.json }
+    //})
 })
 
 /*
@@ -43,6 +43,6 @@ contextBridge.exposeInMainWorld(
             ipcRenderer.send('recieve-json-data', data)
         },
 
-        jsonPromise: dataPromise
+        dataPromise: Promise.resolve(data.old)
     }
 )
