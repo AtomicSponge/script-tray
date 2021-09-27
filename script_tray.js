@@ -181,7 +181,7 @@ let dataPromise = new Promise((resolve, reject) => {
 })
 const showInputWindow = (data) => {
 	inputWin = new BrowserWindow({
-		title: `${appInfo.name}`,
+		title: `${appInfo.name} - ${data.label}`,
 		width: 400,
 		height: 100,
 		fullscreen: false,
@@ -376,7 +376,7 @@ const buildMenu = () => {
 						}
 						let runCmd = item.cmd
 						item.args.forEach((arg) => {
-							showInputWindow({ label: arg.label })
+							showInputWindow({ label: arg })
 							//dataPromise.then()
 						})
 						shell.exec(runCmd, {
@@ -399,7 +399,6 @@ const buildMenu = () => {
 			dialog.showErrorBox(`${appInfo.name}`,
 				`Error building menu, incorrect menu item.\n\n` +
 				`${Object.keys(item)}\n${Object.values(item)}`)
-			app.quit()
 		})
 	}
 
