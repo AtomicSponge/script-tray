@@ -373,7 +373,7 @@ const buildMenu = () => {
 						}
 						let runCmd = item.cmd
 						item.args.forEach((arg) => {
-							showInputWindow({ label: arg })
+							showInputWindow({ label: arg, command: item.cmd })
 							//dataPromise.then()
 						})
 						shell.exec(runCmd, {
