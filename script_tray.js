@@ -207,7 +207,12 @@ ipcMain.on('recieve-input-data', (event, data) => {
 			title: 'Confirm',
 			buttons: ['Yes', 'No'],
 			message: 'Save changes?'
-		}) === 0) Settings.encoding = data.new
+		}) === 0) {
+			Settings.encoding = data.new
+			Settings.save()
+		}
+	} else {
+		// process arg
 	}
 	inputWin.destroy()
 })
