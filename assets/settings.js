@@ -7,7 +7,10 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 let data = {}
-let dataPromise = {}
+let promiseFiller = {}
+let dataPromise = new Promise((resolve, reject) => {
+    promiseFiller = resolve
+})
 
 /*
  * Test if data is json or not
@@ -22,11 +25,10 @@ const isJson = (test) => {
  */
 ipcRenderer.on('send-json-data', (event, message) => {
     data.label = message.label
-    { (isJson(message.json)) ? data.old = message.json : data.old = [] }
+    //{ (isJson(message.json)) ? data.old = message.json : data.old = [] }
+    data.old = message.json
     //  Trigger json data set
-    //dataPromise = new Promise((resolve, reject) => {
-        //resolve = () => { return message.json }
-    //})
+    promiseFiller(data.old)
 })
 
 /*
@@ -43,6 +45,6 @@ contextBridge.exposeInMainWorld(
             ipcRenderer.send('recieve-json-data', data)
         },
 
-        dataPromise: Promise.resolve(data.old)
+        jsonPromise: dataPromise
     }
 )

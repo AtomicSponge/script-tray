@@ -18,7 +18,7 @@
 
     <script>
         const editor = new JSONEditor(document.getElementById("jsonEditor"), {})
-        window.settingsEditor.dataPromise.then((jsonData) => { editor.set(jsonData) })
+        window.settingsEditor.jsonPromise.then((jsonData) => { editor.set(jsonData) })
     </script>
 </body>
 
