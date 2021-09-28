@@ -347,7 +347,7 @@ const buildMenu = () => {
 				if(menuTitle.menu === undefined) {
 					dialog.showErrorBox(`${appInfo.name}`,
 						`Error building menu, incorrect title menu item.\n\n${Object.keys(item)}`)
-					app.quit()
+					return
 				}
 				const tempMenu = new Menu()
 				Launcher(tempMenu, item)  //  Recursive call to keep building menus
@@ -441,11 +441,8 @@ app.whenReady().then(() => {
 	//  Load settings & verify apps exist
 	Settings.load()
 	Settings.appList.forEach((appCheck) => {
-		if(!shell.which(appCheck)) {
-			dialog.showErrorBox(appInfo.name,
-				`Error:  ${appCheck} not found!`)
-			app.quit()
-		}
+		if(!shell.which(appCheck))
+			dialog.showErrorBox(appInfo.name, `Error:  ${appCheck} not found!`)
 	})
 	//  Set up app tray
 	appTray = new Tray(appInfo.icon)
