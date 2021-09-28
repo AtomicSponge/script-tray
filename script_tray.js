@@ -52,9 +52,8 @@ const Settings = {
 			try {
 				storage.has(setting.label, (error, hasKey) => {
 					if(error) throw error
-					if(hasKey) {
-						setting.data(storage.getSync(setting.label))
-					} else setting.data(setting.default)
+					{ (hasKey) ? setting.data(storage.getSync(setting.label)) :
+						setting.data(setting.default) }
 				})
 			} catch(error) {
 				dialog.showErrorBox(`${appInfo.name}`,
