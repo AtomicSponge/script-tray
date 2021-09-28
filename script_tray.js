@@ -48,43 +48,26 @@ const Settings = {
 	 * Load settings
 	 */
 	load: () => {
-		try {
-			storage.has('encoding', (error, hasKey) => {
-				if(error) throw error
-				if(hasKey) 
-					storage.get('encoding', (error, data) => {
-						if(error) throw error
-						Settings.encoding = data
-					})
-			})
-			storage.has('appList', (error, hasKey) => {
-				if(error) throw error
-				if(hasKey) 
-					storage.get('appList', (error, data) => {
-						if(error) throw error
-						Settings.appList = data
-					})
-			})
-			storage.has('launchCmds', (error, hasKey) => {
-				if(error) throw error
-				if(hasKey) 
-					storage.get('launchCmds', (error, data) => {
-						if(error) throw error
-						Settings.launchCmds = data
-					})
-			})
-			storage.has('debug', (error, hasKey) => {
-				if(error) throw error
-				if(hasKey) 
-					storage.get('debug', (error, data) => {
-						if(error) throw error
-						Settings.debug = data
-					})
-			})
-		} catch(error) {
-			dialog.showErrorBox(`${appInfo.name}`,
-				`Error loading settings.\n\n${error}`)
-		}
+		const loadSettings = [
+			{ label: 'encoding', data: (inData) => { Settings.encoding = inData } },
+			{ label: 'appList', data: (inData) => { Settings.appList = inData } },
+			{ label: 'launchCmds', data: (inData) => { Settings.launchCmds = inData } },
+			{ label: 'debug', data: (inData) => { Settings.debug = inData } }
+		].forEach((setting) => {
+			try {
+				storage.has(setting.label, (error, hasKey) => {
+					if(error) throw error
+					if(hasKey) 
+						storage.get(setting.label, (error, savedData) => {
+							if(error) throw error
+							setting.data(savedData)
+						})
+				})
+			} catch(error) {
+				dialog.showErrorBox(`${appInfo.name}`,
+					`Error loading settings.\n\n${error}`)
+			}
+		})
 	},
 
 	/*
@@ -376,15 +359,16 @@ const buildMenu = () => {
 							})
 						}
 						let runCmd = item.cmd
-						item.args.forEach((arg) => {
-							showInputWindow({ label: arg, command: item.cmd })
-							dataPromise.then(
-								(data) => {  // resolved
-									runCmd += ' ' + data.new
-								},
-								() => {}     // rejected
-							)
-						})
+						if(item.args !== undefined)
+							item.args.forEach((arg) => {
+								showInputWindow({ label: arg, command: item.cmd })
+								dataPromise.then(
+									(data) => {  // resolved
+										runCmd += ' ' + data.new
+									},
+									() => {}     // rejected
+								)
+							})
 						shell.exec(runCmd, {
 							silent: !Settings.debug,
 							encoding: Settings.encoding,
