@@ -379,8 +379,10 @@ const buildMenu = () => {
 						item.args.forEach((arg) => {
 							showInputWindow({ label: arg, command: item.cmd })
 							dataPromise.then(
-								(data) => { runCmd += ' ' + data.new },  // resolved
-								() => { return }                         // rejected
+								(data) => {  // resolved
+									runCmd += ' ' + data.new
+								},
+								() => {}     // rejected
 							)
 						})
 						shell.exec(runCmd, {
