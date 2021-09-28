@@ -39,35 +39,39 @@ storage.setDataPath()
  * Settings
  */
 const Settings = {
-	encoding: 'utf8',
+	encoding: 'uft8',
 	appList: [],
 	launchCmds: [],
 	debug: false,
-
 	/*
-	 * Load settings
+	 * Load settings (wip - issue loading)
 	 */
 	load: () => {
 		[
-			{ label: 'encoding', data: (inData) => { Settings.encoding = inData } },
-			{ label: 'appList', data: (inData) => { Settings.appList = inData } },
-			{ label: 'launchCmds', data: (inData) => { Settings.launchCmds = inData } },
-			{ label: 'debug', data: (inData) => { Settings.debug = inData } }
+			{ label: 'encoding', default: 'uft8', data: (inData) => {
+				Settings.encoding = inData
+				console.log(Settings.encoding)
+			} },
+			{ label: 'appList', default: [], data: (inData) => { Settings.appList = inData } },
+			{ label: 'launchCmds', default: [], data: (inData) => { Settings.launchCmds = inData } },
+			{ label: 'debug', default: false, data: (inData) => { Settings.debug = inData } }
 		].forEach((setting) => {
 			try {
 				storage.has(setting.label, (error, hasKey) => {
 					if(error) throw error
-					if(hasKey) 
+					if(hasKey) {
 						storage.get(setting.label, (error, savedData) => {
 							if(error) throw error
 							setting.data(savedData)
 						})
+					} else setting.data(setting.default)
 				})
 			} catch(error) {
 				dialog.showErrorBox(`${appInfo.name}`,
 					`Error loading setting ${setting.label}.\n\n${error}`)
 			}
 		})
+		console.log(Settings)
 	},
 
 	/*
