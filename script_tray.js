@@ -65,7 +65,7 @@ const Settings = {
 				})
 			} catch(error) {
 				dialog.showErrorBox(`${appInfo.name}`,
-					`Error loading settings.\n\n${error}`)
+					`Error loading setting ${setting.label}.\n\n${error}`)
 			}
 		})
 	},
