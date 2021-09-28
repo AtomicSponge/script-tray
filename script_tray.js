@@ -39,19 +39,12 @@ storage.setDataPath()
  * Settings
  */
 const Settings = {
-	encoding: 'uft8',
-	appList: [],
-	launchCmds: [],
-	debug: false,
 	/*
-	 * Load settings (wip - issue loading)
+	 * Load settings
 	 */
 	load: () => {
 		[
-			{ label: 'encoding', default: 'uft8', data: (inData) => {
-				Settings.encoding = inData
-				console.log(Settings.encoding)
-			} },
+			{ label: 'encoding', default: 'uft8', data: (inData) => { Settings.encoding = inData } },
 			{ label: 'appList', default: [], data: (inData) => { Settings.appList = inData } },
 			{ label: 'launchCmds', default: [], data: (inData) => { Settings.launchCmds = inData } },
 			{ label: 'debug', default: false, data: (inData) => { Settings.debug = inData } }
@@ -60,10 +53,7 @@ const Settings = {
 				storage.has(setting.label, (error, hasKey) => {
 					if(error) throw error
 					if(hasKey) {
-						storage.get(setting.label, (error, savedData) => {
-							if(error) throw error
-							setting.data(savedData)
-						})
+						setting.data(storage.getSync(setting.label))
 					} else setting.data(setting.default)
 				})
 			} catch(error) {
@@ -71,7 +61,6 @@ const Settings = {
 					`Error loading setting ${setting.label}.\n\n${error}`)
 			}
 		})
-		console.log(Settings)
 	},
 
 	/*
@@ -106,6 +95,8 @@ const Settings = {
 		Settings.save()
 	}
 }
+
+Settings.load()
 
 /*
  * Window for the settings editor
@@ -427,7 +418,6 @@ app.on('window-all-closed', () => {
  */
 app.whenReady().then(() => {
 	//  Load settings & verify apps exist
-	Settings.load()
 	Settings.appList.forEach((appCheck) => {
 		if(!shell.which(appCheck))
 			dialog.showErrorBox(appInfo.name, `Error:  ${appCheck} not found!`)
