@@ -48,7 +48,7 @@ const Settings = {
 	 * Load settings
 	 */
 	load: () => {
-		const loadSettings = [
+		[
 			{ label: 'encoding', data: (inData) => { Settings.encoding = inData } },
 			{ label: 'appList', data: (inData) => { Settings.appList = inData } },
 			{ label: 'launchCmds', data: (inData) => { Settings.launchCmds = inData } },
