@@ -1,6 +1,6 @@
 ##  Script Tray
 
-*wip* - finishing some things up & testing
+*WIP:*  Fixing the arg window still.
 
 Run scripts or programs from a system tray icon.
 
@@ -43,14 +43,16 @@ Run scripts or programs from a system tray icon.
         ],
         {
             label: 'testa',
-            cmd: 'testa'
+            cmd: 'testa',
+            args: [ 'exampleA', 'exampleB' ]
         },
         {
             separator: null
         },
         {
             label: 'testb',
-            cmd: 'testb'
+            cmd: 'testb',
+            args: [ 'example' ]
         }
     ],
     {

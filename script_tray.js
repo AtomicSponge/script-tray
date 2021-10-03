@@ -9,7 +9,7 @@
  */
 const appInfo = {
 	name: 'Script Tray',
-	version: '092821',
+	version: '100221',
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
@@ -36,24 +36,29 @@ const autoLauncher = new AutoLaunch({ name: appInfo.name.trim() })
 storage.setDataPath()
 
 /*
- * Settings
+ * App Settings
  */
 const Settings = {
+	encoding: null,    //  System encoding type to use for terminal
+	appList: null,     //  List of applications to verify they exist on startup
+	launchCmds: null,  //  Tree of commands to build menu from
+	debug: false,      //  Debug mode
+
 	/*
 	 * Load settings
 	 */
 	load: () => {
 		[
-			{ label: 'encoding', default: 'uft8', data: (inData) => { Settings.encoding = inData } },
-			{ label: 'appList', default: [], data: (inData) => { Settings.appList = inData } },
-			{ label: 'launchCmds', default: [], data: (inData) => { Settings.launchCmds = inData } },
-			{ label: 'debug', default: false, data: (inData) => { Settings.debug = inData } }
+			{ label: 'encoding', default: 'uft8' },
+			{ label: 'appList', default: [] },
+			{ label: 'launchCmds', default: [] },
+			{ label: 'debug', default: false }
 		].forEach((setting) => {
 			try {
 				storage.has(setting.label, (error, hasKey) => {
 					if(error) throw error
-					{ (hasKey) ? setting.data(storage.getSync(setting.label)) :
-						setting.data(setting.default) }
+					{ (hasKey) ? Settings[setting.label] = storage.getSync(setting.label) :
+						Settings[setting.label] = setting.default }
 				})
 			} catch(error) {
 				dialog.showErrorBox(`${appInfo.name}`,
@@ -66,15 +71,16 @@ const Settings = {
 	 * Save settings
 	 */
 	save: () => {
-		try {
-			storage.set('encoding', Settings.encoding, (error) => { if(error) throw error })
-			storage.set('appList', Settings.appList, (error) => { if(error) throw error })
-			storage.set('launchCmds', Settings.launchCmds, (error) => { if(error) throw error })
-			storage.set('debug', Settings.debug, (error) => { if(error) throw error })
-		} catch(error) {
-			dialog.showErrorBox(`${appInfo.name}`,
-				`Error saving settings.\n\n${error}`)
-		}
+		[
+			'encoding', 'appList', 'launchCmds', 'debug'
+		].forEach((setting) => {
+			try {
+				storage.set(setting, Settings[setting], (error) => { if(error) throw error })
+			} catch(error) {
+				dialog.showErrorBox(`${appInfo.name}`,
+					`Error saving setting ${setting}.\n\n${error}`)
+			}
+		})
 	},
 
 	/*
@@ -150,14 +156,9 @@ ipcMain.on('recieve-json-data', (event, data) => {
  * Window for a simple input box
  */
 let inputWin = null
-let promiseResolver = {}
-let promiseRejecter = {}
 let dataPromise = {}
+//let globScope = this
 const showInputWindow = (data) => {
-	dataPromise = new Promise((resolve, reject) => {
-		promiseResolver = resolve
-		promiseRejecter = reject
-	})
 	inputWin = new BrowserWindow({
 		title: `${appInfo.name} - ${data.label}`,
 		width: 400,
@@ -172,7 +173,8 @@ const showInputWindow = (data) => {
 		}
 	})
 	inputWin.on('close', (event) => {
-		promiseRejecter('closed')
+		dataPromise = Promise.reject('closed')
+		dataPromise.then(() => {}, () => {})
 		inputWin.destroy()
 	})
 	inputWin.webContents.on('dom-ready', () => {
@@ -197,10 +199,10 @@ ipcMain.on('recieve-input-data', (event, data) => {
 				Settings.save()
 			}
 		}
-		promiseRejecter('na')
+		dataPromise = Promise.reject('na')
 		dataPromise.then(() => {}, () => {})
 	} else {
-		promiseResolver(data)
+		dataPromise = Promise.resolve(data)
 	}
 	inputWin.destroy()
 })
@@ -343,7 +345,7 @@ const buildMenu = () => {
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
-						if(Settings.debug) {
+						if(Settings.debug)
 							dialog.showMessageBox({
 								type: 'info',
 								title: appInfo.name,
@@ -351,7 +353,6 @@ const buildMenu = () => {
 								detail: `Command:  ${item.cmd}`,
 								icon: appInfo.icon
 							})
-						}
 						let runCmd = item.cmd
 						if(item.args !== undefined)
 							item.args.forEach((arg) => {
