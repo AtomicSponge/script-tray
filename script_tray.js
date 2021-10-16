@@ -9,7 +9,7 @@
  */
 const appInfo = {
 	name: 'Script Tray',
-	version: '100221',
+	version: '101421',
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
@@ -156,7 +156,6 @@ ipcMain.on('recieve-json-data', (event, data) => {
  * Window for a simple input box
  */
 let inputWin = null
-let dataPromise = {}
 //let globScope = this
 const showInputWindow = (data) => {
 	inputWin = new BrowserWindow({
@@ -173,8 +172,7 @@ const showInputWindow = (data) => {
 		}
 	})
 	inputWin.on('close', (event) => {
-		dataPromise = Promise.reject('closed')
-		dataPromise.then(() => {}, () => {})
+		// send cancel
 		inputWin.destroy()
 	})
 	inputWin.webContents.on('dom-ready', () => {
@@ -199,10 +197,9 @@ ipcMain.on('recieve-input-data', (event, data) => {
 				Settings.save()
 			}
 		}
-		dataPromise = Promise.reject('na')
-		dataPromise.then(() => {}, () => {})
+		// no data send here
 	} else {
-		dataPromise = Promise.resolve(data)
+		// send data
 	}
 	inputWin.destroy()
 })
@@ -356,13 +353,14 @@ const buildMenu = () => {
 						let runCmd = item.cmd
 						if(item.args !== undefined)
 							item.args.forEach((arg) => {
-								showInputWindow({ label: arg, command: item.cmd })
-								dataPromise.then(
+								//showInputWindow({ label: arg, command: item.cmd })
+								/*dataPromise.then(
 									(data) => {  // resolved
 										runCmd += ' ' + data.new
+										console.log(runCmd)
 									},
 									() => {}     // rejected
-								)
+								)*/
 							})
 						shell.exec(runCmd, {
 							silent: !Settings.debug,
