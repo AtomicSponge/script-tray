@@ -359,9 +359,11 @@ const buildMenu = () => {
 						let runCmd = item.cmd
 						if(item.args !== undefined)
 							item.args.forEach((arg) => {
-								showInputWindow({ label: arg, command: item.cmd })
-								const res = await resolveInputWin()
-								if(res !== 'winCanceledEvent') runCmd += ' ' + res
+								(async function() {
+									showInputWindow({ label: arg, command: item.cmd })
+									const res = await resolveInputWin()
+									if(res !== 'winCanceledEvent') runCmd += ' ' + res
+								})
 							})
 						shell.exec(runCmd, {
 							silent: !Settings.debug,
