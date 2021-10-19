@@ -155,7 +155,9 @@ ipcMain.on('recieve-json-data', (event, data) => {
 /*
  *
  */
-const resolveInputWin = () => {}
+const resolveInputWin = async function() {
+	//
+}
 
 /*
  * Window for a simple input box
@@ -357,11 +359,9 @@ const buildMenu = () => {
 						let runCmd = item.cmd
 						if(item.args !== undefined)
 							item.args.forEach((arg) => {
-								(async function(arg, cmd) {
-									showInputWindow({ label: arg, command: cmd })
-									const res = await resolveInputWin()
-									if(res !== 'winCanceledEvent') runCmd += ' ' + res
-								})
+								showInputWindow({ label: arg, command: item.cmd })
+								const res = await resolveInputWin()
+								if(res !== 'winCanceledEvent') runCmd += ' ' + res
 							})
 						shell.exec(runCmd, {
 							silent: !Settings.debug,
