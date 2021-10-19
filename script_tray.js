@@ -9,7 +9,7 @@
  */
 const appInfo = {
 	name: 'Script Tray',
-	version: '101421',
+	version: '101921',
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
@@ -101,7 +101,7 @@ const Settings = {
 	}
 }
 
-Settings.load()
+Settings.load()  //  Load settings after object definition
 
 /*
  * Window for the settings editor
@@ -153,10 +153,14 @@ ipcMain.on('recieve-json-data', (event, data) => {
 })
 
 /*
+ *
+ */
+const resolveInputWin = () => {}
+
+/*
  * Window for a simple input box
  */
 let inputWin = null
-//let globScope = this
 const showInputWindow = (data) => {
 	inputWin = new BrowserWindow({
 		title: `${appInfo.name} - ${data.label}`,
@@ -353,14 +357,11 @@ const buildMenu = () => {
 						let runCmd = item.cmd
 						if(item.args !== undefined)
 							item.args.forEach((arg) => {
-								//showInputWindow({ label: arg, command: item.cmd })
-								/*dataPromise.then(
-									(data) => {  // resolved
-										runCmd += ' ' + data.new
-										console.log(runCmd)
-									},
-									() => {}     // rejected
-								)*/
+								(async function(arg, cmd) {
+									showInputWindow({ label: arg, command: cmd })
+									const res = await resolveInputWin()
+									if(res !== 'winCanceledEvent') runCmd += ' ' + res
+								})
 							})
 						shell.exec(runCmd, {
 							silent: !Settings.debug,
@@ -415,7 +416,7 @@ app.on('window-all-closed', () => {
  * Run the Script Tray Electron app 
  */
 app.whenReady().then(() => {
-	//  Load settings & verify apps exist
+	//  Verify apps exist
 	Settings.appList.forEach((appCheck) => {
 		if(!shell.which(appCheck))
 			dialog.showErrorBox(appInfo.name, `Error:  ${appCheck} not found!`)
