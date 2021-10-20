@@ -10,7 +10,7 @@
   },
   "main": "script_tray.js",
   "scripts": {
-    "app": "electron ."
+    "start": "electron ."
   },
   "devDependencies": {
     "electron": "^14.0.1",

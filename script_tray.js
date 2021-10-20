@@ -155,12 +155,22 @@ ipcMain.on('recieve-json-data', (event, data) => {
 /*
  *
  */
-const resolveInputWin = async function(data) {
-	return new Primise(resolve, reject => {
-		if(data === 'winCanceledEvent') reject(data)
-		else resolve(data)
-	})
+/*let promiseResolver = null
+let promiseRejecter = null
+const resolveInputWin = new Promise((resolve, reject) => {
+	promiseResolver = resolve,
+	promiseRejecter = reject
+})*/
+
+class Resolver {
+	constructor() {
+		this.promise = new Promise((resolve, reject) => {
+			this.reject = reject
+			this.resolve = resolve
+		})
+	}
 }
+const resolveInputWin = new Resolver()
 
 /*
  * Window for a simple input box
@@ -181,7 +191,7 @@ const showInputWindow = (data) => {
 		}
 	})
 	inputWin.on('close', (event) => {
-		resolveInputWin('winCanceledEvent')
+		resolveInputWin.reject('winCanceledEvent')
 		inputWin.destroy()
 	})
 	inputWin.webContents.on('dom-ready', () => {
@@ -206,9 +216,7 @@ ipcMain.on('recieve-input-data', (event, data) => {
 				Settings.save()
 			}
 		}
-	} else {
-		resolveInputWin(data)
-	}
+	} else resolveInputWin.resolve(data)
 	inputWin.destroy()
 })
 
@@ -361,14 +369,10 @@ const buildMenu = () => {
 						let runCmd = item.cmd
 						if(item.args !== undefined)
 							item.args.forEach((arg) => {
-								//console.log(arg)
 								(async function() {
-									console.log(arg)
 									showInputWindow({ label: arg, command: item.cmd })
-									return await resolveInputWin()
-								})().then(res => {
-									if(res !== 'winCanceledEvent') runCmd += ' ' + res
-								})
+									return resolveInputWin.promise
+								})().then(res => { runCmd += ' ' + res }).catch()
 							})
 						shell.exec(runCmd, {
 							silent: !Settings.debug,
