@@ -354,44 +354,45 @@ const buildMenu = () => {
 					click: () => {
 						let runCmd = item.cmd
 						if(item.args !== undefined)
-							item.args.forEach((arg) => {
-								(async function() {
-									showInputWindow({ label: arg, command: item.cmd })
-									return await resolveInputWin.promise
-								})().then(res => {
-									runCmd += ' ' + res.new
-									
-									if(Settings.debug)
-									dialog.showMessageBox({
-										type: 'info',
-										title: appInfo.name,
-										message: `Running command '${item.label}'`,
-										detail: `Command:  ${item.cmd}\n${runCmd}`,
-										icon: appInfo.icon
-									})
-
-									shell.exec(runCmd, {
-										silent: !Settings.debug,
-										encoding: Settings.encoding,
-										async: true
-									}, (code, stdout, stderr) => {
-										if(code !== 0)  //  Error processing command
-											dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
-												`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}`)
-										else {  //  Command executed
-											//  do something else?  ¯\_(ツ)_/¯
-										}
-									})
-								}).catch(res => {
-									dialog.showMessageBox({
-										type: 'info',
-										title: appInfo.name,
-										message: `Command canceled '${item.label}'`,
-										detail: `Command:  ${item.cmd}\n${runCmd}`,
-										icon: appInfo.icon
+							(async function() {
+								item.args.forEach((arg) => {
+									(async function() {
+										showInputWindow({ label: arg, command: item.cmd })
+										return await resolveInputWin.promise
+									})().then(res => {
+										runCmd += ' ' + res.new
+									}).catch(res => {
+										dialog.showMessageBox({
+											type: 'info',
+											title: appInfo.name,
+											message: `Command canceled '${item.label}'`,
+											detail: `Command:  ${item.cmd}\n${runCmd}`,
+											icon: appInfo.icon
+										})
 									})
 								})
 							})
+						if(Settings.debug)
+							dialog.showMessageBox({
+								type: 'info',
+								title: appInfo.name,
+								message: `Running command '${item.label}'`,
+								detail: `Command:  ${item.cmd}\n${runCmd}`,
+								icon: appInfo.icon
+							})
+
+						shell.exec(runCmd, {
+							silent: !Settings.debug,
+							encoding: Settings.encoding,
+							async: true
+						}, (code, stdout, stderr) => {
+							if(code !== 0)  //  Error processing command
+								dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
+									`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}`)
+							else {  //  Command executed
+								//  do something else?  ¯\_(ツ)_/¯
+							}
+						})
 					}
 				}))
 				return  //  Next item
