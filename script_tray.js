@@ -163,13 +163,14 @@ class Resolver {
 		})
 	}
 }
-const resolveInputWin = new Resolver()
+let resolveInputWin = new Resolver()
 
 /*
  * Window for a simple input box
  */
 let inputWin = null
 const showInputWindow = (data) => {
+	resolveInputWin = new Resolver()
 	inputWin = new BrowserWindow({
 		title: `${appInfo.name} - ${data.label}`,
 		width: 400,
@@ -381,7 +382,15 @@ const buildMenu = () => {
 											//  do something else?  ¯\_(ツ)_/¯
 										}
 									})
-								}).catch(res => {console.log('canceled')})
+								}).catch(res => {
+									dialog.showMessageBox({
+										type: 'info',
+										title: appInfo.name,
+										message: `Command canceled '${item.label}'`,
+										detail: `Command:  ${item.cmd}\n${runCmd}`,
+										icon: appInfo.icon
+									})
+								})
 							})
 					}
 				}))

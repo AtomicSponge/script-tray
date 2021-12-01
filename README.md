@@ -1,7 +1,5 @@
 ##  Script Tray
 
-*WIP:*  Fixing the arg window still.
-
 Run scripts or programs from a system tray icon.
 
 #### Features:
