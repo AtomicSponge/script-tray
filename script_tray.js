@@ -359,7 +359,7 @@ const buildMenu = () => {
 									showInputWindow({ label: arg, command: item.cmd })
 									return await resolveInputWin.promise
 								})().then(res => {
-									runCmd += ' ' + res
+									runCmd += ' ' + res.new
 									
 									if(Settings.debug)
 									dialog.showMessageBox({
