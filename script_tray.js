@@ -9,7 +9,7 @@
  */
 const appInfo = {
 	name: 'Script Tray',
-	version: '101921',
+	version: '120121',
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
@@ -155,13 +155,6 @@ ipcMain.on('recieve-json-data', (event, data) => {
 /*
  *
  */
-/*let promiseResolver = null
-let promiseRejecter = null
-const resolveInputWin = new Promise((resolve, reject) => {
-	promiseResolver = resolve,
-	promiseRejecter = reject
-})*/
-
 class Resolver {
 	constructor() {
 		this.promise = new Promise((resolve, reject) => {
@@ -358,34 +351,38 @@ const buildMenu = () => {
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
-						if(Settings.debug)
-							dialog.showMessageBox({
-								type: 'info',
-								title: appInfo.name,
-								message: `Running command '${item.label}'`,
-								detail: `Command:  ${item.cmd}`,
-								icon: appInfo.icon
-							})
 						let runCmd = item.cmd
 						if(item.args !== undefined)
 							item.args.forEach((arg) => {
 								(async function() {
 									showInputWindow({ label: arg, command: item.cmd })
-									return resolveInputWin.promise
-								})().then(res => { runCmd += ' ' + res }).catch()
+									return await resolveInputWin.promise
+								})().then(res => {
+									runCmd += ' ' + res
+									
+									if(Settings.debug)
+									dialog.showMessageBox({
+										type: 'info',
+										title: appInfo.name,
+										message: `Running command '${item.label}'`,
+										detail: `Command:  ${item.cmd}\n${runCmd}`,
+										icon: appInfo.icon
+									})
+
+									shell.exec(runCmd, {
+										silent: !Settings.debug,
+										encoding: Settings.encoding,
+										async: true
+									}, (code, stdout, stderr) => {
+										if(code !== 0)  //  Error processing command
+											dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
+												`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}`)
+										else {  //  Command executed
+											//  do something else?  ¯\_(ツ)_/¯
+										}
+									})
+								}).catch(res => {console.log('canceled')})
 							})
-						shell.exec(runCmd, {
-							silent: !Settings.debug,
-							encoding: Settings.encoding,
-							async: true
-						}, (code, stdout, stderr) => {
-							if(code !== 0)  //  Error processing command
-								dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
-									`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}`)
-							else {  //  Command executed
-								//  do something else?  ¯\_(ツ)_/¯
-							}
-						})
 					}
 				}))
 				return  //  Next item
