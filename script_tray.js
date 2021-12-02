@@ -328,7 +328,7 @@ const buildMenu = () => {
 	 */
 	const Launcher = (menu, collection) => {
 		/*
-		 *
+		 * Function to run a command
 		 */
 		const CommandRunner = (item, cmd) => {
 			if(Settings.debug)
@@ -345,10 +345,13 @@ const buildMenu = () => {
 				encoding: Settings.encoding,
 				async: true
 			}, (code, stdout, stderr) => {
-				if(code !== 0)  //  Error processing command
-					dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
+				if(code !== 0) {  //  Error processing command
+					if(Settings.debug)
+						dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
+							`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}\n\n${stdout}`)
+				    else dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
 						`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}`)
-				else {  //  Command executed
+				} else {  //  Command executed
 					//  do something else?  ¯\_(ツ)_/¯
 				}
 			})
