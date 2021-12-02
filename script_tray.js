@@ -153,7 +153,7 @@ ipcMain.on('recieve-json-data', (event, data) => {
 })
 
 /*
- *
+ * Wrapper to Promise class to access functions
  */
 class Resolver {
 	constructor() {
@@ -327,6 +327,33 @@ const buildMenu = () => {
 	 * Build the launcher menu part
 	 */
 	const Launcher = (menu, collection) => {
+		/*
+		 *
+		 */
+		const CommandRunner = (item, cmd) => {
+			if(Settings.debug)
+				dialog.showMessageBox({
+					type: 'info',
+					title: appInfo.name,
+					message: `Running command '${item.label}'`,
+					detail: `Command:  ${item.cmd}`,
+					icon: appInfo.icon
+				})
+
+			shell.exec(cmd, {
+				silent: !Settings.debug,
+				encoding: Settings.encoding,
+				async: true
+			}, (code, stdout, stderr) => {
+				if(code !== 0)  //  Error processing command
+					dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
+						`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}`)
+				else {  //  Command executed
+					//  do something else?  ¯\_(ツ)_/¯
+				}
+			})
+		}
+
 		collection.forEach((item) => {
 			if(Array.isArray(item)) {  //  Item is a sub menu
 				const menuTitle = item.shift()  //  Get the title item
@@ -352,47 +379,32 @@ const buildMenu = () => {
 				menu.append(new MenuItem({
 					label: item.label,
 					click: () => {
-						let runCmd = item.cmd
-						if(item.args !== undefined)
+						if(item.args === undefined) CommandRunner(item, item.cmd)
+						else {
+							let runCanceled = false
 							(async function() {
+								let runCmd = item.cmd
 								item.args.forEach((arg) => {
 									(async function() {
 										showInputWindow({ label: arg, command: item.cmd })
 										return await resolveInputWin.promise
 									})().then(res => {
 										runCmd += ' ' + res.new
-									}).catch(res => {
-										dialog.showMessageBox({
-											type: 'info',
-											title: appInfo.name,
-											message: `Command canceled '${item.label}'`,
-											detail: `Command:  ${item.cmd}\n${runCmd}`,
-											icon: appInfo.icon
-										})
-									})
+									}).catch(res => { runCanceled = true })
 								})
+								return await runCmd
+							})().then(res => {
+								if(runCanceled === true) {
+									dialog.showMessageBox({
+										type: 'info',
+										title: appInfo.name,
+										message: `Command canceled '${item.label}'`,
+										detail: `Command:  ${item.cmd}\n${runCmd}`,
+										icon: appInfo.icon
+									})
+								} else CommandRunner(item, res)
 							})
-						if(Settings.debug)
-							dialog.showMessageBox({
-								type: 'info',
-								title: appInfo.name,
-								message: `Running command '${item.label}'`,
-								detail: `Command:  ${item.cmd}\n${runCmd}`,
-								icon: appInfo.icon
-							})
-
-						shell.exec(runCmd, {
-							silent: !Settings.debug,
-							encoding: Settings.encoding,
-							async: true
-						}, (code, stdout, stderr) => {
-							if(code !== 0)  //  Error processing command
-								dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
-									`Command:  ${item.cmd}\nReturn Code:  ${code}\nError:  ${stderr}`)
-							else {  //  Command executed
-								//  do something else?  ¯\_(ツ)_/¯
-							}
-						})
+						}
 					}
 				}))
 				return  //  Next item
