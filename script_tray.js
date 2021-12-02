@@ -9,7 +9,7 @@
  */
 const appInfo = {
 	name: 'Script Tray',
-	version: '120121',
+	version: '12.02.21',
 	author: 'Matthew Evans',
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
@@ -336,7 +336,7 @@ const buildMenu = () => {
 					type: 'info',
 					title: appInfo.name,
 					message: `Running command '${item.label}'`,
-					detail: `Command:  ${item.cmd}`,
+					detail: `Command:  ${cmd}`,
 					icon: appInfo.icon
 				})
 
@@ -355,6 +355,14 @@ const buildMenu = () => {
 					//  do something else?  ¯\_(ツ)_/¯
 				}
 			})
+		}
+
+		/*
+		 * Async version of forEach
+		 */
+		const AsyncForEach = async (array, callback) => {
+			for(let index = 0; index < array.length; index++)
+				await callback(array[index], index, array)
 		}
 
 		collection.forEach((item) => {
@@ -383,20 +391,16 @@ const buildMenu = () => {
 					label: item.label,
 					click: () => {
 						if(item.args === undefined) CommandRunner(item, item.cmd)
-						else {
-							let runCanceled = false
+						else
 							(async function() {
+								let runCanceled = false
 								let runCmd = item.cmd
-								item.args.forEach((arg) => {
-									(async function() {
-										showInputWindow({ label: arg, command: item.cmd })
-										return await resolveInputWin.promise
-									})().then(res => {
+								await AsyncForEach(item.args, async(arg) => {
+									showInputWindow({ label: arg, command: item.cmd })
+									await resolveInputWin.promise.then(res => {
 										runCmd += ' ' + res.new
 									}).catch(res => { runCanceled = true })
 								})
-								return await runCmd
-							})().then(res => {
 								if(runCanceled === true) {
 									dialog.showMessageBox({
 										type: 'info',
@@ -405,9 +409,8 @@ const buildMenu = () => {
 										detail: `Command:  ${item.cmd}\n${runCmd}`,
 										icon: appInfo.icon
 									})
-								} else CommandRunner(item, res)
-							})
-						}
+								} else CommandRunner(item, runCmd)
+							})()
 					}
 				}))
 				return  //  Next item
