@@ -2,6 +2,8 @@
 
 Run scripts or programs from a system tray icon.
 
+[NPM Package](https://www.npmjs.com/package/script_tray)
+
 #### Features:
 - Custom menus and sub menus via json
 - Runs from the system tray
