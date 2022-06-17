@@ -1,12 +1,12 @@
 {
   "name": "script_tray",
-  "version": "21.12.07",
+  "version": "1.0.0",
   "description": "Script System Tray Utility",
   "author": "Matthew Evans",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wtfsystems/script_tray"
+    "url": "https://github.com/AtomicSponge/script_tray"
   },
   "main": "script_tray.js",
   "scripts": {

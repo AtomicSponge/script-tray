@@ -4,16 +4,17 @@
  * See LICENSE.md for copyright information.
  */
 
+const package = require('./package.json')
 /*
  * App Information
  */
 const appInfo = {
 	name: 'Script Tray',
-	version: '21.12.07',
-	author: 'Matthew Evans',
+	version: package.version,
+	author: package.author,
 	contact: 'contact@wtfsystems.net',
 	website: 'https://www.wtfsystems.net',
-	git: 'https://github.com/wtfsystems/script_tray',
+	git: package.repository.url,
 	license: 'MIT',
 	licenseURL: 'https://mit-license.org',
 	icon: 'assets/robot.png'
