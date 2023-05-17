@@ -13,13 +13,13 @@
     "start": "electron ."
   },
   "devDependencies": {
-    "electron": "^19.0.3",
-    "electron-builder": "^23.0.3"
+    "electron": "^24.3.0",
+    "electron-builder": "^23.6.0"
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
-    "electron-json-storage": "^4.5.0",
-    "jsoneditor": "^9.8.0",
+    "electron-json-storage": "^4.6.0",
+    "jsoneditor": "^9.10.2",
     "shelljs": "^0.8.5"
   },
   "build": {
