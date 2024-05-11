@@ -12,7 +12,7 @@ import storage from 'electron-json-storage'
 
 import { appInfo } from './appInfo'
 
-interface settingsJSON {
+export interface settingsJSON {
   launchMenu:Array<any>
   startup:boolean
   debug:boolean
@@ -83,5 +83,21 @@ export class settings {
     settings.startup = false
     settings.debug = false
     settings.save()
+  }
+
+  /** Get the settings as a JSON object */
+  static get getJSON():settingsJSON {
+    return {
+      launchMenu: settings.launchMenu,
+      startup: settings.startup,
+      debug: settings.debug
+    }
+  }
+
+  /** Set the settings by using a JSON object */
+  static set setJSON(data:settingsJSON) {
+    settings.launchMenu = data.launchMenu
+    settings.startup = data.startup
+    settings.debug = data.debug
   }
 }

@@ -10,10 +10,6 @@
 import { ipcRenderer, contextBridge } from 'electron'
 
 let data = {}
-let promiseResolver = {}
-const dataPromise = new Promise((resolve, _reject) => {
-  promiseResolver = resolve
-})
 
 //  Receive data from the main app
 ipcRenderer.on('send-input-data', (event, message) => {
@@ -24,14 +20,11 @@ ipcRenderer.on('send-input-data', (event, message) => {
 })
 
 //  Send data to renderer
-contextBridge.exposeInMainWorld(
-  'inputBridge',
-  {
-    //  Receive data from renderer and send to main app
-    submit: (inData) => {
-      data.new = inData
-      ipcRenderer.send('recieve-input-data', data)
-    },
-    inputPromise: dataPromise
-  }
-)
+contextBridge.exposeInMainWorld('input', {
+  //  Receive data from renderer and send to main app
+  submit: (inData) => {
+    data.new = inData
+    ipcRenderer.send('recieve-input-data', data)
+  },
+  inputPromise: dataPromise
+})

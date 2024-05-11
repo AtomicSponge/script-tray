@@ -46,7 +46,7 @@ const bufferWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, 'buffer-preload.mjs'),
+      preload: path.join(__dirname, 'preload-buffer.mjs'),
     }
   })
   bufferWin.on('close', (_event) => {
@@ -68,14 +68,11 @@ const settingsEditorWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, 'settings-preload.mjs'),
+      preload: path.join(__dirname, 'preload-settings.mjs'),
     }
   })
   settingsWin.on('close', (_event) => {
     settingsWin?.destroy()
-  })
-  settingsWin.webContents.on('did-finish-load', () => {
-    settingsWin?.webContents.send('send-json-data', settings.launchMenu)
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     settingsWin.loadURL('http://localhost:5174/html/settings.html') :
@@ -83,31 +80,32 @@ const settingsEditorWindow = ():void => {
 }
 
 /* Event handler for receiving settings */
-ipcMain.on('recieve-settings-data', async (_event, data) => {
-  if (data.old !== data.new) {
-    //  Ask to save if data changed
+ipcMain.on('save-settings-data', async (_event, data) => {
+  if (settings.getJSON !== data) {
     if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       type: 'question',
       title: 'Confirm',
       buttons: ['Yes', 'No'],
       message: 'Save changes?'
     }) === 0) {
-      settings.launchMenu = data.new
+      settings.setJSON = data
       settings.save()
       appTray?.setContextMenu(buildMenu())
-
-      /*if (dialog.showMessageBoxSync({
-        type: 'question',
-        title: `${appInfo.name} - Confirm`,
-        buttons: ['Yes', 'No'],
-        message: 'Are you sure you want to reset settings?'
-      }) === 0) {
-        settings.reset()
-        appTray?.setContextMenu(buildMenu())
-      }*/
     }
   }
-  settingsWin?.destroy()
+})
+
+/* Event handler for resetting settings */
+ipcMain.on('reset-settings-data', async () => {
+  if (dialog.showMessageBoxSync({
+    type: 'question',
+    title: `${appInfo.name} - Confirm`,
+    buttons: ['Yes', 'No'],
+    message: 'Are you sure you want to reset settings?'
+  }) === 0) {
+    settings.reset()
+    appTray?.setContextMenu(buildMenu())
+  }
 })
 
 /** Wrapper to Promise class to access functions */
@@ -141,7 +139,7 @@ const inputWindow = (data:inputWinData):void => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
-      preload: path.join(__dirname, 'input-preload.mjs'),
+      preload: path.join(__dirname, 'preload-input.mjs'),
     }
   })
   inputWin.on('close', (_event) => {
