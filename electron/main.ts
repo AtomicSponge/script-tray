@@ -335,7 +335,7 @@ const buildMenu = async ():Promise<Menu> => {
   const menu = new Menu()
   Launcher(menu, settings.launchMenu)
   await Main(menu)
-  if (settings.debug) console.log(menu)
+  if (settings.debug) console.log(menu)  //  Change to send to buffer
   return menu
 }
 
