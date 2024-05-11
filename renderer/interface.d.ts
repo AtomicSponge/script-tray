@@ -12,7 +12,7 @@ export interface IbufferAPI {
 }
 
 export interface IsettingsAPI {
-  saveSettings: (data:settingsJSON) => void
+  saveSettings: (data:JSON) => void
   resetSettings: () => void
   data:JSON
 }

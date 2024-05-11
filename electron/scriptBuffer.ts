@@ -7,13 +7,13 @@
  * 
  */
 
-export class scriptbuffer {
+export class scriptBuffer {
   static #buffer:Array<string>
   static #maxSize:number
 
   constructor() {
-    scriptbuffer.#buffer = []
-    scriptbuffer.#maxSize = 100
+    scriptBuffer.#buffer = []
+    scriptBuffer.#maxSize = 100
     return false
   }
 
@@ -23,7 +23,7 @@ export class scriptbuffer {
    */
   static read():string {
     let resStr = ''
-    scriptbuffer.#buffer.forEach(str => resStr += `${str}\n\n`)
+    scriptBuffer.#buffer.forEach(str => resStr += `${str}\n\n`)
     return resStr
   }
 
@@ -32,13 +32,13 @@ export class scriptbuffer {
    * @param data Data to write
    */
   static write(data:string) {
-    scriptbuffer.#buffer.push(data)
-    if(scriptbuffer.#buffer.length > scriptbuffer.#maxSize)
-      scriptbuffer.#buffer = scriptbuffer.#buffer.slice(-scriptbuffer.#maxSize)
+    scriptBuffer.#buffer.push(data)
+    if(scriptBuffer.#buffer.length > scriptBuffer.#maxSize)
+      scriptBuffer.#buffer = scriptBuffer.#buffer.slice(-scriptBuffer.#maxSize)
   }
 
   /** Get the max buffer size */
-  static get size():number { return scriptbuffer.#maxSize }
+  static get size():number { return scriptBuffer.#maxSize }
   /** Set the max buffer size */
-  static set size(val:number) { scriptbuffer.#maxSize = val }
+  static set size(val:number) { scriptBuffer.#maxSize = val }
 }

@@ -9,12 +9,9 @@
 
 import { ipcRenderer, contextBridge } from 'electron'
 
-import { settings } from './settings'
-import { scriptbuffer } from './scriptbuffer'
-
 contextBridge.exposeInIsolatedWorld(4201, 'bufferAPI', {
   getData: ():string => {
-    return scriptbuffer.read()
+    return ''
   }
 })
 
@@ -25,7 +22,7 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   resetSettings: ():void => {
     ipcRenderer.send('reset-settings-data', true)
   },
-  data: settings.getJSON
+  data: { test: "hello!" }
 })
 
 contextBridge.exposeInIsolatedWorld(4203, 'inputAPI', {

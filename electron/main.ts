@@ -15,18 +15,18 @@ import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'elect
 import AutoLaunch from 'auto-launch'
 
 import { appInfo, __dirname } from './appInfo'
-import { settings } from './settings'
-import { scriptbuffer } from './scriptbuffer'
+import { appSettings } from './appSettings'
+import { scriptBuffer } from './scriptBuffer'
 
 //const require = createRequire(import.meta.url)
 
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
-settings.load()  //  Load settings on startup
+appSettings.load()  //  Load settings on startup
 
 //  Verify auto launch is enabled if it should be
 autoLauncher.isEnabled().then((enabled) => {
   if (enabled) return
-  if (settings.startup) autoLauncher.enable()
+  if (appSettings.startup) autoLauncher.enable()
 }).catch((_error:any) => {})
 
 //  Windows & tray objects
@@ -75,15 +75,15 @@ const settingsEditorWindow = ():void => {
 
 /* Event handler for receiving settings */
 ipcMain.on('save-settings-data', async (_event, data) => {
-  if (settings.getJSON !== data) {
+  if (appSettings.getJSON !== data) {
     if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       type: 'question',
       title: 'Confirm',
       buttons: ['Yes', 'No'],
       message: 'Save changes?'
     }) === 0) {
-      settings.setJSON = data
-      settings.save()
+      appSettings.setJSON = data
+      appSettings.save()
       appTray?.setContextMenu(buildMenu())
     }
   }
@@ -97,7 +97,7 @@ ipcMain.on('reset-settings-data', async () => {
     buttons: ['Yes', 'No'],
     message: 'Are you sure you want to reset settings?'
   }) === 0) {
-    settings.reset()
+    appSettings.reset()
     appTray?.setContextMenu(buildMenu())
   }
 })
@@ -207,7 +207,7 @@ const buildMenu = ():Menu => {
      * @param cmd Command to run
      */
     const CommandRunner = (item:commandItem, cmd:string):void => {
-      if (settings.debug)
+      if (appSettings.debug)
         dialog.showMessageBox({
           type: 'info',
           title: appInfo.name,
@@ -217,12 +217,12 @@ const buildMenu = ():Menu => {
         })
 
       try {
-        const cmdRes = execSync(cmd, { windowsHide: !settings.debug })
-        scriptbuffer.write(`${cmd}\n` + cmdRes.toString())
+        const cmdRes = execSync(cmd, { windowsHide: !appSettings.debug })
+        scriptBuffer.write(`${cmd}\n` + cmdRes.toString())
       } catch (error:any) {
         dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
           `Command:  ${item.cmd}\nError:  ${error.message}`)
-        scriptbuffer.write(`Command:  ${item.cmd}\nError:  ${error.message}`)
+        scriptBuffer.write(`Command:  ${item.cmd}\nError:  ${error.message}`)
       }
     }
 
@@ -292,9 +292,9 @@ const buildMenu = ():Menu => {
 
   /* Generate the complete menu */
   const menu = new Menu()
-  buildLauncher(menu, settings.launchMenu)
+  buildLauncher(menu, appSettings.launchMenu)
   buildMain(menu)
-  if (settings.debug) console.log(menu)  //  Change to send to buffer
+  if (appSettings.debug) console.log(menu)  //  Change to send to buffer
   return menu
 }
 

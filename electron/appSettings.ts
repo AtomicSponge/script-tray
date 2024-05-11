@@ -19,7 +19,7 @@ export interface settingsJSON {
 }
 
 /** App settings */
-export class settings {
+export class appSettings {
   /** Tree of commands to build menu from */
   static launchMenu:Array<any>
   /** Load on startup */
@@ -28,9 +28,9 @@ export class settings {
   static debug:boolean
 
   constructor() {
-    settings.launchMenu = []
-    settings.startup = false
-    settings.debug = false
+    appSettings.launchMenu = []
+    appSettings.startup = false
+    appSettings.debug = false
     storage.setDataPath()
     return false
   }
@@ -42,13 +42,13 @@ export class settings {
         if (error) throw error
         if (hasKey) {
           const temp = <settingsJSON>storage.getSync('settings')
-          settings.launchMenu = temp.launchMenu
-          settings.startup = temp.startup
-          settings.debug = temp.debug
+          appSettings.launchMenu = temp.launchMenu
+          appSettings.startup = temp.startup
+          appSettings.debug = temp.debug
         } else {
-          settings.launchMenu = []
-          settings.startup = false
-          settings.debug = false
+          appSettings.launchMenu = []
+          appSettings.startup = false
+          appSettings.debug = false
         }
       })
     } catch (error:any) {
@@ -61,9 +61,9 @@ export class settings {
   static save = ():void => {
     try {
       storage.set('settings', {
-        launchMenu: settings.launchMenu,
-        startup: settings.startup,
-        debug: settings.debug
+        launchMenu: appSettings.launchMenu,
+        startup: appSettings.startup,
+        debug: appSettings.debug
       }, (error) => { if (error) throw error })
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
@@ -79,25 +79,25 @@ export class settings {
       dialog.showErrorBox(`${appInfo.name}`,
         `Error clearing settings!\n\n${error.message}`)
     }
-    settings.launchMenu = []
-    settings.startup = false
-    settings.debug = false
-    settings.save()
+    appSettings.launchMenu = []
+    appSettings.startup = false
+    appSettings.debug = false
+    appSettings.save()
   }
 
   /** Get the settings as a JSON object */
   static get getJSON():settingsJSON {
     return {
-      launchMenu: settings.launchMenu,
-      startup: settings.startup,
-      debug: settings.debug
+      launchMenu: appSettings.launchMenu,
+      startup: appSettings.startup,
+      debug: appSettings.debug
     }
   }
 
   /** Set the settings by using a JSON object */
   static set setJSON(data:settingsJSON) {
-    settings.launchMenu = data.launchMenu
-    settings.startup = data.startup
-    settings.debug = data.debug
+    appSettings.launchMenu = data.launchMenu
+    appSettings.startup = data.startup
+    appSettings.debug = data.debug
   }
 }
