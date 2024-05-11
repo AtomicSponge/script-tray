@@ -8,8 +8,6 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: false,
     minify: false,
-    rollupOptions: {
-      input: path.join(__dirname, 'html/input.html'),
-    },
-  },
+    rollupOptions: { input: path.join(__dirname, 'html/input.html') }
+  }
 })

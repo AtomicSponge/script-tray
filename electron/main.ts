@@ -44,10 +44,7 @@ const bufferWindow = ():void => {
     height: 600,
     fullscreen: false,
     fullscreenable: false,
-    autoHideMenuBar: true,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload-buffer.mjs'),
-    }
+    autoHideMenuBar: true
   })
   bufferWin.on('close', (_event) => {
     bufferWin?.destroy()
@@ -66,10 +63,7 @@ const settingsEditorWindow = ():void => {
     height: 600,
     fullscreen: false,
     fullscreenable: false,
-    autoHideMenuBar: true,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload-settings.mjs'),
-    }
+    autoHideMenuBar: true
   })
   settingsWin.on('close', (_event) => {
     settingsWin?.destroy()
@@ -137,10 +131,7 @@ const inputWindow = (data:inputWinData):void => {
     height: 100,
     fullscreen: false,
     fullscreenable: false,
-    autoHideMenuBar: true,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload-input.mjs'),
-    }
+    autoHideMenuBar: true
   })
   inputWin.on('close', (_event) => {
     resolveInputWin.reject('winCanceledEvent')

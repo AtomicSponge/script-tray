@@ -13,7 +13,7 @@ export default defineConfig(() => {
       vue(),
       electron({
         main: { entry: 'electron/main.ts' },
-        renderer: process.env.NODE_ENV === 'test' ? undefined : {}
+        preload: { input: path.join(__dirname, 'electron/preload.ts') }
       }),
       multiple([
         {
@@ -25,6 +25,9 @@ export default defineConfig(() => {
           config: 'vite.settings.config.ts',
         }
       ])
-    ]
+    ],
+    build: {
+      rollupOptions: { input: path.join(__dirname, 'html/index.html') }
+    }
   }
 })

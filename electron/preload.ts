@@ -12,7 +12,7 @@ import { ipcRenderer, contextBridge } from 'electron'
 import { settings } from './settings'
 import type { settingsJSON } from './settings'
 
-contextBridge.exposeInMainWorld('settings', {
+contextBridge.exposeInMainWorld('traySettings', {
   saveSettings: (data:settingsJSON) => {
     ipcRenderer.send('save-settings-data', data)
   },
