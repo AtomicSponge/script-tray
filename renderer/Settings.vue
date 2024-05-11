@@ -7,14 +7,15 @@
 <script setup lang="ts">
 window.onload = () => {
   const testTemp = <HTMLDivElement>document.getElementById('contents')
-  testTemp.innerText = window.settings.testData
+  testTemp.innerText = window.settingsAPI.data.toString()
 }
 </script>
 
 <template>
   <div>
     Settings
-    <button onclick="window.settings.resetSettings()">Reset Settings</button>
+    <button onclick="window.settingsAPI.resetSettings">Reset Settings</button>
+    <button onclick="window.settingsAPI.saveSettings">Save Settings</button>
   </div>
   <div id="contents">replace me</div>
   <div id="footer">Footer</div>
