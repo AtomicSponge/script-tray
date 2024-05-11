@@ -39,12 +39,16 @@ export class settings {
   static load = ():void => {
     try {
       storage.has('settings', (error, hasKey) => {
-        if(error) throw error
+        if (error) throw error
         if (hasKey) {
           const temp = <settingsJSON>storage.getSync('settings')
           settings.launchMenu = temp.launchMenu
           settings.startup = temp.startup
           settings.debug = temp.debug
+        } else {
+          settings.launchMenu = []
+          settings.startup = false
+          settings.debug = false
         }
       })
     } catch (error:any) {

@@ -25,9 +25,9 @@ settings.load()  //  Load settings on startup
 
 //  Verify auto launch is enabled if it should be
 autoLauncher.isEnabled().then((enabled) => {
-  if(enabled) return
-  if(settings.startup) autoLauncher.enable()
-})
+  if (enabled) return
+  if (settings.startup) autoLauncher.enable()
+}).catch((_error:any) => {})
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null
@@ -94,7 +94,7 @@ ipcMain.on('recieve-settings-data', async (_event, data) => {
     }) === 0) {
       settings.launchMenu = data.new
       settings.save()
-      appTray?.setContextMenu(await buildMenu())
+      appTray?.setContextMenu(buildMenu())
 
       /*if (dialog.showMessageBoxSync({
         type: 'question',
@@ -103,7 +103,7 @@ ipcMain.on('recieve-settings-data', async (_event, data) => {
         message: 'Are you sure you want to reset settings?'
       }) === 0) {
         settings.reset()
-        appTray?.setContextMenu(await buildMenu())
+        appTray?.setContextMenu(buildMenu())
       }*/
     }
   }
@@ -242,7 +242,7 @@ const buildMenu = ():Menu => {
      * @param array Array of items
      * @param callback Callback to run on each item
      */
-    const AsyncForEach = async (array:Array<any>, callback:Function):Promise<void> => {
+    const asyncForEach = async (array:Array<any>, callback:Function):Promise<void> => {
       for (let index = 0; index < array.length; index++)
         await callback(array[index], index, array)
     }
@@ -274,7 +274,7 @@ const buildMenu = ():Menu => {
               (async () => {
                 let runCanceled:boolean = false
                 let runCmd:string = <string>item.cmd
-                await AsyncForEach(<Array<string>>item.args, async (arg:string) => {
+                await asyncForEach(<Array<string>>item.args, async (arg:string) => {
                   inputWindow({ label: arg, command: <string>item.cmd })
                   await resolveInputWin.promise.then(res => {
                     runCmd += ' ' + res.new
@@ -325,5 +325,5 @@ app.whenReady().then(async () => {
   appTray = new Tray(appInfo.icon)
   appTray.setToolTip(appInfo.name)
   appTray.setTitle(appInfo.name)
-  appTray.setContextMenu(await buildMenu())
+  appTray.setContextMenu(buildMenu())
 })
