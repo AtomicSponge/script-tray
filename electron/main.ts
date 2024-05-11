@@ -88,6 +88,16 @@ ipcMain.on('recieve-settings-data', async (_event, data) => {
       settings.launchMenu = data.new
       settings.save()
       appTray?.setContextMenu(await buildMenu())
+
+      /*if (dialog.showMessageBoxSync({
+        type: 'question',
+        title: `${appInfo.name} - Confirm`,
+        buttons: ['Yes', 'No'],
+        message: 'Are you sure you want to reset settings?'
+      }) === 0) {
+        settings.reset()
+        appTray?.setContextMenu(await buildMenu())
+      }*/
     }
   }
   settingsWin?.destroy()
@@ -161,76 +171,27 @@ const aboutMessageBox = ():void => {
 }
 
 /** Builds the system tray menu */
-const buildMenu = async ():Promise<Menu> => {
+const buildMenu = ():Menu => {
   /**
    * Build the main menu part
    * @param menu Menu item to append to
    */
-  const Main = async (menu:Menu):Promise<void> => {
+  const Main = (menu:Menu):void => {
     menu.append(new MenuItem({ type: 'separator' }))
     menu.append(new MenuItem({
       label: `Show Output Buffer`,
       click: () => { bufferWindow() }
     }))
     menu.append(new MenuItem({ type: 'separator' }))
-    {
-      const optionsMenu = new Menu()
-      await Options(optionsMenu)
-      menu.append(new MenuItem({label: 'Settings', submenu: optionsMenu}))
-    }
+    menu.append(new MenuItem({ label: 'Settings',
+      click: () => { settingsEditorWindow() }
+    }))
     menu.append(new MenuItem({ type: 'separator' }))
     menu.append(new MenuItem({
       label: `About ${appInfo.name}`,
       click: () => { aboutMessageBox() }
     }))
     menu.append(new MenuItem({ label: `Close ${appInfo.name}`, role: 'quit' }))
-  }
-
-  /**
-   * Build the options (settings) menu part
-   * @param menu Menu item to append to
-   */
-  const Options = async (menu:Menu):Promise<void> => {
-    menu.append(new MenuItem({ label: 'Edit Command Menu',
-      click: () => { settingsEditorWindow() }
-    }))
-    menu.append(new MenuItem({ type: 'separator' }))
-    menu.append(new MenuItem({
-      label: 'Start at login',
-      type: 'checkbox',
-      checked: (await autoLauncher.isEnabled()) ? true : false,
-      click: (item) => { 
-        try {
-          (item.checked) ? autoLauncher.enable() : autoLauncher.disable()
-        } catch (error:any) {
-          dialog.showErrorBox(`${appInfo.name}`, `${error.message}`)
-        }
-      }
-    }))
-    menu.append(new MenuItem({
-      label: 'Enable debugging',
-      type: 'checkbox',
-      checked: (settings.debug) ? true : false,
-      click: (item) => {
-        { (item.checked) ? settings.debug = true : settings.debug = false }
-        settings.save()
-      }
-    }))
-    menu.append(new MenuItem({ type: 'separator' }))
-    menu.append(new MenuItem({
-      label: 'Reset settings',
-      click: async () => {
-        if (dialog.showMessageBoxSync({
-          type: 'question',
-          title: `${appInfo.name} - Confirm`,
-          buttons: ['Yes', 'No'],
-          message: 'Are you sure you want to reset settings?'
-        }) === 0) {
-          settings.reset()
-          appTray?.setContextMenu(await buildMenu())
-        }
-      }
-    }))
   }
 
   /**
@@ -337,7 +298,7 @@ const buildMenu = async ():Promise<Menu> => {
    */
   const menu = new Menu()
   Launcher(menu, settings.launchMenu)
-  await Main(menu)
+  Main(menu)
   if (settings.debug) console.log(menu)  //  Change to send to buffer
   return menu
 }
