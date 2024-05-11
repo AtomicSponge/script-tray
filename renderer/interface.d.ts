@@ -7,6 +7,10 @@
  * 
  */
 
+export interface IbufferAPI {
+  getData: () => string
+}
+
 export interface IsettingsAPI {
   saveSettings: (data:settingsJSON) => void
   resetSettings: () => void
@@ -15,6 +19,7 @@ export interface IsettingsAPI {
 
 declare global {
   interface Window {
+    bufferAPI:IbufferAPI
     settingsAPI:IsettingsAPI
   }
 }
