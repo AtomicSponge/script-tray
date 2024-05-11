@@ -1,7 +1,3 @@
-.npmignore
-node_modules/
-dist/
-*_bak/
-out/
-*.code-workspace
-package-lock.json
+node_modules
+dist
+dist-electron
