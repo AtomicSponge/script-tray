@@ -8,8 +8,13 @@
 </script>
 
 <template>
-  <h1>Settings</h1>
+  <div>Settings</div>
+  <div id="footer">Footer</div>
 </template>
 
-<style scoped>
+<style lang="stylus" scoped>
+#footer
+  position fixed
+  bottom 0
+  width 100%
 </style>

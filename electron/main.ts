@@ -16,6 +16,7 @@ import AutoLaunch from 'auto-launch'
 
 import { appInfo, __dirname } from './appInfo'
 import { settings } from './settings'
+import { scriptbuffer } from './scriptbuffer'
 
 //const require = createRequire(import.meta.url)
 
@@ -259,10 +260,12 @@ const buildMenu = async ():Promise<Menu> => {
         })
 
       try {
-        execSync(cmd, { windowsHide: !settings.debug })
+        const cmdRes = execSync(cmd, { windowsHide: !settings.debug })
+        scriptbuffer.write(`${cmd}\n` + cmdRes.toString())
       } catch (error:any) {
         dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
           `Command:  ${item.cmd}\nError:  ${error.message}`)
+        scriptbuffer.write(`Command:  ${item.cmd}\nError:  ${error.message}`)
       }
     }
 
