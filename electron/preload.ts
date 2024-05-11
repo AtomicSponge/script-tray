@@ -11,7 +11,6 @@ import { ipcRenderer, contextBridge } from 'electron'
 
 import { settings } from './settings'
 import { scriptbuffer } from './scriptbuffer'
-import type { settingsJSON } from './settings'
 
 contextBridge.exposeInIsolatedWorld(4201, 'bufferAPI', {
   getData: ():string => {
@@ -20,7 +19,7 @@ contextBridge.exposeInIsolatedWorld(4201, 'bufferAPI', {
 })
 
 contextBridge.exposeInMainWorld('settingsAPI', {
-  saveSettings: (data:settingsJSON):void => {
+  saveSettings: (data:JSON):void => {
     ipcRenderer.send('save-settings-data', data)
   },
   resetSettings: ():void => {
