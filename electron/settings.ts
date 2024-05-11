@@ -14,6 +14,7 @@ import { appInfo } from './appInfo'
 
 interface settingsJSON {
   launchMenu:Array<any>
+  startup:boolean
   debug:boolean
 }
 
@@ -21,11 +22,14 @@ interface settingsJSON {
 export class settings {
   /** Tree of commands to build menu from */
   static launchMenu:Array<any>
+  /** Load on startup */
+  static startup:boolean
   /** Debug mode */
   static debug:boolean
 
   constructor() {
     settings.launchMenu = []
+    settings.startup = false
     settings.debug = false
     storage.setDataPath()
     return false
@@ -39,10 +43,8 @@ export class settings {
         if (hasKey) {
           const temp = <settingsJSON>storage.getSync('settings')
           settings.launchMenu = temp.launchMenu
+          settings.startup = temp.startup
           settings.debug = temp.debug
-        } else {
-          settings.launchMenu = []
-          settings.debug = false
         }
       })
     } catch (error:any) {
@@ -56,6 +58,7 @@ export class settings {
     try {
       storage.set('settings', {
         launchMenu: settings.launchMenu,
+        startup: settings.startup,
         debug: settings.debug
       }, (error) => { if (error) throw error })
     } catch (error:any) {
@@ -73,6 +76,7 @@ export class settings {
         `Error clearing settings!\n\n${error.message}`)
     }
     settings.launchMenu = []
+    settings.startup = false
     settings.debug = false
     settings.save()
   }

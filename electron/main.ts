@@ -23,6 +23,13 @@ import { scriptbuffer } from './scriptbuffer'
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 settings.load()  //  Load settings on startup
 
+//  Verify auto launch is enabled if it should be
+autoLauncher.isEnabled().then((enabled) => {
+  if(enabled) return
+  if(settings.startup) autoLauncher.enable()
+})
+
+//  Windows & tray objects
 let bufferWin:BrowserWindow | null
 let settingsWin:BrowserWindow | null
 let inputWin:BrowserWindow | null
@@ -176,7 +183,7 @@ const buildMenu = ():Menu => {
    * Build the main menu part
    * @param menu Menu item to append to
    */
-  const Main = (menu:Menu):void => {
+  const buildMain = (menu:Menu):void => {
     menu.append(new MenuItem({ type: 'separator' }))
     menu.append(new MenuItem({
       label: `Show Output Buffer`,
@@ -199,7 +206,7 @@ const buildMenu = ():Menu => {
    * @param menu Menu item to append to
    * @param collection Menu items to process
    */
-  const Launcher = (menu:Menu, collection:Array<any>):void => {
+  const buildLauncher = (menu:Menu, collection:Array<any>):void => {
     interface commandItem {
       label:string
       cmd:string
@@ -249,7 +256,7 @@ const buildMenu = ():Menu => {
           return
         }
         const tempMenu = new Menu()
-        Launcher(tempMenu, item)  //  Recursive call to keep building menus
+        buildLauncher(tempMenu, item)  //  Recursive call to keep building menus
         //  Add the generated sub menu
         menu.append(new MenuItem({ label: menuTitle.menu, submenu: tempMenu}))
         return  //  Next item
@@ -293,12 +300,11 @@ const buildMenu = ():Menu => {
         `${Object.keys(item)}\n${Object.values(item)}`)
     })
   }
-  /*
-   * Generate the complete menu
-   */
+
+  /* Generate the complete menu */
   const menu = new Menu()
-  Launcher(menu, settings.launchMenu)
-  Main(menu)
+  buildLauncher(menu, settings.launchMenu)
+  buildMain(menu)
   if (settings.debug) console.log(menu)  //  Change to send to buffer
   return menu
 }
