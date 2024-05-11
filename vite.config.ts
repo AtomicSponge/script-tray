@@ -27,7 +27,7 @@ export default defineConfig(() => {
       ])
     ],
     build: {
-      rollupOptions: { input: path.join(__dirname, 'html/index.html') }
+      rollupOptions: { input: path.join(__dirname, 'html/buffer.html') }
     }
   }
 })
