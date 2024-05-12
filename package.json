@@ -8,12 +8,11 @@
   "homepage": "https://github.com/AtomicSponge/script_tray#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AtomicSponge/script_tray.git"
+    "url": "https://github.com/AtomicSponge/script_tray.git"
   },
   "bugs": {
     "url": "https://github.com/AtomicSponge/script_tray/issues"
   },
-  "type": "module",
   "main": "dist-electron/main.js",
   "scripts": {
     "dev": "vite",
@@ -36,7 +35,6 @@
     "vite": "^5.2.11",
     "vite-plugin-electron": "^0.28.7",
     "vite-plugin-electron-renderer": "^0.14.5",
-    "vite-plugin-multiple": "^0.2.0",
-    "vue-tsc": "^2.0.17"
+    "vite-plugin-multiple": "^0.2.0"
   }
 }
