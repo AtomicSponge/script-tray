@@ -128,7 +128,7 @@ ipcMain.on('reset-settings-data', async () => {
 })
 
 /** Window for argument input */
-const inputWindow = (data:InputWinData):void => {
+const inputWindow = (data:CommandData):void => {
   inputWin = new BrowserWindow({
     icon: appInfo.icon,
     title: `${appInfo.name} - ${data.label}`,
@@ -208,17 +208,12 @@ const buildMenu = ():Menu => {
    * @param collection Menu items to process
    */
   const buildLauncher = (menu:Menu, collection:Array<any>):void => {
-    interface CommandItem {
-      label:string
-      cmd:string
-      args?:Array<string>
-    }
     /**
      * Function to run a command
      * @param item Menu item calling the run
      * @param cmd Command to run
      */
-    const CommandRunner = (item:CommandItem, cmd:string):void => {
+    const CommandRunner = (item:CommandData, cmd:string):void => {
       if (appSettings.debug)
         dialog.showMessageBox({
           type: 'info',
@@ -233,8 +228,8 @@ const buildMenu = ():Menu => {
         resBuff.write(`Command:  ${cmd}\n${cmdRes.toString()}\n`)
       } catch (error:any) {
         dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
-          `Command:  ${item.cmd}\nError:  ${error.message}`)
-        resBuff.write(`Command:  ${item.cmd}\nError:  ${error.message}\n`)
+          `Command:  ${item.command}\nError:  ${error.message}`)
+        resBuff.write(`Command:  ${item.command}\nError:  ${error.message}\n`)
       }
     }
 

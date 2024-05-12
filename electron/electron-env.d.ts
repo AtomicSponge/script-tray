@@ -52,8 +52,8 @@ declare global {
     debug:boolean
   }
   
-  /** Data for the Input Window */
-  interface InputWinData {
+  /** Data for command object format */
+  interface CommandData {
     label:string
     command:string
   }
