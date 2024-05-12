@@ -9,7 +9,7 @@
 
 import { ipcRenderer, contextBridge } from 'electron'
 
-contextBridge.exposeInIsolatedWorld(4201, 'bufferAPI', {
+contextBridge.exposeInMainWorld('bufferAPI', {
   onUpdateBuffer: (callback:Function):void => {
     ipcRenderer.on('send-buffer-data', (_event, value) => callback(value))
   }

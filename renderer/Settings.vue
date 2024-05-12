@@ -28,9 +28,9 @@ window.onload = () => {
   <div id="contents">replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/></div>
   <footer>
     <select id="menu-select">
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
+      <option value="1">Command Launcher</option>
+      <option value="2">Sub Menu</option>
+      <option value="3">Spacer</option>
     </select>
     <button>Add</button>
   </footer>

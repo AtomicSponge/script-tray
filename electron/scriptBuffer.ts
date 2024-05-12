@@ -7,38 +7,45 @@
  * 
  */
 
-export class scriptBuffer {
-  static #buffer:Array<string>
-  static #maxSize:number
-
-  constructor() {
-    scriptBuffer.#buffer = []
-    scriptBuffer.#maxSize = 100
-    return false
+interface IscriptBuffer {
+  readonly data: {
+    buffer:Array<string>
+    maxSize:number
   }
+  read():string
+  write(data:string):void
+  get size():number
+  set size(val:number)
+}
+
+export const scriptBuffer:IscriptBuffer = {
+  data: {
+    buffer: [],
+    maxSize: 100
+  },
 
   /**
    * Read the script buffer
    * @returns The entire buffer formatted as a single string
    */
-  static read():string {
+  read():string {
     let resStr = ''
-    scriptBuffer.#buffer.forEach(str => resStr += `${str}\n\n`)
+    scriptBuffer.data.buffer.forEach(str => resStr += `${str}\n\n`)
     return resStr
-  }
+  },
 
   /**
    * Write to the script buffer
    * @param data Data to write
    */
-  static write(data:string) {
-    scriptBuffer.#buffer.push(data)
-    if(scriptBuffer.#buffer.length > scriptBuffer.#maxSize)
-      scriptBuffer.#buffer = scriptBuffer.#buffer.slice(-scriptBuffer.#maxSize)
-  }
+  write(data:string):void {
+    scriptBuffer.data.buffer.push(data)
+    if(scriptBuffer.data.buffer.length > scriptBuffer.data.maxSize)
+      scriptBuffer.data.buffer = scriptBuffer.data.buffer.slice(-scriptBuffer.data.maxSize)
+  },
 
   /** Get the max buffer size */
-  static get size():number { return scriptBuffer.#maxSize }
+  get size():number { return scriptBuffer.data.maxSize },
   /** Set the max buffer size */
-  static set size(val:number) { scriptBuffer.#maxSize = val }
+  set size(val:number) { scriptBuffer.data.maxSize = val }
 }
