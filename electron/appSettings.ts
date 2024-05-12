@@ -55,10 +55,6 @@ export const appSettings:IappSettings = {
           appSettings.launchMenu = temp.launchMenu
           appSettings.startup = temp.startup
           appSettings.debug = temp.debug
-        } else {
-          appSettings.launchMenu = []
-          appSettings.startup = false
-          appSettings.debug = false
         }
       })
     } catch (error:any) {
@@ -83,16 +79,9 @@ export const appSettings:IappSettings = {
 
   /** Reset settings */
   reset():void {
-    try {
-      storage.clear((error) => { if (error) throw error })
-    } catch (error:any) {
-      dialog.showErrorBox(`${appInfo.name}`,
-        `Error clearing settings!\n\n${error.message}`)
-    }
     appSettings.launchMenu = []
     appSettings.startup = false
     appSettings.debug = false
-    appSettings.save()
   },
 
   /** Get the settings as a JSON object */
