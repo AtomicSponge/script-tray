@@ -21,8 +21,8 @@ window.onload = () => {
       <input type="checkbox">Debug mode</input>
     </div>
     <div class="rightheader">
-      <button onclick="window.settingsAPI.resetSettings">Reset Settings</button>
-      <button onclick="window.settingsAPI.saveSettings">Save Settings</button>
+      <button onclick="window.settingsAPI.resetSettings()">Reset Settings</button>
+      <button onclick="window.settingsAPI.saveSettings()">Save Settings</button>
     </div>
   </header>
   <div id="contents">replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/></div>

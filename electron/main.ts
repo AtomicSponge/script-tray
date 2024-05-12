@@ -16,9 +16,11 @@ import AutoLaunch from 'auto-launch'
 import { appInfo } from './appInfo'
 import { appSettings } from './appSettings'
 import { ScriptBuffer } from './ScriptBuffer'
+import { Resolver } from './Resolver'
 
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 const resBuff = new ScriptBuffer()
+const resolveInputWin = new Resolver()
 appSettings.config()
 
 //  Verify auto launch is enabled if it should be
@@ -48,12 +50,13 @@ const bufferWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
       preload: path.join(__dirname, '../dist-electron/preload.js'),
     }
   })
   bufferWin.webContents.on('did-finish-load', () => {
-    //bufferWin?.webContents.send('send-buffer-data', resBuff.read())
-    bufferWin?.webContents.send('send-buffer-data', 'THIS IS A TEST')
+    bufferWin?.webContents.send('send-buffer-data', resBuff.read())
   })
   //Add a trigger buffer update
   //bufferWin.webContents.send('send-buffer-data', resBuff.read())
@@ -76,6 +79,8 @@ const settingsEditorWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
       preload: path.join(__dirname, '../dist-electron/preload.js'),
     }
   })
@@ -120,20 +125,6 @@ ipcMain.on('reset-settings-data', async () => {
   }
 })
 
-/** Wrapper to Promise class to access functions */
-class Resolver {
-  promise:Promise<any>
-  reject:Function = () => {}
-  resolve:Function = () => {}
-  constructor() {
-    this.promise = new Promise((resolve, reject) => {
-      this.reject = reject
-      this.resolve = resolve
-    })
-  }
-}
-const resolveInputWin = new Resolver()
-
 /** Data for the Input Window */
 interface inputWinData {
   label:string    //  
@@ -151,6 +142,8 @@ const inputWindow = (data:inputWinData):void => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
       preload: path.join(__dirname, '../dist-electron/preload.js'),
     }
   })
