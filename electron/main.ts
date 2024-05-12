@@ -100,7 +100,7 @@ ipcMain.on('save-settings-data', async (_event, data) => {
   if (appSettings.getJSON !== data) {
     if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       type: 'question',
-      title: 'Confirm',
+      title: `${appInfo.name} - Confirm`,
       buttons: ['Yes', 'No'],
       message: 'Save changes?'
     }) === 0) {

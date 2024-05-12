@@ -95,6 +95,7 @@ export const appSettings:IappSettings = {
 
   /** Set the settings by using a JSON object */
   set setJSON(data:settingsJSON) {
+    if(data === undefined || data === null) return
     appSettings.launchMenu = data.launchMenu
     appSettings.startup = data.startup
     appSettings.debug = data.debug

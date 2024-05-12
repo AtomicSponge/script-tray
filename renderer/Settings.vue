@@ -22,6 +22,7 @@ window.onload = () => {
     </div>
     <div class="rightheader">
       <button onclick="window.settingsAPI.resetSettings()">Reset Settings</button>
+      &nbsp;
       <button onclick="window.settingsAPI.saveSettings()">Save Settings</button>
     </div>
   </header>
@@ -37,8 +38,10 @@ window.onload = () => {
 </template>
 
 <style lang="stylus" scoped>
+@import './styleVars.styl'
+
 header
-  background-color #242424
+  background-color app_bg_color
   position fixed
   top 0
   width 100%
@@ -47,7 +50,7 @@ header
 .rightheader
   float right
 footer
-  background-color #242424
+  background-color app_bg_color
   position fixed
   bottom 0
   width 100%
