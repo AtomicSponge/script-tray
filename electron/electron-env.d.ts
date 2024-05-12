@@ -20,3 +20,25 @@ declare namespace NodeJS {
     VITE_PUBLIC: string
   }
 }
+
+export interface IbufferAPI {
+  onUpdateBuffer: (callback:Function) => void
+}
+
+export interface IsettingsAPI {
+  saveSettings: (data:JSON) => void
+  resetSettings: () => void
+  onUpdateSettings: (callback:Function) => void
+}
+
+export interface IinputAPI {
+  //
+}
+
+declare global {
+  interface Window {
+    bufferAPI:IbufferAPI
+    settingsAPI:IsettingsAPI
+    inputAPI:IinputAPI
+  }
+}
