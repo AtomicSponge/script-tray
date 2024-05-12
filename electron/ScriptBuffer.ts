@@ -32,12 +32,20 @@ export class ScriptBuffer {
    */
   write(data:string):void {
     this.#buffer.push(data)
+    this.#trim()
+  }
+
+  //  Trim the buffer to max size
+  #trim():void {
     if(this.#buffer.length > this.#maxSize)
       this.#buffer = this.#buffer.slice(-this.#maxSize)
   }
 
   /** Get the max buffer size */
   get size():number { return this.#maxSize }
-  /** Set the max buffer size */
-  set size(val:number) { this.#maxSize = val }
+  /** Set the max buffer size and trim if necessary */
+  set size(val:number) {
+    this.#maxSize = val
+    this.#trim()
+  }
 }

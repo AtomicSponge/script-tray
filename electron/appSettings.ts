@@ -14,12 +14,14 @@ import { appInfo } from './appInfo'
 
 interface settingsJSON {
   launchMenu:Array<any>
+  bufferSize:number
   startup:boolean
   debug:boolean
 }
 
 interface IappSettings {
   launchMenu:Array<any>
+  bufferSize:number
   startup:boolean
   debug:boolean
   config():void
@@ -34,6 +36,8 @@ interface IappSettings {
 export const appSettings:IappSettings = {
   /** Tree of commands to build menu from */
   launchMenu: [],
+  /** Buffer size */
+  bufferSize: 100,
   /** Load on startup */
   startup: false,
   /** Debug mode */
@@ -53,6 +57,7 @@ export const appSettings:IappSettings = {
         if (hasKey) {
           const temp = <settingsJSON>storage.getSync('settings')
           appSettings.launchMenu = temp.launchMenu
+          appSettings.bufferSize = temp.bufferSize
           appSettings.startup = temp.startup
           appSettings.debug = temp.debug
         }
@@ -80,6 +85,7 @@ export const appSettings:IappSettings = {
   /** Reset settings */
   reset():void {
     appSettings.launchMenu = []
+    appSettings.bufferSize = 100
     appSettings.startup = false
     appSettings.debug = false
   },
@@ -88,6 +94,7 @@ export const appSettings:IappSettings = {
   get getJSON():settingsJSON {
     return {
       launchMenu: appSettings.launchMenu,
+      bufferSize: appSettings.bufferSize,
       startup: appSettings.startup,
       debug: appSettings.debug
     }
@@ -97,6 +104,7 @@ export const appSettings:IappSettings = {
   set setJSON(data:settingsJSON) {
     if(data === undefined || data === null) return
     appSettings.launchMenu = data.launchMenu
+    appSettings.bufferSize = data.bufferSize
     appSettings.startup = data.startup
     appSettings.debug = data.debug
   }

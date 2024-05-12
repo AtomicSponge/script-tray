@@ -22,6 +22,7 @@ const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 const resBuff = new ScriptBuffer()
 const resolveInputWin = new Resolver()
 appSettings.config()
+resBuff.size = appSettings.bufferSize
 
 //  Verify auto launch is enabled if it should be
 autoLauncher.isEnabled().then((enabled) => {
@@ -105,6 +106,7 @@ ipcMain.on('save-settings-data', async (_event, data) => {
       message: 'Save changes?'
     }) === 0) {
       appSettings.setJSON = data
+      resBuff.size = appSettings.bufferSize
       appSettings.save()
       appTray?.setContextMenu(buildMenu())
     }
