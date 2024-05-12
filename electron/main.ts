@@ -214,15 +214,6 @@ const buildMenu = ():Menu => {
      * @param cmd Command to run
      */
     const CommandRunner = (item:CommandData, cmd:string):void => {
-      if (appSettings.debug)
-        dialog.showMessageBox({
-          type: 'info',
-          title: appInfo.name,
-          message: `Running command '${item.label}'`,
-          detail: `Command:  ${cmd}`,
-          icon: appInfo.icon
-        })
-
       try {
         const cmdRes = execSync(cmd, { windowsHide: !appSettings.debug })
         resBuff.write(`Command:  ${cmd}\n${cmdRes.toString()}\n`)
