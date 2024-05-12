@@ -14,12 +14,17 @@ export interface IbufferAPI {
 export interface IsettingsAPI {
   saveSettings: (data:JSON) => void
   resetSettings: () => void
-  async getSettingsData: () => Promise<JSON>
+  onUpdateSettings: (callback:Function) => void
+}
+
+export interface IinputAPI {
+  //
 }
 
 declare global {
   interface Window {
     bufferAPI:IbufferAPI
     settingsAPI:IsettingsAPI
+    inputAPI:IinputAPI
   }
 }

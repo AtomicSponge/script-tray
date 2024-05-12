@@ -46,6 +46,10 @@ const bufferWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true
   })
+  bufferWin.webContents.on('did-finish-load', () => {
+    bufferWin?.webContents.send('send-buffer-data', scriptBuffer.read())
+  })
+  //Add a trigger buffer update
   //bufferWin.webContents.send('send-buffer-data', scriptBuffer.read())
   bufferWin.on('close', (_event) => {
     bufferWin?.destroy()
@@ -66,6 +70,9 @@ const settingsEditorWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true
   })
+  settingsWin.webContents.on('did-finish-load', () => {
+    settingsWin?.webContents.send('send-settings-data', appSettings.getJSON)
+  })
   settingsWin.on('close', (_event) => {
     settingsWin?.destroy()
   })
@@ -73,9 +80,6 @@ const settingsEditorWindow = ():void => {
     settingsWin.loadURL('http://localhost:5174/html/settings.html') :
     settingsWin.loadFile(path.join(__dirname, '../dist/html/settings.html'))}
 }
-
-/* Event handler to send settings data to window */
-ipcMain.handle('send-settings-data', () => { return appSettings.getJSON })
 
 /* Event handler for receiving settings */
 ipcMain.on('save-settings-data', async (_event, data) => {

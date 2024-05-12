@@ -5,9 +5,11 @@
 -->
 
 <script setup lang="ts">
-window.onload = async () => {
+window.onload = () => {
   const testTemp = <HTMLDivElement>document.getElementById('contents')
-  testTemp.innerText = await window.settingsAPI.getSettingsData().toString()
+  window.settingsAPI.onUpdateSettings((settingsData:JSON) => {
+    testTemp.innerText = settingsData.toString()
+  })
 }
 </script>
 
