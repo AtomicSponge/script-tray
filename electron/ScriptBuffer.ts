@@ -43,8 +43,13 @@ export class ScriptBuffer {
 
   /** Get the max buffer size */
   get size():number { return this.#maxSize }
-  /** Set the max buffer size and trim if necessary */
+  /**
+   * Set the max buffer size and trim if necessary
+   * Minimum size: 10 - Maximum size: 500
+   */
   set size(val:number) {
+    if(val < 10) val = 10
+    if(val > 500) val = 500
     this.#maxSize = val
     this.#trim()
   }
