@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld('bufferAPI', {
 })
 
 contextBridge.exposeInMainWorld('settingsAPI', {
-  saveSettings: (data:JSON):void => {
+  saveSettings: (data:SettingsJSON):void => {
     ipcRenderer.send('save-settings-data', data)
   },
   resetSettings: ():void => {
@@ -28,5 +28,10 @@ contextBridge.exposeInMainWorld('settingsAPI', {
 })
 
 contextBridge.exposeInMainWorld('inputAPI', {
-  //
+  sendInput: (data:InputWinData): void => {
+    ipcRenderer.send('recieve-input-data', data)
+  },
+  onReceiveData: (callback:Function):void => {
+    ipcRenderer.on('send-input-data', (_event, value) => callback(value))
+  }
 })

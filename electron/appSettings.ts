@@ -12,24 +12,13 @@ import storage from 'electron-json-storage'
 
 import { appInfo } from './appInfo'
 
-interface settingsJSON {
-  launchMenu:Array<any>
-  bufferSize:number
-  startup:boolean
-  debug:boolean
-}
-
-interface IappSettings {
-  launchMenu:Array<any>
-  bufferSize:number
-  startup:boolean
-  debug:boolean
+interface IappSettings extends SettingsJSON {
   config():void
   load():void
   save():void
   reset():void
-  get getJSON():settingsJSON
-  set setJSON(data:settingsJSON)
+  get getJSON():SettingsJSON
+  set setJSON(data:SettingsJSON)
 }
 
 /** App settings */
@@ -55,7 +44,7 @@ export const appSettings:IappSettings = {
       storage.has('settings', (error, hasKey) => {
         if (error) throw error
         if (hasKey) {
-          const temp = <settingsJSON>storage.getSync('settings')
+          const temp = <SettingsJSON>storage.getSync('settings')
           appSettings.launchMenu = temp.launchMenu
           appSettings.bufferSize = temp.bufferSize
           appSettings.startup = temp.startup
@@ -88,7 +77,7 @@ export const appSettings:IappSettings = {
   },
 
   /** Get the settings as a JSON object */
-  get getJSON():settingsJSON {
+  get getJSON():SettingsJSON {
     return {
       launchMenu: appSettings.launchMenu,
       bufferSize: appSettings.bufferSize,
@@ -98,9 +87,9 @@ export const appSettings:IappSettings = {
   },
 
   /** Set the settings by using a JSON object */
-  set setJSON(data:settingsJSON) {
+  set setJSON(data:SettingsJSON) {
     if(data === undefined || data === null) return
-    if(!data.hasOwnProperty('launchMenu')) return
+    if(!data.hasOwnProperty('launchMenu') || !(data.launchMenu instanceof Array)) return
     if(!data.hasOwnProperty('bufferSize')) return
     if(!data.hasOwnProperty('startup')) return
     if(!data.hasOwnProperty('debug')) return

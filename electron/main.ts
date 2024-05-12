@@ -127,14 +127,8 @@ ipcMain.on('reset-settings-data', async () => {
   }
 })
 
-/** Data for the Input Window */
-interface inputWinData {
-  label:string    //  
-  command:string  //
-}
-
 /** Window for argument input */
-const inputWindow = (data:inputWinData):void => {
+const inputWindow = (data:InputWinData):void => {
   inputWin = new BrowserWindow({
     icon: appInfo.icon,
     title: `${appInfo.name} - ${data.label}`,

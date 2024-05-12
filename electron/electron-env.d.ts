@@ -32,7 +32,8 @@ export interface IsettingsAPI {
 }
 
 export interface IinputAPI {
-  //
+  sendInput: (data:string) => void
+  onReceiveData: (callback:Function) => void
 }
 
 declare global {
@@ -40,5 +41,19 @@ declare global {
     bufferAPI:IbufferAPI
     settingsAPI:IsettingsAPI
     inputAPI:IinputAPI
+  }
+
+  /** Settings JSON format */
+  interface SettingsJSON {
+    launchMenu:Array<any>
+    bufferSize:number
+    startup:boolean
+    debug:boolean
+  }
+  
+  /** Data for the Input Window */
+  interface InputWinData {
+    label:string
+    command:string
   }
 }
