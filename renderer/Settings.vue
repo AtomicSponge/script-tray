@@ -14,17 +14,40 @@ window.onload = () => {
 </script>
 
 <template>
-  <div>
-    Settings
-    <button onclick="window.settingsAPI.resetSettings">Reset Settings</button>
-    <button onclick="window.settingsAPI.saveSettings">Save Settings</button>
-  </div>
-  <div id="contents">replace me</div>
-  <div id="footer">Footer</div>
+  <header>
+    <div class="leftheader">
+      <input type="checkbox">Load on startup</input>
+      &nbsp;&nbsp;&nbsp;
+      <input type="checkbox">Debug mode</input>
+    </div>
+    <div class="rightheader">
+      <button onclick="window.settingsAPI.resetSettings">Reset Settings</button>
+      <button onclick="window.settingsAPI.saveSettings">Save Settings</button>
+    </div>
+  </header>
+  <div id="contents">replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/></div>
+  <footer>
+    <select id="menu-select">
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+    </select>
+    <button>Add</button>
+  </footer>
 </template>
 
 <style lang="stylus" scoped>
-#footer
+header
+  background-color #242424
+  position fixed
+  top 0
+  width 100%
+.leftheader
+  float: left
+.rightheader
+  float right
+footer
+  background-color #242424
   position fixed
   bottom 0
   width 100%

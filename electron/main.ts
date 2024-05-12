@@ -63,7 +63,7 @@ const bufferWindow = ():void => {
 const settingsEditorWindow = ():void => {
   settingsWin = new BrowserWindow({
     icon: appInfo.icon,
-    title: `${appInfo.name} - Editing Menu`,
+    title: `${appInfo.name} - Settings`,
     width: 800,
     height: 600,
     fullscreen: false,
