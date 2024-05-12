@@ -73,6 +73,9 @@ const settingsEditorWindow = ():void => {
     settingsWin.loadFile(path.join(__dirname, '../dist/html/settings.html'))}
 }
 
+/* Event handler to send settings data to window */
+ipcMain.handle('send-settings-data', () => { return appSettings.getJSON })
+
 /* Event handler for receiving settings */
 ipcMain.on('save-settings-data', async (_event, data) => {
   if (appSettings.getJSON !== data) {

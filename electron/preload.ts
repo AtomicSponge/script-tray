@@ -22,7 +22,7 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   resetSettings: ():void => {
     ipcRenderer.send('reset-settings-data', true)
   },
-  data: { test: "hello!" }
+  getSettingsData: async ():Promise<JSON> => ipcRenderer.invoke('send-settings-data')
 })
 
 contextBridge.exposeInIsolatedWorld(4203, 'inputAPI', {

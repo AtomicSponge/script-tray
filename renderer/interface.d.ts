@@ -14,7 +14,7 @@ export interface IbufferAPI {
 export interface IsettingsAPI {
   saveSettings: (data:JSON) => void
   resetSettings: () => void
-  data:JSON
+  async getSettingsData: () => Promise<JSON>
 }
 
 declare global {

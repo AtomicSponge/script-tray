@@ -5,9 +5,9 @@
 -->
 
 <script setup lang="ts">
-window.onload = () => {
+window.onload = async () => {
   const testTemp = <HTMLDivElement>document.getElementById('contents')
-  testTemp.innerText = window.settingsAPI.data.toString()
+  testTemp.innerText = await window.settingsAPI.getSettingsData().toString()
 }
 </script>
 
