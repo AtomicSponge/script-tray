@@ -17,12 +17,13 @@ import storage from 'electron-json-storage'
 
 import { appInfo, __dirname } from './appInfo'
 import { appSettings } from './appSettings'
-import { scriptBuffer } from './scriptBuffer'
+import { ScriptBuffer } from './ScriptBuffer'
 
 //const require = createRequire(import.meta.url)
 
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 storage.setDataPath()
+const resBuff = new ScriptBuffer()
 appSettings.load()  //  Load settings on startup
 
 //  Verify auto launch is enabled if it should be
@@ -49,11 +50,11 @@ const bufferWindow = ():void => {
     autoHideMenuBar: true
   })
   bufferWin.webContents.on('did-finish-load', () => {
-    //bufferWin?.webContents.send('send-buffer-data', scriptBuffer.read())
+    //bufferWin?.webContents.send('send-buffer-data', resBuff.read())
     bufferWin?.webContents.send('send-buffer-data', 'THIS IS A TEST')
   })
   //Add a trigger buffer update
-  //bufferWin.webContents.send('send-buffer-data', scriptBuffer.read())
+  //bufferWin.webContents.send('send-buffer-data', resBuff.read())
   bufferWin.on('close', (_event) => {
     bufferWin?.destroy()
   })
@@ -230,11 +231,11 @@ const buildMenu = ():Menu => {
 
       try {
         const cmdRes = execSync(cmd, { windowsHide: !appSettings.debug })
-        scriptBuffer.write(`${cmd}\n` + cmdRes.toString())
+        resBuff.write(`${cmd}\n` + cmdRes.toString())
       } catch (error:any) {
         dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
           `Command:  ${item.cmd}\nError:  ${error.message}`)
-        scriptBuffer.write(`Command:  ${item.cmd}\nError:  ${error.message}`)
+        resBuff.write(`Command:  ${item.cmd}\nError:  ${error.message}`)
       }
     }
 
