@@ -305,7 +305,6 @@ const buildMenu = ():Menu => {
   const menu = new Menu()
   buildLauncher(menu, appSettings.launchMenu)
   buildMain(menu)
-  if (appSettings.debug) console.log(menu)  //  Change to send to buffer
   return menu
 }
 
