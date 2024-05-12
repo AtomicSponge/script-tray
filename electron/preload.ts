@@ -10,8 +10,8 @@
 import { ipcRenderer, contextBridge } from 'electron'
 
 contextBridge.exposeInIsolatedWorld(4201, 'bufferAPI', {
-  getData: ():string => {
-    return ''
+  onUpdateBuffer: (callback:Function) => {
+    ipcRenderer.on('send-buffer-data', (_event, value) => callback(value))
   }
 })
 

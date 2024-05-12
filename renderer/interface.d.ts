@@ -8,7 +8,7 @@
  */
 
 export interface IbufferAPI {
-  getData: () => string
+  onUpdateBuffer: (callback:Function) => void
 }
 
 export interface IsettingsAPI {

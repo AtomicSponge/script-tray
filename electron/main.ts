@@ -46,6 +46,7 @@ const bufferWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true
   })
+  //bufferWin.webContents.send('send-buffer-data', scriptBuffer.read())
   bufferWin.on('close', (_event) => {
     bufferWin?.destroy()
   })
