@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 window.onload = () => {
-  const testTemp = <HTMLDivElement>document.getElementById('contents')
-  window.settingsAPI.onUpdateSettings((settingsData:JSON) => {
+  const testTemp = <HTMLDivElement>document.getElementById('menuContents')
+  window.settingsAPI.onUpdateSettings((settingsData:SettingsJSON) => {
     testTemp.innerText = settingsData.toString()
   })
 }
@@ -26,7 +26,7 @@ window.onload = () => {
       <button onclick="window.settingsAPI.saveSettings()">Save Settings</button>
     </div>
   </header>
-  <div id="contents">replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/>replace me!<br/></div>
+  <div id="menuContents"></div>
   <footer>
     <select id="menu-select">
       <option value="1">Command Launcher</option>
