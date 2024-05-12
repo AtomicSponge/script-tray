@@ -71,11 +71,8 @@ export const appSettings:IappSettings = {
   /** Save settings */
   save():void {
     try {
-      storage.set('settings', {
-        launchMenu: appSettings.launchMenu,
-        startup: appSettings.startup,
-        debug: appSettings.debug
-      }, (error) => { if (error) throw error })
+      storage.set('settings', appSettings.getJSON,
+        (error) => { if (error) throw error })
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
         `Error saving settings!\n\n${error.message}`)
@@ -103,6 +100,10 @@ export const appSettings:IappSettings = {
   /** Set the settings by using a JSON object */
   set setJSON(data:settingsJSON) {
     if(data === undefined || data === null) return
+    if(!data.hasOwnProperty('launchMenu')) return
+    if(!data.hasOwnProperty('bufferSize')) return
+    if(!data.hasOwnProperty('startup')) return
+    if(!data.hasOwnProperty('debug')) return
     appSettings.launchMenu = data.launchMenu
     appSettings.bufferSize = data.bufferSize
     appSettings.startup = data.startup
