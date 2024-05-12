@@ -46,7 +46,10 @@ const bufferWindow = ():void => {
     height: 600,
     fullscreen: false,
     fullscreenable: false,
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.join(__dirname, '../dist-electron/preload.js'),
+    }
   })
   bufferWin.webContents.on('did-finish-load', () => {
     //bufferWin?.webContents.send('send-buffer-data', resBuff.read())
@@ -71,7 +74,10 @@ const settingsEditorWindow = ():void => {
     height: 600,
     fullscreen: false,
     fullscreenable: false,
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.join(__dirname, '../dist-electron/preload.js'),
+    }
   })
   settingsWin.webContents.on('did-finish-load', () => {
     settingsWin?.webContents.send('send-settings-data', appSettings.getJSON)
@@ -143,7 +149,10 @@ const inputWindow = (data:inputWinData):void => {
     height: 100,
     fullscreen: false,
     fullscreenable: false,
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.join(__dirname, '../dist-electron/preload.js'),
+    }
   })
   inputWin.on('close', (_event) => {
     resolveInputWin.reject('winCanceledEvent')
