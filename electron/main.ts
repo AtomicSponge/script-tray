@@ -171,7 +171,9 @@ const aboutMessageBox = ():void => {
       `Author:  ${appInfo.author}\n` +
       `${appInfo.websiteURL}\n\n` +
       `License:  ${appInfo.license}\n` +
-      `${appInfo.licenseURL}`,
+      `${appInfo.licenseURL}\n\n\n` +
+      `Icon:  ${appInfo.iconURL}\n` +
+      `License:  ${appInfo.iconLicenseURL}`,
     icon: appInfo.icon
   })
 }
