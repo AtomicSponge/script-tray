@@ -37,6 +37,7 @@ export interface IinputAPI {
 }
 
 declare global {
+  /** Preload APIs */
   interface Window {
     bufferAPI:IbufferAPI
     settingsAPI:IsettingsAPI

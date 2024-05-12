@@ -206,7 +206,7 @@ const buildMenu = ():Menu => {
    * @param collection Menu items to process
    */
   const buildLauncher = (menu:Menu, collection:Array<any>):void => {
-    interface commandItem {
+    interface CommandItem {
       label:string
       cmd:string
       args?:Array<string>
@@ -216,7 +216,7 @@ const buildMenu = ():Menu => {
      * @param item Menu item calling the run
      * @param cmd Command to run
      */
-    const CommandRunner = (item:commandItem, cmd:string):void => {
+    const CommandRunner = (item:CommandItem, cmd:string):void => {
       if (appSettings.debug)
         dialog.showMessageBox({
           type: 'info',
@@ -228,11 +228,11 @@ const buildMenu = ():Menu => {
 
       try {
         const cmdRes = execSync(cmd, { windowsHide: !appSettings.debug })
-        resBuff.write(`${cmd}\n` + cmdRes.toString())
+        resBuff.write(`Command:  ${cmd}\n${cmdRes.toString()}\n`)
       } catch (error:any) {
         dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
           `Command:  ${item.cmd}\nError:  ${error.message}`)
-        resBuff.write(`Command:  ${item.cmd}\nError:  ${error.message}`)
+        resBuff.write(`Command:  ${item.cmd}\nError:  ${error.message}\n`)
       }
     }
 
@@ -251,7 +251,7 @@ const buildMenu = ():Menu => {
         const menuTitle = item.shift()  //  Get the title item
         if (menuTitle.menu === undefined) {
           dialog.showErrorBox(`${appInfo.name}`,
-            `Error building menu, incorrect title menu item.\n\n${Object.keys(item)}`)
+            `Error building menu, incorrect title menu item!\n\n${Object.keys(item)}`)
           return
         }
         const tempMenu = new Menu()
@@ -269,7 +269,7 @@ const buildMenu = ():Menu => {
           label: item.label,
           click: () => {
             if (item.args === undefined) CommandRunner(item, <string>item.cmd)
-            else
+            else {
               (async () => {
                 let runCanceled:boolean = false
                 let runCmd:string = <string>item.cmd
@@ -283,19 +283,20 @@ const buildMenu = ():Menu => {
                   dialog.showMessageBox({
                     type: 'info',
                     title: appInfo.name,
-                    message: `Command canceled '${item.label}'`,
-                    detail: `Command:  ${item.cmd}\n${runCmd}`,
+                    message: `Command '${item.label}' canceled!`,
+                    detail: `Command:  ${item.cmd}`,
                     icon: appInfo.icon
                   })
                 } else CommandRunner(item, runCmd)
               })()
+            }
           }
         }))
         return  //  Next item
       }
       //  Item wasn't processed, so there's a problem with the format
       dialog.showErrorBox(`${appInfo.name}`,
-        `Error building menu, incorrect menu item.\n\n` +
+        `Error building menu, incorrect menu item!\n\n` +
         `${Object.keys(item)}\n${Object.values(item)}`)
     })
   }
