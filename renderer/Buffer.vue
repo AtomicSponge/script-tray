@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 window.onload = () => {
-  const testTemp = <HTMLDivElement>document.getElementById('contents')
+  const testTemp = <HTMLDivElement>document.getElementById('bufferOutput')
   window.bufferAPI.onUpdateBuffer((bufferData:string) => {
     testTemp.innerText = bufferData
   })
@@ -14,8 +14,7 @@ window.onload = () => {
 </script>
 
 <template>
-  <h1>Buffer</h1>
-  <div id="contents"></div>
+  <div id="bufferOutput"></div>
 </template>
 
 <style lang="stylus" scoped>

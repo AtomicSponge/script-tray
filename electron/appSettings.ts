@@ -22,6 +22,7 @@ interface IappSettings {
   launchMenu:Array<any>
   startup:boolean
   debug:boolean
+  config():void
   load():void
   save():void
   reset():void
@@ -37,6 +38,12 @@ export const appSettings:IappSettings = {
   startup: false,
   /** Debug mode */
   debug: false,
+
+  /** Configure app settings - called at launch */
+  config():void {
+    storage.setDataPath()
+    this.load()
+  },
 
   /** Load settings */
   load():void {

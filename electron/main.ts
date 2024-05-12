@@ -7,30 +7,29 @@
  * 
  */
 
-//import { createRequire } from 'node:module'
 import { execSync } from 'node:child_process'
 import path from 'node:path'
 
 import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'electron'
 import AutoLaunch from 'auto-launch'
-import storage from 'electron-json-storage'
 
-import { appInfo, __dirname } from './appInfo'
+import { appInfo } from './appInfo'
 import { appSettings } from './appSettings'
 import { ScriptBuffer } from './ScriptBuffer'
 
-//const require = createRequire(import.meta.url)
-
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
-storage.setDataPath()
 const resBuff = new ScriptBuffer()
-appSettings.load()  //  Load settings on startup
+appSettings.config()
 
 //  Verify auto launch is enabled if it should be
 autoLauncher.isEnabled().then((enabled) => {
   if (enabled) return
   if (appSettings.startup) autoLauncher.enable()
-}).catch((_error:any) => {})
+}).catch((error:any) => {
+  dialog.showErrorBox(`${appInfo.name}`,
+    `Error enabling auto launcher!\n\n` +
+    `${error.message}`)
+})
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null

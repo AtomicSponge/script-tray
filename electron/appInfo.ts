@@ -8,9 +8,7 @@
  */
 
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 
-export const __dirname = path.dirname(fileURLToPath(import.meta.url))
 process.env.APP_ROOT = path.join(__dirname, '..')
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
