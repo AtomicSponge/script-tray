@@ -15,14 +15,12 @@ window.onload = () => {
 }
 </script>
 
-<template>
+<template><section>
   <header>
-    <div class="leftheader">
+    <div class="left">
       <input type="checkbox" id="startupInput"/> Load on startup
-      &nbsp;&nbsp;&nbsp;
-      Buffer Size: <input type="text" id="bufferInput"/>
     </div>
-    <div class="rightheader">
+    <div class="right">
       <button onclick="window.settingsAPI.resetSettings()">Reset Settings</button>
       &nbsp;
       <button onclick="window.settingsAPI.saveSettings()">Save Settings</button>
@@ -30,30 +28,39 @@ window.onload = () => {
   </header>
   <div id="menuContents"></div>
   <footer>
-    <select id="menu-select">
-      <option value="1">Command Launcher</option>
-      <option value="2">Sub Menu</option>
-      <option value="3">Spacer</option>
-    </select>
-    <button>Add</button>
+    <div class="left">
+      <select id="menu-select">
+        <option value="1">Command Launcher</option>
+        <option value="2">Sub Menu</option>
+        <option value="3">Spacer</option>
+      </select>
+      <button>Add</button>
+    </div>
+    <div class="right">
+      Buffer Size: <input type="text" id="bufferInput" size="3"/>&nbsp;
+    </div>
   </footer>
-</template>
+</section></template>
 
 <style lang="stylus" scoped>
 @import './styleVars.styl'
 
+section
+  display flex
+  flex-flow column
+  align-items stretch
+  height 100vh
 header
+  flex 0 1 auto
   background-color app_bg_color
-  position fixed
-  top 0
-  width 100%
-.leftheader
-  float: left
-.rightheader
-  float right
+#menuContents
+  flex: 1 1 auto
+  overflow-y auto
 footer
+  flex: 0 1
   background-color app_bg_color
-  position fixed
-  bottom 0
-  width 100%
+.left
+  float left
+.right
+  float right
 </style>
