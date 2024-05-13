@@ -24,8 +24,6 @@ const resolveInputWin = new Resolver()
 appSettings.config()
 resBuff.size = appSettings.bufferSize
 
-console.log(appSettings.getJSON())
-
 //  Verify auto launch is enabled if it should be
 autoLauncher.isEnabled().then((enabled) => {
   if (enabled) return
@@ -88,7 +86,7 @@ const settingsEditorWindow = ():void => {
     }
   })
   settingsWin.webContents.on('did-finish-load', () => {
-    console.log(appSettings.getJSON())
+    console.log(appSettings.bufferSize)
     settingsWin?.webContents.send('send-settings-data', appSettings.getJSON())
   })
   settingsWin.on('close', (_event) => {
