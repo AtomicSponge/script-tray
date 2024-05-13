@@ -51,13 +51,11 @@ section
   align-items stretch
   height 100vh
 header
-  flex 0 1 auto
   background-color app_bg_color
 #menuContents
-  flex: 1 1 auto
-  overflow-y auto
+  flex: auto
+  overflow auto
 footer
-  flex: 0 1
   background-color app_bg_color
 .left
   float left
