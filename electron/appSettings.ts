@@ -34,9 +34,9 @@ export const appSettings:IappSettings = {
         if (error) throw error
         if (hasKey) {
           const temp = <SettingsJSON>storage.getSync('settings')
-          appSettings.launchMenu = temp.launchMenu
-          appSettings.bufferSize = temp.bufferSize
-          appSettings.startup = temp.startup
+          this.launchMenu = temp.launchMenu
+          this.bufferSize = temp.bufferSize
+          this.startup = temp.startup
         }
       })
     } catch (error:any) {
@@ -48,7 +48,7 @@ export const appSettings:IappSettings = {
   /** Save settings */
   save():void {
     try {
-      storage.set('settings', appSettings.getJSON(),
+      storage.set('settings', this.getJSON(),
         (error) => { if (error) throw error })
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
@@ -58,17 +58,17 @@ export const appSettings:IappSettings = {
 
   /** Reset settings */
   reset():void {
-    appSettings.launchMenu = []
-    appSettings.bufferSize = 100
-    appSettings.startup = false
+    this.launchMenu = []
+    this.bufferSize = 100
+    this.startup = false
   },
 
   /** Get the settings as a JSON object */
   getJSON():SettingsJSON {
     return {
-      launchMenu: appSettings.launchMenu,
-      bufferSize: appSettings.bufferSize,
-      startup: appSettings.startup
+      launchMenu: this.launchMenu,
+      bufferSize: this.bufferSize,
+      startup: this.startup
     }
   },
 
@@ -78,8 +78,8 @@ export const appSettings:IappSettings = {
     if(!data.hasOwnProperty('launchMenu') || !(data.launchMenu instanceof Array)) return
     if(!data.hasOwnProperty('bufferSize')) return
     if(!data.hasOwnProperty('startup')) return
-    appSettings.launchMenu = data.launchMenu
-    appSettings.bufferSize = data.bufferSize
-    appSettings.startup = data.startup
+    this.launchMenu = data.launchMenu
+    this.bufferSize = data.bufferSize
+    this.startup = data.startup
   }
 }

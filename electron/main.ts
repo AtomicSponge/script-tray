@@ -86,7 +86,6 @@ const settingsEditorWindow = ():void => {
     }
   })
   settingsWin.webContents.on('did-finish-load', () => {
-    console.log(appSettings.bufferSize)
     settingsWin?.webContents.send('send-settings-data', appSettings.getJSON())
   })
   settingsWin.on('close', (_event) => {
