@@ -23,12 +23,12 @@ contextBridge.exposeInMainWorld('settingsAPI', {
     ipcRenderer.send('reset-settings-data', true)
   },
   onUpdateSettings: (callback:Function):void => {
-    ipcRenderer.on('send-buffer-data', (_event, value) => callback(value))
+    ipcRenderer.on('send-settings-data', (_event, value) => callback(value))
   }
 })
 
 contextBridge.exposeInMainWorld('inputAPI', {
-  sendInput: (data:CommandData): void => {
+  sendInput: (data:string): void => {
     ipcRenderer.send('recieve-input-data', data)
   },
   onReceiveData: (callback:Function):void => {

@@ -12,15 +12,6 @@ import storage from 'electron-json-storage'
 
 import { appInfo } from './appInfo'
 
-interface IappSettings extends SettingsJSON {
-  config():void
-  load():void
-  save():void
-  reset():void
-  get getJSON():SettingsJSON
-  set setJSON(data:SettingsJSON)
-}
-
 /** App settings */
 export const appSettings:IappSettings = {
   /** Tree of commands to build menu from */
@@ -29,8 +20,6 @@ export const appSettings:IappSettings = {
   bufferSize: 100,
   /** Load on startup */
   startup: false,
-  /** Debug mode */
-  debug: false,
 
   /** Configure app settings - called at launch */
   config():void {
@@ -48,7 +37,6 @@ export const appSettings:IappSettings = {
           appSettings.launchMenu = temp.launchMenu
           appSettings.bufferSize = temp.bufferSize
           appSettings.startup = temp.startup
-          appSettings.debug = temp.debug
         }
       })
     } catch (error:any) {
@@ -60,7 +48,7 @@ export const appSettings:IappSettings = {
   /** Save settings */
   save():void {
     try {
-      storage.set('settings', appSettings.getJSON,
+      storage.set('settings', appSettings.getJSON(),
         (error) => { if (error) throw error })
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
@@ -73,29 +61,25 @@ export const appSettings:IappSettings = {
     appSettings.launchMenu = []
     appSettings.bufferSize = 100
     appSettings.startup = false
-    appSettings.debug = false
   },
 
   /** Get the settings as a JSON object */
-  get getJSON():SettingsJSON {
+  getJSON():SettingsJSON {
     return {
       launchMenu: appSettings.launchMenu,
       bufferSize: appSettings.bufferSize,
-      startup: appSettings.startup,
-      debug: appSettings.debug
+      startup: appSettings.startup
     }
   },
 
   /** Set the settings by using a JSON object */
-  set setJSON(data:SettingsJSON) {
+  setJSON(data:SettingsJSON):void {
     if(data === undefined || data === null) return
     if(!data.hasOwnProperty('launchMenu') || !(data.launchMenu instanceof Array)) return
     if(!data.hasOwnProperty('bufferSize')) return
     if(!data.hasOwnProperty('startup')) return
-    if(!data.hasOwnProperty('debug')) return
     appSettings.launchMenu = data.launchMenu
     appSettings.bufferSize = data.bufferSize
     appSettings.startup = data.startup
-    appSettings.debug = data.debug
   }
 }

@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 window.onload = () => {
-  const testTemp = <HTMLDivElement>document.getElementById('bufferOutput')
   window.bufferAPI.onUpdateBuffer((bufferData:string) => {
-    testTemp.innerText = bufferData
+    const bufferOutput = <HTMLDivElement>document.getElementById('bufferOutput')
+    bufferOutput.innerText = bufferData
   })
 }
 </script>

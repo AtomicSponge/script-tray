@@ -6,9 +6,11 @@
 
 <script setup lang="ts">
 window.onload = () => {
-  const testTemp = <HTMLDivElement>document.getElementById('menuContents')
   window.settingsAPI.onUpdateSettings((settingsData:SettingsJSON) => {
-    testTemp.innerText = settingsData.toString()
+    const startupInput = <HTMLInputElement>document.getElementById('startupInput')
+    startupInput.checked = settingsData.startup
+    const bufferInput = <HTMLInputElement>document.getElementById('bufferInput')
+    bufferInput.value = `${settingsData.bufferSize}`
   })
 }
 </script>
@@ -16,9 +18,9 @@ window.onload = () => {
 <template>
   <header>
     <div class="leftheader">
-      <input type="checkbox">Load on startup</input>
+      <input type="checkbox" id="startupInput"/> Load on startup
       &nbsp;&nbsp;&nbsp;
-      <input type="checkbox">Debug mode</input>
+      Buffer Size: <input type="text" id="bufferInput"/>
     </div>
     <div class="rightheader">
       <button onclick="window.settingsAPI.resetSettings()">Reset Settings</button>

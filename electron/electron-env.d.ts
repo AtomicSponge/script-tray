@@ -49,12 +49,29 @@ declare global {
     launchMenu:Array<any>
     bufferSize:number
     startup:boolean
-    debug:boolean
   }
-  
-  /** Data for command object format */
-  interface CommandData {
+
+  /** appSettings Namespace */
+  interface IappSettings extends SettingsJSON {
+    config():void
+    load():void
+    save():void
+    reset():void
+    getJSON():SettingsJSON
+    setJSON(data:SettingsJSON):void
+  }
+
+  /** Command object format */
+  interface TrayCommand {
     label:string
     command:string
+    args:Array<string>
+    showConsole:boolean
+  }
+
+  /** Prompt data passed to the Input window */
+  interface InputPromptData {
+    command:string
+    argument:string
   }
 }

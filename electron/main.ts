@@ -24,6 +24,8 @@ const resolveInputWin = new Resolver()
 appSettings.config()
 resBuff.size = appSettings.bufferSize
 
+console.log(appSettings.getJSON())
+
 //  Verify auto launch is enabled if it should be
 autoLauncher.isEnabled().then((enabled) => {
   if (enabled) return
@@ -86,7 +88,8 @@ const settingsEditorWindow = ():void => {
     }
   })
   settingsWin.webContents.on('did-finish-load', () => {
-    settingsWin?.webContents.send('send-settings-data', appSettings.getJSON)
+    console.log(appSettings.getJSON())
+    settingsWin?.webContents.send('send-settings-data', appSettings.getJSON())
   })
   settingsWin.on('close', (_event) => {
     settingsWin?.destroy()
@@ -98,14 +101,14 @@ const settingsEditorWindow = ():void => {
 
 /* Event handler for receiving settings */
 ipcMain.on('save-settings-data', async (_event, data) => {
-  if (appSettings.getJSON !== data) {
+  if (appSettings.getJSON() !== data) {
     if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       type: 'question',
       title: `${appInfo.name} - Confirm`,
       buttons: ['Yes', 'No'],
       message: 'Save changes?'
     }) === 0) {
-      appSettings.setJSON = data
+      appSettings.setJSON(data)
       resBuff.size = appSettings.bufferSize
       appSettings.save()
       appTray?.setContextMenu(buildMenu())
@@ -122,16 +125,16 @@ ipcMain.on('reset-settings-data', async () => {
     message: 'Are you sure you want to reset settings?'
   }) === 0) {
     appSettings.reset()
-    settingsWin?.webContents.send('send-settings-data', appSettings.getJSON)
+    settingsWin?.webContents.send('send-settings-data', appSettings.getJSON())
     appTray?.setContextMenu(buildMenu())
   }
 })
 
 /** Window for argument input */
-const inputWindow = (data:CommandData):void => {
+const inputWindow = (data:InputPromptData):void => {
   inputWin = new BrowserWindow({
     icon: appInfo.icon,
-    title: `${appInfo.name} - ${data.label}`,
+    title: `${appInfo.name} - ${data.command} ${data.argument}`,
     width: 400,
     height: 100,
     fullscreen: false,
@@ -213,14 +216,14 @@ const buildMenu = ():Menu => {
      * @param item Menu item calling the run
      * @param cmd Command to run
      */
-    const CommandRunner = (item:CommandData, cmd:string):void => {
+    const CommandRunner = (cmd:string, item:TrayCommand):void => {
       try {
-        const cmdRes = execSync(cmd, { windowsHide: !appSettings.debug })
+        const cmdRes = execSync(cmd, { windowsHide: item.showConsole })
         resBuff.write(`Command:  ${cmd}\n${cmdRes.toString()}\n`)
       } catch (error:any) {
-        dialog.showErrorBox(`${appInfo.name} - ${item.label}`,
-          `Command:  ${item.command}\nError:  ${error.message}`)
-        resBuff.write(`Command:  ${item.command}\nError:  ${error.message}\n`)
+        dialog.showErrorBox(`${appInfo.name} - ${item.command}`,
+          `Command:  ${cmd}\nError:  ${error.message}`)
+        resBuff.write(`Command:  ${cmd}\nError:  ${error.message}\n`)
       }
     }
 
@@ -256,15 +259,15 @@ const buildMenu = ():Menu => {
         menu.append(new MenuItem({
           label: item.label,
           click: () => {
-            if (item.args === undefined) CommandRunner(item, <string>item.cmd)
+            if (item.args === undefined) CommandRunner(<string>item.cmd, item)
             else {
               (async () => {
                 let runCanceled:boolean = false
                 let runCmd:string = <string>item.cmd
                 await asyncForEach(<Array<string>>item.args, async (arg:string) => {
-                  inputWindow({ label: arg, command: <string>item.cmd })
-                  await resolveInputWin.promise.then(res => {
-                    runCmd += ' ' + res.new
+                  inputWindow({ command: <string>item.cmd, argument: arg })
+                  await resolveInputWin.promise.then(resStr => {
+                    runCmd += ' ' + resStr
                   }).catch(_res => { runCanceled = true })
                 })
                 if (runCanceled) {
@@ -275,7 +278,7 @@ const buildMenu = ():Menu => {
                     detail: `Command:  ${item.cmd}`,
                     icon: appInfo.icon
                   })
-                } else CommandRunner(item, runCmd)
+                } else CommandRunner(runCmd, item)
               })()
             }
           }
