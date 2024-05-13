@@ -217,11 +217,11 @@ const buildMenu = ():Menu => {
     const CommandRunner = (cmd:string, item:TrayCommand):void => {
       try {
         const cmdRes = execSync(cmd, { windowsHide: item.showConsole })
-        resBuff.write(`Command:  ${cmd}\n${cmdRes.toString()}\n`)
+        resBuff.write(`Command:  ${cmd}\n${cmdRes.toString()}`)
       } catch (error:any) {
         dialog.showErrorBox(`${appInfo.name} - ${item.command}`,
           `Command:  ${cmd}\nError:  ${error.message}`)
-        resBuff.write(`Command:  ${cmd}\nError:  ${error.message}\n`)
+        resBuff.write(`Command:  ${cmd}\nError:  ${error.message}`)
       }
     }
 
