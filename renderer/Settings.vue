@@ -7,6 +7,8 @@
 <script setup lang="ts">
 window.onload = () => {
   window.settingsAPI.onUpdateSettings((settingsData:SettingsJSON) => {
+    const menuContents = <HTMLInputElement>document.getElementById('menuContents')
+    menuContents.innerText = settingsData.launchMenu.toString()
     const startupInput = <HTMLInputElement>document.getElementById('startupInput')
     startupInput.checked = settingsData.startup
     const bufferInput = <HTMLInputElement>document.getElementById('bufferInput')
