@@ -4,13 +4,23 @@
  * See LICENSE.md
  */
 
-@import './styleVars.styl'
+app_font = Inter, system-ui, Avenir, Helvetica, Arial, sans-serif
+app_font_size = medium
+app_line_height = 1.5
+app_font_weight = 400
+
+app_bg_color = rgb(36, 36, 36)
+app_fg_color = rgba(255, 255, 255, 0.87)
+
+button_fg_color = app_fg_color
+button_bg_color = rgb(26, 26, 26)
+button_hv_color = rgb(100, 108, 255)
 
 :root
   font-family app_font
   font-size app_font_size
-  line-height 1.5
-  font-weight 400
+  line-height app_line_height
+  font-weight app_font_weight
 
   color app_fg_color
   background-color app_bg_color
@@ -23,7 +33,6 @@
 body
   padding 0
   margin 0
-  align-items stretch
   width 100vw
   height 100vh
 
@@ -32,7 +41,7 @@ button
   border 1px solid transparent
   padding 0.4em 1.0em
   font-size 0.8em
-  font-weight 500
+  font-weight (app_font_weight + 100)
   font-family inherit
   color button_fg_color
   background-color button_bg_color

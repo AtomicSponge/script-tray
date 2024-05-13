@@ -45,24 +45,23 @@ window.onload = () => {
 </section></template>
 
 <style lang="stylus" scoped>
-@import './styleVars.styl'
-
 section
   display flex
   flex-flow column
   align-items stretch
   height 100vh
 header
-  background-color app_bg_color
   padding 2px
 #menuContents
   flex: auto
   overflow auto
 footer
-  background-color app_bg_color
   padding 2px
 .left
   float left
 .right
   float right
+
+input
+  cursor pointer
 </style>
