@@ -38,7 +38,9 @@ button
   background-color button_bg_color
   cursor pointer
   transition border-color 0.25s
+  box-shadow 1px 2px #999999
 button:hover
   border-color button_hv_color
-button:focus, button:focus-visible
-  outline 4px auto -webkit-focus-ring-color
+button:active
+  box-shadow 0px 0px
+  transform translateX(1px) translateY(2px)

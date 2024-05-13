@@ -54,11 +54,13 @@ section
   height 100vh
 header
   background-color app_bg_color
+  padding 2px
 #menuContents
   flex: auto
   overflow auto
 footer
   background-color app_bg_color
+  padding 2px
 .left
   float left
 .right
