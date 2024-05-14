@@ -151,8 +151,8 @@ const inputWindow = (data:InputPromptData):void => {
     inputWin?.webContents.send('send-input-data', data)
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
-    inputWin.loadURL('http://localhost:5175/html/input.html') :
-    inputWin.loadFile(path.join(__dirname, '../dist/html/input.html'))}
+    inputWin.loadURL('http://localhost:5175/html/arg-input.html') :
+    inputWin.loadFile(path.join(__dirname, '../dist/html/arg-input.html'))}
 }
 
 /* Event handler for receiving data from the input box */

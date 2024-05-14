@@ -18,7 +18,7 @@ export default defineConfig(() => {
       multiple([
         {
           name: 'input',
-          config: 'vite.input.config.ts',
+          config: 'vite.arg-input.config.ts',
         },
         {
           name: 'settings',

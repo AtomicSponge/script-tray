@@ -8,7 +8,7 @@
  */
 
 import { createApp } from 'vue'
-import InputApp from './Input.vue'
+import ArgInputApp from './ArgInput.vue'
 import './style.styl'
 
-createApp(InputApp).mount('#app')
+createApp(ArgInputApp).mount('#app')
