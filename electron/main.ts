@@ -21,8 +21,6 @@ import { Resolver } from './Resolver'
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 const resBuff = new ScriptBuffer()
 const resolveInputWin = new Resolver()
-appSettings.config()
-resBuff.size = appSettings.bufferSize
 
 //  Verify auto launch is enabled if it should be
 autoLauncher.isEnabled().then((enabled) => {
@@ -249,19 +247,19 @@ const buildMenu = ():Menu => {
         return  //  Next item
       }
       if (item.label !== undefined &&
-          item.cmd !== undefined &&
+          item.command !== undefined &&
           item.args !== undefined &&
           item.showConsole !== undefined) {  //  Item is a command
         menu.append(new MenuItem({
           label: item.label,
           click: () => {
-            if (item.args === undefined) CommandRunner(<string>item.cmd, item)
+            if (item.args === undefined) CommandRunner(<string>item.command, item)
             else {
               (async () => {
                 let runCanceled:boolean = false
-                let runCmd:string = <string>item.cmd
+                let runCmd:string = <string>item.command
                 await asyncForEach(<Array<string>>item.args, async (arg:string) => {
-                  inputWindow({ command: <string>item.cmd, argument: arg })
+                  inputWindow({ command: <string>item.command, argument: arg })
                   await resolveInputWin.promise.then(resStr => {
                     runCmd += ' ' + resStr
                   }).catch(_res => { runCanceled = true })
@@ -271,7 +269,7 @@ const buildMenu = ():Menu => {
                     type: 'info',
                     title: appInfo.name,
                     message: `Command '${item.label}' canceled!`,
-                    detail: `Command:  ${item.cmd}`,
+                    detail: `Command:  ${item.command}`,
                     icon: appInfo.icon
                   })
                 } else CommandRunner(runCmd, item)
@@ -308,6 +306,9 @@ app.on('window-all-closed', () => {})
 
 /* Run Script Tray app */
 app.whenReady().then(async () => {
+  appSettings.config()
+  resBuff.size = appSettings.bufferSize
+
   appTray = new Tray(appInfo.icon)
   appTray.setToolTip(appInfo.name)
   appTray.setTitle(appInfo.name)
