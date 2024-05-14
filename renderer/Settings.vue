@@ -21,7 +21,7 @@ const resetSettings = ():void => { window.settingsAPI.resetSettings() }
 const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
 
 /** Parse data from the settings window */
-const parseData = ():SettingsJSON => {
+const parseData = ():SettingsInterface => {
   return {
     launchMenu: _launchMenu.value,
     bufferSize: Number(_bufferSize.value),
@@ -44,11 +44,11 @@ const addItem = ():void => {
 }
 
 window.onload = ():void => {
-  window.settingsAPI.onUpdateSettings((settingsData:SettingsJSON) => {
+  window.settingsAPI.onUpdateSettings((settingsData:SettingsInterface) => {
     _launchMenu.value = settingsData.launchMenu
     _bufferSize.value = settingsData.bufferSize
     _startup.value = settingsData.startup
-    console.log(_launchMenu.value)
+    console.log(settingsData)
   })
 }
 </script>

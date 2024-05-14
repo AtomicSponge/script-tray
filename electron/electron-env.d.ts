@@ -26,7 +26,7 @@ export interface IbufferAPI {
 }
 
 export interface IsettingsAPI {
-  saveSettings: (data:SettingsJSON) => void
+  saveSettings: (data:SettingsInterface) => void
   resetSettings: () => void
   onUpdateSettings: (callback:Function) => void
 }
@@ -45,20 +45,20 @@ declare global {
   }
 
   /** Settings JSON format */
-  interface SettingsJSON {
+  interface SettingsInterface {
     launchMenu:Array<any>
     bufferSize:number
     startup:boolean
   }
 
   /** appSettings Namespace */
-  interface IappSettings extends SettingsJSON {
+  interface IappSettings extends SettingsInterface {
     config():void
     load():void
     save():void
     reset():void
-    getJSON():SettingsJSON
-    setJSON(data:SettingsJSON):void
+    getData():SettingsInterface
+    setData(data:SettingsInterface):void
   }
 
   /** Prompt data passed to the Input window */

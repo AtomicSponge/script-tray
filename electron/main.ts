@@ -84,7 +84,8 @@ const settingsEditorWindow = ():void => {
     }
   })
   settingsWin.webContents.on('did-finish-load', () => {
-    settingsWin?.webContents.send('send-settings-data', appSettings.getJSON())
+    console.log(appSettings.getData())
+    settingsWin?.webContents.send('send-settings-data', appSettings.getData())
   })
   settingsWin.on('close', (_event) => {
     settingsWin?.destroy()
@@ -96,14 +97,14 @@ const settingsEditorWindow = ():void => {
 
 /* Event handler for receiving settings */
 ipcMain.on('save-settings-data', async (_event, data) => {
-  if (appSettings.getJSON() !== data) {
+  if (appSettings.getData() !== data) {
     if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       type: 'question',
       title: `${appInfo.name} - Confirm`,
       buttons: ['Yes', 'No'],
       message: 'Save changes?'
     }) === 0) {
-      appSettings.setJSON(data)
+      appSettings.setData(data)
       resBuff.size = appSettings.bufferSize
       appSettings.save()
       appTray?.setContextMenu(buildMenu())
@@ -120,7 +121,7 @@ ipcMain.on('reset-settings-data', async () => {
     message: 'Are you sure you want to reset settings?'
   }) === 0) {
     appSettings.reset()
-    settingsWin?.webContents.send('send-settings-data', appSettings.getJSON())
+    settingsWin?.webContents.send('send-settings-data', appSettings.getData())
     appTray?.setContextMenu(buildMenu())
   }
 })

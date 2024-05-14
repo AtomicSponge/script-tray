@@ -81,7 +81,7 @@ export const appSettings:IappSettings = {
       storage.has('settings', (error, hasKey) => {
         if (error) throw error
         if (hasKey) {
-          const temp = <SettingsJSON>storage.getSync('settings')
+          const temp = <SettingsInterface>storage.getSync('settings')
           this.launchMenu = temp.launchMenu
           this.bufferSize = temp.bufferSize
           this.startup = temp.startup
@@ -96,8 +96,7 @@ export const appSettings:IappSettings = {
   /** Save settings */
   save():void {
     try {
-      storage.set('settings', this.getJSON(),
-        (error) => { if (error) throw error })
+      storage.set('settings', this.getData(), (error) => { if (error) throw error })
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
         `Error saving settings!\n\n${error.message}`)
@@ -111,8 +110,8 @@ export const appSettings:IappSettings = {
     this.startup = false
   },
 
-  /** Get the settings as a JSON object */
-  getJSON():SettingsJSON {
+  /** Get entite settings */
+  getData():SettingsInterface {
     return {
       launchMenu: this.launchMenu,
       bufferSize: this.bufferSize,
@@ -120,10 +119,14 @@ export const appSettings:IappSettings = {
     }
   },
 
-  /** Set the settings by using a JSON object */
-  setJSON(data:SettingsJSON):void {
+  /**
+   * Set entire settings
+   * @param data Data to parse
+   */
+  setData(data:SettingsInterface):void {
     if(data === undefined || data === null) return
-    if(!data.hasOwnProperty('launchMenu') || !(data.launchMenu instanceof Array)) return
+    if(!data.hasOwnProperty('launchMenu') && !(data.launchMenu instanceof Array))
+      return
     if(!data.hasOwnProperty('bufferSize')) return
     if(!data.hasOwnProperty('startup')) return
     this.launchMenu = data.launchMenu
