@@ -21,9 +21,9 @@ const resetSettings = ():void => { window.settingsAPI.resetSettings() }
 const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
 
 /** Parse data from the settings window */
-const parseData = ():SettingsData => {
+const parseData = ():SettingsIpc => {
   return {
-    launchMenu: _launchMenu.value,
+    launchMenu: JSON.stringify(_launchMenu.value),
     bufferSize: Number(_bufferSize.value),
     startup: Boolean(_startup.value)
   }
@@ -44,8 +44,8 @@ const addItem = ():void => {
 }
 
 window.onload = ():void => {
-  window.settingsAPI.onUpdateSettings((settingsData:SettingsData) => {
-    _launchMenu.value = settingsData.launchMenu
+  window.settingsAPI.onUpdateSettings((settingsData:SettingsIpc) => {
+    _launchMenu.value = JSON.parse(settingsData.launchMenu)
     _bufferSize.value = settingsData.bufferSize
     _startup.value = settingsData.startup
   })

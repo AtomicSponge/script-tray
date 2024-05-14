@@ -51,6 +51,13 @@ declare global {
     startup:boolean
   }
 
+  /** Settings data format for Electron Ipc */
+  interface SettingsIpc {
+    launchMenu:string
+    bufferSize:number
+    startup:boolean
+  }
+
   /** Prompt data passed to the Input window */
   interface InputPromptData {
     command:string

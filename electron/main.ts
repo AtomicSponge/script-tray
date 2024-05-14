@@ -18,7 +18,7 @@ import { AppSettings } from './lib/AppSettings'
 import { ScriptBuffer } from './lib/ScriptBuffer'
 import { Resolver } from './lib/Resolver'
 
-let loadTrayData = false  //  TESTING - change to true
+let loadTrayData = true
 process.argv.forEach(arg => {
   if(arg === '--no-load-traydata') loadTrayData = false
 })

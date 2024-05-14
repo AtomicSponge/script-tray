@@ -96,7 +96,11 @@ export class AppSettings {
   /** Save settings */
   save():void {
     try {
-      storage.set('settings', this.getData(), (error) => { if (error) throw error })
+      storage.set('settings', {
+        'launchMenu': AppSettings.#launchMenu,
+        'bufferSize': AppSettings.#bufferSize,
+        'startup': AppSettings.#startup
+      }, (error) => { if (error) throw error })
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
         `Error saving settings!\n\n${error.message}`)
@@ -111,9 +115,9 @@ export class AppSettings {
   }
 
   /** Get entite settings */
-  getData():SettingsData {
+  getData():SettingsIpc {
     return {
-      launchMenu: AppSettings.#launchMenu,
+      launchMenu: JSON.stringify(AppSettings.#launchMenu),
       bufferSize: AppSettings.#bufferSize,
       startup: AppSettings.#startup
     }
@@ -123,16 +127,12 @@ export class AppSettings {
    * Set entire settings from an object
    * @param data Data to parse for settings
    */
-  setData(data:SettingsData):void {
+  setData(data:SettingsIpc):void {
     try {
       if (data === undefined || data === null)
         throw new TrayError('Invalid menu item!', this.setData)
-      if (!data.hasOwnProperty('launchMenu') && !(data.launchMenu instanceof Array))
+      if (!data.hasOwnProperty('launchMenu'))
         throw new TrayError('Invalid menu item! Launch Menu is missing or incorrect format!', this.setData)
-      data.launchMenu.forEach(item => {
-        if (!(item instanceof Object))
-          throw new TrayError('Invalid menu item!', this.setData)
-      })
       if (!data.hasOwnProperty('bufferSize'))
         throw new TrayError('Invalid data format! Missing Buffer Size!', this.setData)
       if (!data.hasOwnProperty('startup'))
@@ -142,7 +142,7 @@ export class AppSettings {
         `Error:  ${error.message}`)
       return
     }
-    AppSettings.#launchMenu = data.launchMenu
+    AppSettings.#launchMenu = JSON.parse(data.launchMenu)
     AppSettings.#bufferSize = data.bufferSize
     AppSettings.#startup = data.startup
   }

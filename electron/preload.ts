@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld('bufferAPI', {
 })
 
 contextBridge.exposeInMainWorld('settingsAPI', {
-  saveSettings: (data:SettingsInterface):void => {
+  saveSettings: (data:SettingsIpc):void => {
     ipcRenderer.send('save-settings-data', data)
   },
   resetSettings: ():void => {
