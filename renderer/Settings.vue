@@ -19,9 +19,9 @@ const saveSettings = () => { window.settingsAPI.saveSettings(parseData()) }
 /** Parse data from the settings window */
 const parseData = () => {
   return {
-    launchMenu: [],
-    bufferSize: 100,
-    startup: false
+    launchMenu: launchMenu.value,
+    bufferSize: bufferSize.value,
+    startup: startup.value
   }
 }
 
