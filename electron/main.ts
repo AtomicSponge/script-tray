@@ -234,8 +234,7 @@ const buildMenu = ():Menu => {
 
     collection.forEach((item:any) => {
       if (item.label !== undefined &&
-          item.sub !== undefined &&
-          Array.isArray(item.sub)) {  //  Item is a sub menu
+          item.sub !== undefined && Array.isArray(item.sub)) {  //  Item is a sub menu
         const tempMenu = new Menu()
         buildLauncher(tempMenu, item.sub)  //  Recursive call to keep building menus
         //  Add the generated sub menu
@@ -248,7 +247,7 @@ const buildMenu = ():Menu => {
       }
       if (item.label !== undefined &&
           item.command !== undefined &&
-          item.args !== undefined &&
+          item.args !== undefined && Array.isArray(item.args) &&
           item.showConsole !== undefined) {  //  Item is a command
         menu.append(new MenuItem({
           label: item.label,
