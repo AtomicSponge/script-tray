@@ -13,6 +13,8 @@ const _launchMenu = ref()
 const _bufferSize = ref()
 const _startup = ref()
 
+const _menuSelect = ref(1)
+
 /** Reset settings button action */
 const resetSettings = ():void => { window.settingsAPI.resetSettings() }
 /** Save settings button action */
@@ -22,8 +24,22 @@ const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
 const parseData = ():SettingsJSON => {
   return {
     launchMenu: _launchMenu.value,
-    bufferSize: _bufferSize.value,
-    startup: _startup.value
+    bufferSize: Number(_bufferSize.value),
+    startup: Boolean(_startup.value)
+  }
+}
+
+/** Add a new item to the launch menu */
+const addItem = ():void => {
+  switch(_menuSelect.value) {
+    case 1:
+      break
+    case 2:
+      break
+    case 3:
+      break
+    default:
+      return
   }
 }
 
@@ -88,16 +104,16 @@ window.onload = ():void => {
   <div id="menuContents"><MenuBuilder v-model="_launchMenu"/></div>
   <footer>
     <div class="left">
-      <select id="menu-select">
+      <select id="menu-select" v-model="_menuSelect">
         <option value="1">Command Launcher</option>
         <option value="2">Sub Menu</option>
         <option value="3">Spacer</option>
       </select>
-      <button>Add</button>
+      <button @click="addItem">Add</button>
     </div>
     <div class="right">
       <label for="bufferInput">Buffer Size:</label>
-      <input type="text" id="bufferInput" size="3" v-model="_bufferSize"/>&nbsp;
+      <input type="text" id="bufferInput" size="3" v-model="_bufferSize"/>
     </div>
   </footer>
 </section></template>
@@ -120,6 +136,25 @@ footer
 .right
   float right
 
-input
+#menu-select
+  color inherit
+  background-color inherit
   cursor pointer
+  border none
+  font-family inherit
+  font-size medium
+  margin-left 4px
+  margin-right 6px
+#menu-select:focus
+  outline none
+option
+  color black
+#bufferInput
+  color inherit
+  background-color inherit
+  font-size large
+  margin-left 4px
+  margin-right 4px
+#bufferInput:focus
+  outline none
 </style>
