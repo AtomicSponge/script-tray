@@ -280,9 +280,11 @@ const buildMenu = ():Menu => {
         return  //  Next item
       }
       //  Item wasn't processed, so there's a problem with the format
-      dialog.showErrorBox(`${appInfo.name}`,
-        `Error building menu, incorrect menu item!\n\n` +
-        `${Object.keys(item)}\n${Object.values(item)}`)
+      let outErrStr = `Error building menu, incorrect menu item!\n\n`
+      for (let key in item) {
+        if(item.hasOwnProperty(key)) outErrStr += `${key} - ${item[key]}\n`
+      }
+      dialog.showErrorBox(`${appInfo.name}`, outErrStr)
     })
   }
 
