@@ -74,8 +74,8 @@ const settingsEditorWindow = ():void => {
   settingsWin = new BrowserWindow({
     icon: appInfo.icon,
     title: `${appInfo.name} - Settings`,
-    width: 800,
-    height: 600,
+    width: 900,
+    height: 700,
     fullscreen: false,
     fullscreenable: false,
     autoHideMenuBar: true,
@@ -235,24 +235,23 @@ const buildMenu = ():Menu => {
     }
 
     collection.forEach((item:any) => {
-      if (Array.isArray(item)) {  //  Item is a sub menu
-        const menuTitle = item.shift()  //  Get the title item
-        if (menuTitle.menu === undefined) {
-          dialog.showErrorBox(`${appInfo.name}`,
-            `Error building menu, incorrect title menu item!\n\n${Object.keys(item)}`)
-          return
-        }
+      if (item.label !== undefined &&
+          item.sub !== undefined &&
+          Array.isArray(item.sub)) {  //  Item is a sub menu
         const tempMenu = new Menu()
-        buildLauncher(tempMenu, item)  //  Recursive call to keep building menus
+        buildLauncher(tempMenu, item.sub)  //  Recursive call to keep building menus
         //  Add the generated sub menu
-        menu.append(new MenuItem({ label: menuTitle.menu, submenu: tempMenu}))
+        menu.append(new MenuItem({ label: item.label, submenu: tempMenu}))
         return  //  Next item
       }
       if (item.separator !== undefined) {  //  Item is a seperator
         menu.append(new MenuItem({ type: 'separator' }))
         return  //  Next item
       }
-      if (item.label !== undefined && item.cmd !== undefined) {  //  Item is a command
+      if (item.label !== undefined &&
+          item.cmd !== undefined &&
+          item.args !== undefined &&
+          item.showConsole !== undefined) {  //  Item is a command
         menu.append(new MenuItem({
           label: item.label,
           click: () => {

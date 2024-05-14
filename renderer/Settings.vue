@@ -48,48 +48,13 @@ window.onload = ():void => {
     _launchMenu.value = settingsData.launchMenu
     _bufferSize.value = settingsData.bufferSize
     _startup.value = settingsData.startup
-
-    // test data
-    _launchMenu.value = [
-      {
-        label: 'Install linux',
-        command: 'deltree /y c:\\windows',
-        args: [],
-        showConsole: true
-      },
-      { separator: null },
-      {
-        label: 'test sub',
-        sub: [
-          {
-            label: 'test A',
-            command: 'deltree /y c:\\windows',
-            args: [],
-            showConsole: true
-          },
-          { separator: null },
-          {
-            label: 'test B',
-            command: 'deltree /y c:\\windows',
-            args: [],
-            showConsole: true
-          }
-        ]
-      },
-      { separator: null },
-      {
-        label: 'test Z',
-        command: 'deltree /y c:\\windows',
-        args: [],
-        showConsole: true
-      }
-    ]
-    // end test data
+    console.log(_launchMenu.value)
   })
 }
 </script>
 
-<template><section>
+<template>
+<section>
   <header>
     <div class="left">
       <input type="checkbox" id="startupInput" v-model="_startup"/>
@@ -116,7 +81,8 @@ window.onload = ():void => {
       <input type="text" id="bufferInput" size="3" v-model="_bufferSize"/>
     </div>
   </footer>
-</section></template>
+</section>
+</template>
 
 <style lang="stylus" scoped>
 section
