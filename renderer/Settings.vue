@@ -5,14 +5,31 @@
 -->
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
+const launchMenu = ref()
+const bufferSize = ref()
+const startup = ref()
+
+/** Reset settings button action */
+const resetSettings = () => { window.settingsAPI.resetSettings() }
+/** Save settings button action */
+const saveSettings = () => { window.settingsAPI.saveSettings(parseData()) }
+
+/** Parse data from the settings window */
+const parseData = () => {
+  return {
+    launchMenu: [],
+    bufferSize: 100,
+    startup: false
+  }
+}
+
 window.onload = () => {
   window.settingsAPI.onUpdateSettings((settingsData:SettingsJSON) => {
-    const menuContents = <HTMLInputElement>document.getElementById('menuContents')
-    menuContents.innerText = settingsData.launchMenu.toString()
-    const startupInput = <HTMLInputElement>document.getElementById('startupInput')
-    startupInput.checked = settingsData.startup
-    const bufferInput = <HTMLInputElement>document.getElementById('bufferInput')
-    bufferInput.value = `${settingsData.bufferSize}`
+    launchMenu.value = settingsData.launchMenu
+    bufferSize.value = settingsData.bufferSize
+    startup.value = settingsData.startup
   })
 }
 </script>
@@ -20,12 +37,13 @@ window.onload = () => {
 <template><section>
   <header>
     <div class="left">
-      <input type="checkbox" id="startupInput"/> Load on startup
+      <input type="checkbox" id="startupInput" v-model="startup"/>
+      <label for="startupInput">Load on startup</label>
     </div>
     <div class="right">
-      <button onclick="window.settingsAPI.resetSettings()">Reset Settings</button>
+      <button @click="resetSettings">Reset Settings</button>
       &nbsp;
-      <button onclick="window.settingsAPI.saveSettings()">Save Settings</button>
+      <button @click="saveSettings">Save Settings</button>
     </div>
   </header>
   <div id="menuContents"></div>
@@ -39,7 +57,8 @@ window.onload = () => {
       <button>Add</button>
     </div>
     <div class="right">
-      Buffer Size: <input type="text" id="bufferInput" size="3"/>&nbsp;
+      <label for="bufferInput">Buffer Size:</label>
+      <input type="text" id="bufferInput" size="3" v-model="bufferSize"/>&nbsp;
     </div>
   </footer>
 </section></template>

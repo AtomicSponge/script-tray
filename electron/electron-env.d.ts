@@ -26,7 +26,7 @@ export interface IbufferAPI {
 }
 
 export interface IsettingsAPI {
-  saveSettings: (data:JSON) => void
+  saveSettings: (data:SettingsJSON) => void
   resetSettings: () => void
   onUpdateSettings: (callback:Function) => void
 }
