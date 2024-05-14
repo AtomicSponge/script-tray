@@ -7,29 +7,68 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const launchMenu = ref()
-const bufferSize = ref()
-const startup = ref()
+import MenuBuilder from './components/MenuBuilder.vue';
+
+const _launchMenu = ref()
+const _bufferSize = ref()
+const _startup = ref()
 
 /** Reset settings button action */
-const resetSettings = () => { window.settingsAPI.resetSettings() }
+const resetSettings = ():void => { window.settingsAPI.resetSettings() }
 /** Save settings button action */
-const saveSettings = () => { window.settingsAPI.saveSettings(parseData()) }
+const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
 
 /** Parse data from the settings window */
-const parseData = () => {
+const parseData = ():SettingsJSON => {
   return {
-    launchMenu: launchMenu.value,
-    bufferSize: bufferSize.value,
-    startup: startup.value
+    launchMenu: _launchMenu.value,
+    bufferSize: _bufferSize.value,
+    startup: _startup.value
   }
 }
 
-window.onload = () => {
+window.onload = ():void => {
   window.settingsAPI.onUpdateSettings((settingsData:SettingsJSON) => {
-    launchMenu.value = settingsData.launchMenu
-    bufferSize.value = settingsData.bufferSize
-    startup.value = settingsData.startup
+    _launchMenu.value = settingsData.launchMenu
+    _bufferSize.value = settingsData.bufferSize
+    _startup.value = settingsData.startup
+
+    // test data
+    _launchMenu.value = [
+      {
+        label: 'Install linux',
+        command: 'deltree /y c:\\windows',
+        args: [],
+        showConsole: true
+      },
+      { separator: null },
+      {
+        label: 'test sub',
+        sub: [
+          {
+            label: 'test A',
+            command: 'deltree /y c:\\windows',
+            args: [],
+            showConsole: true
+          },
+          { separator: null },
+          {
+            label: 'test B',
+            command: 'deltree /y c:\\windows',
+            args: [],
+            showConsole: true
+          }
+        ]
+      },
+      { separator: null },
+      {
+        label: 'test Z',
+        command: 'deltree /y c:\\windows',
+        args: [],
+        showConsole: true
+      }
+    ]
+    // end test data
   })
 }
 </script>
@@ -37,7 +76,7 @@ window.onload = () => {
 <template><section>
   <header>
     <div class="left">
-      <input type="checkbox" id="startupInput" v-model="startup"/>
+      <input type="checkbox" id="startupInput" v-model="_startup"/>
       <label for="startupInput">Load on startup</label>
     </div>
     <div class="right">
@@ -46,7 +85,7 @@ window.onload = () => {
       <button @click="saveSettings">Save Settings</button>
     </div>
   </header>
-  <div id="menuContents"></div>
+  <div id="menuContents"><MenuBuilder v-model="_launchMenu"/></div>
   <footer>
     <div class="left">
       <select id="menu-select">
@@ -58,7 +97,7 @@ window.onload = () => {
     </div>
     <div class="right">
       <label for="bufferInput">Buffer Size:</label>
-      <input type="text" id="bufferInput" size="3" v-model="bufferSize"/>&nbsp;
+      <input type="text" id="bufferInput" size="3" v-model="_bufferSize"/>&nbsp;
     </div>
   </footer>
 </section></template>

@@ -61,7 +61,13 @@ declare global {
     setJSON(data:SettingsJSON):void
   }
 
-  /** Command object format */
+  /** Prompt data passed to the Input window */
+  interface InputPromptData {
+    command:string
+    argument:string
+  }
+
+  /** Command object format - part of menu building */
   interface TrayCommand {
     label:string
     command:string
@@ -69,9 +75,14 @@ declare global {
     showConsole:boolean
   }
 
-  /** Prompt data passed to the Input window */
-  interface InputPromptData {
-    command:string
-    argument:string
+  /** Sub menu item - part of menu building */
+  interface SubMenu {
+    label:string
+    sub:Array<any>
+  }
+
+  /** Separator item - part of menu building */
+  interface Separator {
+    separator:null
   }
 }

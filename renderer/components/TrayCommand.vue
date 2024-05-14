@@ -5,9 +5,11 @@
 -->
 
 <script setup lang="ts">
+const trayCommand = defineModel()
 </script>
 
 <template>
+  <input v-model="trayCommand" hidden/>
 </template>
 
 <style lang="stylus" scoped>
