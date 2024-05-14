@@ -28,7 +28,7 @@ contextBridge.exposeInMainWorld('settingsAPI', {
 })
 
 contextBridge.exposeInMainWorld('inputAPI', {
-  sendInput: (data:string): void => {
+  sendInput: (data:string):void => {
     ipcRenderer.send('recieve-input-data', data)
   },
   onReceiveData: (callback:Function):void => {
