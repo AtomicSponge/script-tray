@@ -31,7 +31,7 @@ const parseData = ():SettingsJSON => {
 
 /** Add a new item to the launch menu */
 const addItem = ():void => {
-  switch(_menuSelect.value) {
+  switch(Number(_menuSelect.value)) {
     case 1:
       break
     case 2:
