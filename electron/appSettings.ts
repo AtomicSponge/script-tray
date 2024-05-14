@@ -82,9 +82,9 @@ export const appSettings:IappSettings = {
         if (error) throw error
         if (hasKey) {
           const temp = <SettingsInterface>storage.getSync('settings')
-          this.launchMenu = temp.launchMenu
-          this.bufferSize = temp.bufferSize
-          this.startup = temp.startup
+          if(temp.launchMenu !== undefined) this.launchMenu = temp.launchMenu
+          if(temp.bufferSize !== undefined) this.bufferSize = temp.bufferSize
+          if(temp.startup !== undefined) this.startup = temp.startup
         }
       })
     } catch (error:any) {
