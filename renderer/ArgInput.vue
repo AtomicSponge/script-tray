@@ -12,7 +12,7 @@ const displayData:InputPromptData = {
   argument: ''
 }
 
-const _argInput = ref()
+const _argInput = ref('')
 
 /** Send input back to main app */
 const sendData = ():void => {
