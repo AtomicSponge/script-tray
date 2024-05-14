@@ -13,7 +13,6 @@ import storage from 'electron-json-storage'
 import { appInfo } from '../appInfo'
 import { TrayError } from './TrayError'
 
-/** App settings */
 export class AppSettings {
   /** Tree of commands to build menu from */
   static #launchMenu:Array<Object> = []
@@ -82,9 +81,9 @@ export class AppSettings {
   setData(data:SettingsIpc):void {
     try {
       if (data === undefined || data === null)
-        throw new TrayError('Invalid menu item!', this.setData)
+        throw new TrayError('No data received!', this.setData)
       if (!data.hasOwnProperty('launchMenu'))
-        throw new TrayError('Invalid menu item! Launch Menu is missing or incorrect format!', this.setData)
+        throw new TrayError('Invalid data format! Launch Menu is missing or incorrect format!', this.setData)
       if (!data.hasOwnProperty('bufferSize'))
         throw new TrayError('Invalid data format! Missing Buffer Size!', this.setData)
       if (!data.hasOwnProperty('startup'))

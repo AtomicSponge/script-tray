@@ -25,9 +25,8 @@ process.argv.forEach(arg => {
 
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 const appSettings = new AppSettings(loadTrayData)
-const resBuff = new ScriptBuffer()
+const resBuff = new ScriptBuffer(appSettings.bufferSize)
 const resolveInputWin = new Resolver()
-resBuff.size = appSettings.bufferSize
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null

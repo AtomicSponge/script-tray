@@ -14,9 +14,13 @@ export class ScriptBuffer {
   static #minSize:number = 10
   static #maxSize:number = 500
 
-  constructor() {
+  /**
+   * Create a new ScriptBuffer object
+   * @param size Size of the buffer
+   */
+  constructor(size = 100) {
     this.#buffer = []
-    this.#size = 100
+    this.#size = this.#check(size)
   }
 
   /**
@@ -38,20 +42,29 @@ export class ScriptBuffer {
     this.#trim()
   }
 
-  //  Trim the buffer to max size
+  /** Trim the buffer to max size */
   #trim():void {
     if(this.#buffer.length > this.#size)
       this.#buffer = this.#buffer.slice(-this.#size)
+  }
+
+  /**
+   * Check for valid buffer size
+   * @param val Value to check
+   * @returns Value adjusted if above max or below min
+   */
+  #check(val:number) {
+    if(val < ScriptBuffer.#minSize) val = ScriptBuffer.#minSize
+    if(val > ScriptBuffer.#maxSize) val = ScriptBuffer.#maxSize
+    return val
   }
 
   /** Get the max buffer size */
   get size():number { return this.#size }
 
   /** Set the max buffer size and trim if necessary */
-  set size(val:number) {
-    if(val < ScriptBuffer.#minSize) val = ScriptBuffer.#minSize
-    if(val > ScriptBuffer.#maxSize) val = ScriptBuffer.#maxSize
-    this.#size = val
+  set size(newSize:number) {
+    this.#size = this.#check(newSize)
     this.#trim()
   }
 }
