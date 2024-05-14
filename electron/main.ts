@@ -18,13 +18,13 @@ import { AppSettings } from './lib/AppSettings'
 import { ScriptBuffer } from './lib/ScriptBuffer'
 import { Resolver } from './lib/Resolver'
 
-/*let autoLauncher:AutoLaunch
-let appSettings:AppSettings
-let resBuff:ScriptBuffer
-let resolveInputWin:Resolver*/
+let loadTrayData = false  //  TESTING - change to true
+process.argv.forEach(arg => {
+  if(arg === '--no-load-traydata') loadTrayData = false
+})
 
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
-const appSettings = new AppSettings()
+const appSettings = new AppSettings(loadTrayData)
 const resBuff = new ScriptBuffer()
 const resolveInputWin = new Resolver()
 resBuff.size = appSettings.bufferSize
@@ -81,7 +81,6 @@ const settingsEditorWindow = ():void => {
     }
   })
   settingsWin.webContents.on('did-finish-load', () => {
-    console.log(appSettings.getData())
     settingsWin?.webContents.send('send-settings-data', appSettings.getData())
   })
   settingsWin.on('close', (_event) => {
@@ -231,22 +230,25 @@ const buildMenu = ():Menu => {
     }
 
     collection.forEach((item:any) => {
+      //  Item is a sub menu
       if (item.label !== undefined &&
-          item.sub !== undefined && Array.isArray(item.sub)) {  //  Item is a sub menu
+          item.sub !== undefined && Array.isArray(item.sub)) {
         const tempMenu = new Menu()
-        buildLauncher(tempMenu, item.sub)  //  Recursive call to keep building menus
-        //  Add the generated sub menu
+        buildLauncher(tempMenu, item.sub)  //  Build submenu
         menu.append(new MenuItem({ label: item.label, submenu: tempMenu}))
         return  //  Next item
       }
-      if (item.separator !== undefined) {  //  Item is a seperator
+      //  Item is a seperator
+      if (item.separator !== undefined &&
+          item.separator === null) {
         menu.append(new MenuItem({ type: 'separator' }))
         return  //  Next item
       }
+      //  Item is a command
       if (item.label !== undefined &&
           item.command !== undefined &&
           item.args !== undefined && Array.isArray(item.args) &&
-          item.showConsole !== undefined) {  //  Item is a command
+          item.showConsole !== undefined) {
         menu.append(new MenuItem({
           label: item.label,
           click: () => {
@@ -305,12 +307,6 @@ app.on('window-all-closed', () => {})
 
 /* Run Script Tray app */
 app.whenReady().then(() => {
-  /*autoLauncher = new AutoLaunch({ name: 'script_tray' })
-  appSettings = new AppSettings()
-  resBuff = new ScriptBuffer()
-  resolveInputWin = new Resolver()
-  resBuff.size = appSettings.bufferSize*/
-  
   //  Verify auto launch is enabled if it should be
   autoLauncher.isEnabled().then((enabled) => {
     if (enabled) return

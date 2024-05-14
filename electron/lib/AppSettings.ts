@@ -11,26 +11,23 @@ import { dialog } from 'electron'
 import storage from 'electron-json-storage'
 
 import { appInfo } from '../appInfo'
+import { TrayError } from './TrayError'
 
 /** App settings */
 export class AppSettings {
   /** Tree of commands to build menu from */
-  #launchMenu:Array<Object>
+  static #launchMenu:Array<Object> = []
   /** Buffer size */
-  #bufferSize:number
+  static #bufferSize:number = 100
   /** Load on startup */
-  #startup:boolean
+  static #startup:boolean = false
 
-  constructor() {
-    this.#launchMenu = []
-    this.#bufferSize = 100
-    this.#startup = false
-
+  constructor(load:boolean) {
     storage.setDataPath()
-    this.load()
+    if(load) this.load()
 
     // test data
-    this.#launchMenu = [
+    AppSettings.#launchMenu = [
       {
         label: 'Install linux',
         command: 'deltree /y c:\\windows',
@@ -84,10 +81,10 @@ export class AppSettings {
       storage.has('settings', (error, hasKey) => {
         if (error) throw error
         if (hasKey) {
-          const temp = <SettingsInterface>storage.getSync('settings')
-          if (temp.launchMenu !== undefined) this.#launchMenu = temp.launchMenu
-          if (temp.bufferSize !== undefined) this.#bufferSize = temp.bufferSize
-          if (temp.startup !== undefined) this.#startup = temp.startup
+          const temp = <SettingsData>storage.getSync('settings')
+          if (temp.launchMenu !== undefined) AppSettings.#launchMenu = temp.launchMenu
+          if (temp.bufferSize !== undefined) AppSettings.#bufferSize = temp.bufferSize
+          if (temp.startup !== undefined) AppSettings.#startup = temp.startup
         }
       })
     } catch (error:any) {
@@ -108,48 +105,52 @@ export class AppSettings {
 
   /** Reset settings */
   reset():void {
-    this.#launchMenu = []
-    this.#bufferSize = 100
-    this.#startup = false
+    AppSettings.#launchMenu = []
+    AppSettings.#bufferSize = 100
+    AppSettings.#startup = false
   }
 
   /** Get entite settings */
-  getData():SettingsInterface {
+  getData():SettingsData {
     return {
-      launchMenu: this.#launchMenu,
-      bufferSize: this.#bufferSize,
-      startup: this.#startup
+      launchMenu: AppSettings.#launchMenu,
+      bufferSize: AppSettings.#bufferSize,
+      startup: AppSettings.#startup
     }
   }
 
   /**
-   * Set entire settings
-   * @param data Data to parse
+   * Set entire settings from an object
+   * @param data Data to parse for settings
    */
-  setData(data:SettingsInterface):void {
+  setData(data:SettingsData):void {
     try {
       if (data === undefined || data === null)
-        throw new Error('Invalid menu item!')
+        throw new TrayError('Invalid menu item!', this.setData)
       if (!data.hasOwnProperty('launchMenu') && !(data.launchMenu instanceof Array))
-        throw new Error('Invalid menu item! Launch Menu is missing or incorrect format!')
+        throw new TrayError('Invalid menu item! Launch Menu is missing or incorrect format!', this.setData)
       data.launchMenu.forEach(item => {
-        if (!(item instanceof Object)) throw new Error('Invalid menu item!')
+        if (!(item instanceof Object))
+          throw new TrayError('Invalid menu item!', this.setData)
       })
       if (!data.hasOwnProperty('bufferSize'))
-        throw new Error('Invalid data format! Missing Buffer Size!')
+        throw new TrayError('Invalid data format! Missing Buffer Size!', this.setData)
       if (!data.hasOwnProperty('startup'))
-        throw new Error('Invalid data format! Missing startup flag!')
+        throw new TrayError('Invalid data format! Missing startup flag!', this.setData)
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
         `Error:  ${error.message}`)
       return
     }
-    this.#launchMenu = data.launchMenu
-    this.#bufferSize = data.bufferSize
-    this.#startup = data.startup
+    AppSettings.#launchMenu = data.launchMenu
+    AppSettings.#bufferSize = data.bufferSize
+    AppSettings.#startup = data.startup
   }
 
-  get launchMenu():Array<Object> { return this.#launchMenu }
-  get bufferSize():number { return this.#bufferSize }
-  get startup():boolean { return this.#startup }
+  /** Get the launch menu */
+  get launchMenu():Array<Object> { return AppSettings.#launchMenu }
+  /** Get the buffer size */
+  get bufferSize():number { return AppSettings.#bufferSize }
+  /** Get the startup flag */
+  get startup():boolean { return AppSettings.#startup }
 }

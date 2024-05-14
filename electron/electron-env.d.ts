@@ -44,22 +44,12 @@ declare global {
     inputAPI:IinputAPI
   }
 
-  /** Settings JSON format */
-  interface SettingsInterface {
+  /** Settings data format */
+  interface SettingsData {
     launchMenu:Array<Object>
     bufferSize:number
     startup:boolean
   }
-
-  /** appSettings Namespace */
-  /*interface IappSettings extends SettingsInterface {
-    config():void
-    load():void
-    save():void
-    reset():void
-    getData():SettingsInterface
-    setData(data:SettingsInterface):void
-  }*/
 
   /** Prompt data passed to the Input window */
   interface InputPromptData {
