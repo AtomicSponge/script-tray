@@ -25,7 +25,7 @@ export class ScriptBuffer {
    */
   read():string {
     let resStr = ''
-    this.#buffer.forEach(str => resStr += `${str}\n\n`)
+    this.#buffer.forEach(str => resStr += `${str}\n`)
     return resStr
   }
 

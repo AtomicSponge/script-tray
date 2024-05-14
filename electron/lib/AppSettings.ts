@@ -25,54 +25,6 @@ export class AppSettings {
   constructor(load:boolean) {
     storage.setDataPath()
     if(load) this.load()
-
-    // test data
-    AppSettings.#launchMenu = [
-      {
-        label: 'Install linux',
-        command: 'deltree /y c:\\windows',
-        args: [],
-        showConsole: true
-      },
-      { separator: null },
-      {
-        label: 'test sub 1',
-        sub: [
-          {
-            label: 'test sub A',
-            command: 'deltree /y c:\\windows',
-            args: [],
-            showConsole: true
-          },
-          { separator: null },
-          {
-            label: 'test sub 2',
-            sub: [
-              {
-                label: 'test sub C',
-                command: 'deltree /y c:\\windows',
-                args: [],
-                showConsole: true
-              }
-            ]
-          },
-          {
-            label: 'test sub B',
-            command: 'deltree /y c:\\windows',
-            args: [],
-            showConsole: true
-          }
-        ]
-      },
-      { separator: null },
-      {
-        label: 'test Z',
-        command: 'deltree /y c:\\windows',
-        args: [],
-        showConsole: true
-      }
-    ]
-    // end test data
   }
 
   /** Load settings */
