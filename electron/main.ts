@@ -14,23 +14,14 @@ import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'elect
 import AutoLaunch from 'auto-launch'
 
 import { appInfo } from './appInfo'
-import { appSettings } from './appSettings'
+import { AppSettings } from './AppSettings'
 import { ScriptBuffer } from './ScriptBuffer'
 import { Resolver } from './Resolver'
 
-const autoLauncher = new AutoLaunch({ name: 'script_tray' })
-const resBuff = new ScriptBuffer()
-const resolveInputWin = new Resolver()
-
-//  Verify auto launch is enabled if it should be
-autoLauncher.isEnabled().then((enabled) => {
-  if (enabled) return
-  if (appSettings.startup) autoLauncher.enable()
-}).catch((error:any) => {
-  dialog.showErrorBox(`${appInfo.name}`,
-    `Error enabling auto launcher!\n\n` +
-    `${error.message}`)
-})
+let autoLauncher:AutoLaunch
+let appSettings:AppSettings
+let resBuff:ScriptBuffer
+let resolveInputWin:Resolver
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null
@@ -308,8 +299,21 @@ app.on('window-all-closed', () => {})
 
 /* Run Script Tray app */
 app.whenReady().then(async () => {
-  appSettings.config()
+  autoLauncher = new AutoLaunch({ name: 'script_tray' })
+  appSettings = new AppSettings()
+  resBuff = new ScriptBuffer()
+  resolveInputWin = new Resolver()
   resBuff.size = appSettings.bufferSize
+  
+  //  Verify auto launch is enabled if it should be
+  autoLauncher.isEnabled().then((enabled) => {
+    if (enabled) return
+    if (appSettings.startup) autoLauncher.enable()
+  }).catch((error:any) => {
+    dialog.showErrorBox(`${appInfo.name}`,
+      `Error enabling auto launcher!\n\n` +
+      `${error.message}`)
+  })
 
   appTray = new Tray(appInfo.icon)
   appTray.setToolTip(appInfo.name)

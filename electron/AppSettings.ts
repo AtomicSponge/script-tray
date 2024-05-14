@@ -13,21 +13,24 @@ import storage from 'electron-json-storage'
 import { appInfo } from './appInfo'
 
 /** App settings */
-export const appSettings:IappSettings = {
+export class AppSettings {
   /** Tree of commands to build menu from */
-  launchMenu: [],
+  #launchMenu:Array<any>
   /** Buffer size */
-  bufferSize: 100,
+  #bufferSize:number
   /** Load on startup */
-  startup: false,
+  #startup:boolean
 
-  /** Configure app settings - called at launch */
-  config():void {
+  constructor() {
+    this.#launchMenu = []
+    this.#bufferSize = 100
+    this.#startup = false
+
     storage.setDataPath()
     this.load()
 
     // test data
-    this.launchMenu = [
+    this.#launchMenu = [
       {
         label: 'Install linux',
         command: 'deltree /y c:\\windows',
@@ -73,7 +76,7 @@ export const appSettings:IappSettings = {
       }
     ]
     // end test data
-  },
+  }
 
   /** Load settings */
   load():void {
@@ -82,16 +85,16 @@ export const appSettings:IappSettings = {
         if (error) throw error
         if (hasKey) {
           const temp = <SettingsInterface>storage.getSync('settings')
-          if(temp.launchMenu !== undefined) this.launchMenu = temp.launchMenu
-          if(temp.bufferSize !== undefined) this.bufferSize = temp.bufferSize
-          if(temp.startup !== undefined) this.startup = temp.startup
+          if(temp.launchMenu !== undefined) this.#launchMenu = temp.launchMenu
+          if(temp.bufferSize !== undefined) this.#bufferSize = temp.bufferSize
+          if(temp.startup !== undefined) this.#startup = temp.startup
         }
       })
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
         `Error loading settings!\n\n${error.message}`)
     }
-  },
+  }
 
   /** Save settings */
   save():void {
@@ -101,23 +104,23 @@ export const appSettings:IappSettings = {
       dialog.showErrorBox(`${appInfo.name}`,
         `Error saving settings!\n\n${error.message}`)
     }
-  },
+  }
 
   /** Reset settings */
   reset():void {
-    this.launchMenu = []
-    this.bufferSize = 100
-    this.startup = false
-  },
+    this.#launchMenu = []
+    this.#bufferSize = 100
+    this.#startup = false
+  }
 
   /** Get entite settings */
   getData():SettingsInterface {
     return {
-      launchMenu: this.launchMenu,
-      bufferSize: this.bufferSize,
-      startup: this.startup
+      launchMenu: this.#launchMenu,
+      bufferSize: this.#bufferSize,
+      startup: this.#startup
     }
-  },
+  }
 
   /**
    * Set entire settings
@@ -129,8 +132,12 @@ export const appSettings:IappSettings = {
       return
     if(!data.hasOwnProperty('bufferSize')) return
     if(!data.hasOwnProperty('startup')) return
-    this.launchMenu = data.launchMenu
-    this.bufferSize = data.bufferSize
-    this.startup = data.startup
+    this.#launchMenu = data.launchMenu
+    this.#bufferSize = data.bufferSize
+    this.#startup = data.startup
   }
+
+  get launchMenu():Array<any> { return this.#launchMenu }
+  get bufferSize():number { return this.#bufferSize }
+  get startup():boolean { return this.#startup }
 }
