@@ -10,12 +10,12 @@
 import { dialog } from 'electron'
 import storage from 'electron-json-storage'
 
-import { appInfo } from './appInfo'
+import { appInfo } from '../appInfo'
 
 /** App settings */
 export class AppSettings {
   /** Tree of commands to build menu from */
-  #launchMenu:Array<any>
+  #launchMenu:Array<Object>
   /** Buffer size */
   #bufferSize:number
   /** Load on startup */
@@ -85,9 +85,9 @@ export class AppSettings {
         if (error) throw error
         if (hasKey) {
           const temp = <SettingsInterface>storage.getSync('settings')
-          if(temp.launchMenu !== undefined) this.#launchMenu = temp.launchMenu
-          if(temp.bufferSize !== undefined) this.#bufferSize = temp.bufferSize
-          if(temp.startup !== undefined) this.#startup = temp.startup
+          if (temp.launchMenu !== undefined) this.#launchMenu = temp.launchMenu
+          if (temp.bufferSize !== undefined) this.#bufferSize = temp.bufferSize
+          if (temp.startup !== undefined) this.#startup = temp.startup
         }
       })
     } catch (error:any) {
@@ -127,17 +127,29 @@ export class AppSettings {
    * @param data Data to parse
    */
   setData(data:SettingsInterface):void {
-    if(data === undefined || data === null) return
-    if(!data.hasOwnProperty('launchMenu') && !(data.launchMenu instanceof Array))
+    try {
+      if (data === undefined || data === null)
+        throw new Error('Invalid menu item!')
+      if (!data.hasOwnProperty('launchMenu') && !(data.launchMenu instanceof Array))
+        throw new Error('Invalid menu item! Launch Menu is missing or incorrect format!')
+      data.launchMenu.forEach(item => {
+        if (!(item instanceof Object)) throw new Error('Invalid menu item!')
+      })
+      if (!data.hasOwnProperty('bufferSize'))
+        throw new Error('Invalid data format! Missing Buffer Size!')
+      if (!data.hasOwnProperty('startup'))
+        throw new Error('Invalid data format! Missing startup flag!')
+    } catch (error:any) {
+      dialog.showErrorBox(`${appInfo.name}`,
+        `Error:  ${error.message}`)
       return
-    if(!data.hasOwnProperty('bufferSize')) return
-    if(!data.hasOwnProperty('startup')) return
+    }
     this.#launchMenu = data.launchMenu
     this.#bufferSize = data.bufferSize
     this.#startup = data.startup
   }
 
-  get launchMenu():Array<any> { return this.#launchMenu }
+  get launchMenu():Array<Object> { return this.#launchMenu }
   get bufferSize():number { return this.#bufferSize }
   get startup():boolean { return this.#startup }
 }

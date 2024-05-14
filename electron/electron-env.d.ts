@@ -46,20 +46,20 @@ declare global {
 
   /** Settings JSON format */
   interface SettingsInterface {
-    launchMenu:Array<any>
+    launchMenu:Array<Object>
     bufferSize:number
     startup:boolean
   }
 
   /** appSettings Namespace */
-  interface IappSettings extends SettingsInterface {
+  /*interface IappSettings extends SettingsInterface {
     config():void
     load():void
     save():void
     reset():void
     getData():SettingsInterface
     setData(data:SettingsInterface):void
-  }
+  }*/
 
   /** Prompt data passed to the Input window */
   interface InputPromptData {
@@ -78,7 +78,7 @@ declare global {
   /** Sub menu item - part of menu building */
   interface SubMenu {
     label:string
-    sub:Array<any>
+    sub:Array<Object>
   }
 
   /** Separator item - part of menu building */

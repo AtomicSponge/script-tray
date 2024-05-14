@@ -14,14 +14,20 @@ import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'elect
 import AutoLaunch from 'auto-launch'
 
 import { appInfo } from './appInfo'
-import { AppSettings } from './AppSettings'
-import { ScriptBuffer } from './ScriptBuffer'
-import { Resolver } from './Resolver'
+import { AppSettings } from './lib/AppSettings'
+import { ScriptBuffer } from './lib/ScriptBuffer'
+import { Resolver } from './lib/Resolver'
 
-let autoLauncher:AutoLaunch
+/*let autoLauncher:AutoLaunch
 let appSettings:AppSettings
 let resBuff:ScriptBuffer
-let resolveInputWin:Resolver
+let resolveInputWin:Resolver*/
+
+const autoLauncher = new AutoLaunch({ name: 'script_tray' })
+const appSettings = new AppSettings()
+const resBuff = new ScriptBuffer()
+const resolveInputWin = new Resolver()
+resBuff.size = appSettings.bufferSize
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null
@@ -298,12 +304,12 @@ app.on('before-quit', () => {
 app.on('window-all-closed', () => {})
 
 /* Run Script Tray app */
-app.whenReady().then(async () => {
-  autoLauncher = new AutoLaunch({ name: 'script_tray' })
+app.whenReady().then(() => {
+  /*autoLauncher = new AutoLaunch({ name: 'script_tray' })
   appSettings = new AppSettings()
   resBuff = new ScriptBuffer()
   resolveInputWin = new Resolver()
-  resBuff.size = appSettings.bufferSize
+  resBuff.size = appSettings.bufferSize*/
   
   //  Verify auto launch is enabled if it should be
   autoLauncher.isEnabled().then((enabled) => {
