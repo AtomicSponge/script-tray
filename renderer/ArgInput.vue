@@ -15,9 +15,10 @@ const displayData:InputPromptData = {
 const _argInput = ref('')
 
 /** Send input back to main app */
-const sendData = ():void => {
-  window.inputAPI.sendInput(_argInput.value)
-}
+const sendData = ():void => { window.inputAPI.sendInput(_argInput.value) }
+
+/** Cancel running command */
+const cancelCmd = ():void => { window.close() }
 
 window.onload = () => {
   window.inputAPI.onReceiveData((inputData:InputPromptData) => {
@@ -31,7 +32,9 @@ window.onload = () => {
   Command: {{ displayData.command }}<br/>
   <label for="argInput">Enter argument {{ displayData.argument }}:</label>
   <input type="text" id="argInput" v-model="_argInput"/>
-  <button @click="sendData"></button>
+  <button @click="sendData">Submit</button>
+  <br/>
+  <button @click="cancelCmd">Cancel Command</button>
 </template>
 
 <style lang="stylus" scoped>
