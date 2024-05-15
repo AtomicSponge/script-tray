@@ -93,7 +93,7 @@ const settingsEditorWindow = ():void => {
 }
 
 /* Event handler for receiving settings */
-ipcMain.on('save-settings-data', async (_event, data) => {
+ipcMain.on('save-settings-data', (_event, data) => {
   if (appSettings.getData() !== data) {
     if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       type: 'question',
@@ -111,8 +111,9 @@ ipcMain.on('save-settings-data', async (_event, data) => {
 })
 
 /* Event handler for resetting settings */
-ipcMain.on('reset-settings-data', async () => {
-  if (dialog.showMessageBoxSync({
+ipcMain.on('reset-settings-data', (_event, data) => {
+  if (!data) return
+  if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
     type: 'question',
     title: `${appInfo.name} - Confirm`,
     buttons: ['Yes', 'No'],
