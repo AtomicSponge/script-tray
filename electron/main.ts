@@ -94,19 +94,17 @@ const settingsEditorWindow = ():void => {
 
 /* Event handler for receiving settings */
 ipcMain.on('save-settings-data', (_event, data) => {
-  if (appSettings.getData() !== data) {
-    if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
-      type: 'question',
-      title: `${appInfo.name} - Confirm`,
-      buttons: [ 'Yes', 'No' ],
-      message: 'Save changes?'
-    }) === 0) {
-      appSettings.setData(data)
-      appSettings.save()
-      resBuff.size = appSettings.bufferSize
-      {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
-      appTray?.setContextMenu(buildMenu())
-    }
+  if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
+    type: 'question',
+    title: `${appInfo.name} - Confirm`,
+    buttons: [ 'Yes', 'No' ],
+    message: 'Save changes?'
+  }) === 0) {
+    appSettings.setData(data)
+    appSettings.save()
+    resBuff.size = appSettings.bufferSize
+    {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
+    appTray?.setContextMenu(buildMenu())
   }
 })
 
