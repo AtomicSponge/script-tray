@@ -1,4 +1,4 @@
-<!--
+  <!--
   script_tray
   By:  Matthew Evans
   See LICENSE.md
@@ -33,10 +33,16 @@ const parseData = ():SettingsIpc => {
 const addItem = ():void => {
   switch(Number(_menuSelect.value)) {
     case 1:
+      _launchMenu.value.push({
+        label: 'New Label', command: 'New Command',
+        args: [], showConsole: false
+      })
       break
     case 2:
+      _launchMenu.value.push({ label: 'New Sub Menu', sub: [] })
       break
     case 3:
+      _launchMenu.value.push({ separator:null })
       break
     default:
       return
@@ -71,7 +77,7 @@ onMounted(() => {
       <select id="menu-select" v-model="_menuSelect">
         <option value="1">Command Launcher</option>
         <option value="2">Sub Menu</option>
-        <option value="3">Spacer</option>
+        <option value="3">Separator</option>
       </select>
       <button @click="addItem">Add</button>
     </div>

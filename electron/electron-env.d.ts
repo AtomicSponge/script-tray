@@ -64,22 +64,11 @@ declare global {
     argument:string
   }
 
-  /** Command object format - part of menu building */
+  /** Command object used in menu building */
   interface TrayCommand {
     label:string
     command:string
     args:Array<string>
     showConsole:boolean
-  }
-
-  /** Sub menu item - part of menu building */
-  interface SubMenu {
-    label:string
-    sub:Array<Object>
-  }
-
-  /** Separator item - part of menu building */
-  interface Separator {
-    separator:null
   }
 }
