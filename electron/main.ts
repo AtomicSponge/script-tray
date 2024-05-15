@@ -230,7 +230,7 @@ const buildMenu = ():Menu => {
 
     collection.forEach((item:any) => {
       //  Item is a sub menu
-      if (item.label !== undefined &&
+      if (item.label !== undefined && item.label !== '' &&
           item.sub !== undefined && Array.isArray(item.sub)) {
         const tempMenu = new Menu()
         buildLauncher(tempMenu, item.sub)  //  Build submenu
@@ -238,14 +238,13 @@ const buildMenu = ():Menu => {
         return  //  Next item
       }
       //  Item is a seperator
-      if (item.separator !== undefined &&
-          item.separator === null) {
+      if (item.separator !== undefined && item.separator === null) {
         menu.append(new MenuItem({ type: 'separator' }))
         return  //  Next item
       }
       //  Item is a command
-      if (item.label !== undefined &&
-          item.command !== undefined &&
+      if (item.label !== undefined && item.label !== '' &&
+          item.command !== undefined && item.command !== '' &&
           item.args !== undefined && Array.isArray(item.args) &&
           item.showConsole !== undefined) {
         menu.append(new MenuItem({
