@@ -92,7 +92,7 @@ const settingsEditorWindow = ():void => {
     settingsWin.loadFile(path.join(__dirname, '../dist/html/settings.html'))}
 }
 
-/* Event handler for receiving settings */
+/* Event handler for saving settings */
 ipcMain.on('save-settings-data', (_event, data) => {
   if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
     type: 'question',
