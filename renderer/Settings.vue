@@ -1,4 +1,4 @@
-  <!--
+<!--
   script_tray
   By:  Matthew Evans
   See LICENSE.md
