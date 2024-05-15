@@ -5,7 +5,7 @@
 -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const displayData:InputPromptData = {
   command: '',
@@ -20,12 +20,12 @@ const sendData = ():void => { window.inputAPI.sendInput(_argInput.value) }
 /** Cancel running command */
 const cancelCmd = ():void => { window.close() }
 
-window.onload = () => {
+onMounted(() => {
   window.inputAPI.onReceiveData((inputData:InputPromptData) => {
     displayData.command = inputData.command
     displayData.argument = inputData.argument
   })
-}
+})
 </script>
 
 <template>

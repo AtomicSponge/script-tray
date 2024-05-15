@@ -5,7 +5,7 @@
 -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import MenuBuilder from './components/MenuBuilder.vue';
 
@@ -43,13 +43,13 @@ const addItem = ():void => {
   }
 }
 
-window.onload = ():void => {
+onMounted(() => {
   window.settingsAPI.onUpdateSettings((settingsData:SettingsIpc) => {
     _launchMenu.value = JSON.parse(settingsData.launchMenu)
     _bufferSize.value = settingsData.bufferSize
     _startup.value = settingsData.startup
   })
-}
+})
 </script>
 
 <template>

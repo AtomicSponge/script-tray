@@ -5,7 +5,7 @@
 -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const _buffer = ref()
 
@@ -19,11 +19,12 @@ const formatText = (text:string):string => {
   return text
 }
 
-window.onload = () => {
+onMounted(() => {
   window.bufferAPI.onUpdateBuffer((bufferData:string) => {
     _buffer.value = formatText(bufferData)
   })
-}
+  window.scrollTo(0, document.body.scrollHeight)
+})
 </script>
 
 <template>
