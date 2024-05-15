@@ -53,10 +53,15 @@ const bufferWindow = ():void => {
   bufferWin.webContents.on('did-finish-load', () => {
     bufferWin?.webContents.send('send-buffer-data', resBuff.read())
   })
+
   //  Send when the buffer updates
   resBuff.on('script-buffer-updated', () => {
     bufferWin?.webContents.send('send-buffer-data', resBuff.read())
   })
+  resBuff.on('error', (error:any) => {
+    dialog.showErrorBox(`${appInfo.name}`, `Buffer Event Error:  ${error.message}`)
+  })
+
   bufferWin.on('close', (_event) => {
     bufferWin?.destroy()
   })
