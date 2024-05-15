@@ -120,7 +120,6 @@ ipcMain.on('reset-settings-data', async () => {
   }) === 0) {
     appSettings.reset()
     settingsWin?.webContents.send('send-settings-data', appSettings.getData())
-    appTray?.setContextMenu(buildMenu())
   }
 })
 
