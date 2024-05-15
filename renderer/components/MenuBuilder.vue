@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import TrayCommand from './TrayCommand.vue'
 import SubMenu from './SubMenu.vue'
-import Spacer from './Spacer.vue'
+import Separator from './Separator.vue'
 
 const _launchMenu = defineModel()
 
