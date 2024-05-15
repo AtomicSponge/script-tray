@@ -98,7 +98,7 @@ ipcMain.on('save-settings-data', (_event, data) => {
     if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       type: 'question',
       title: `${appInfo.name} - Confirm`,
-      buttons: ['Yes', 'No'],
+      buttons: [ 'Yes', 'No' ],
       message: 'Save changes?'
     }) === 0) {
       appSettings.setData(data)
@@ -116,7 +116,7 @@ ipcMain.on('reset-settings-data', (_event, data) => {
   if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
     type: 'question',
     title: `${appInfo.name} - Confirm`,
-    buttons: ['Yes', 'No'],
+    buttons: [ 'Yes', 'No' ],
     message: 'Are you sure you want to reset settings?'
   }) === 0) {
     appSettings.reset()
