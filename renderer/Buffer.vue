@@ -5,7 +5,7 @@
 -->
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 
 const _buffer = ref()
 
@@ -22,19 +22,25 @@ const formatText = (text:string):string => {
 onMounted(() => {
   window.bufferAPI.onUpdateBuffer((bufferData:string) => {
     _buffer.value = formatText(bufferData)
+    nextTick(() => {
+      window.scrollTo(0, document.body.scrollHeight)
+    })
   })
-  window.scrollTo(0, document.body.scrollHeight)
 })
 </script>
 
 <template>
-  <div class="buffer-view">
+  <section>
     <span v-html="_buffer"></span>
-  </div>
+  </section>
 </template>
 
 <style lang="stylus" scoped>
-.buffer-view
+section
+  display flex
+  flex-flow column
+  align-items left
+  height 100vh
   font-size smaller
   padding-top 2px
   padding-left 4px
