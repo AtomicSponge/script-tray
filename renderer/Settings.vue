@@ -5,7 +5,7 @@
 -->
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 
 import MenuBuilder from './components/MenuBuilder.vue'
 
@@ -22,6 +22,10 @@ const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
 
 /** Parse data from the settings window */
 const parseData = ():SettingsIpc => {
+  const minVal:ScriptBufferMin = 10
+  const maxVal:ScriptBufferMax = 500
+  if(_bufferSize.value < minVal) _bufferSize.value = minVal
+  if(_bufferSize.value > maxVal) _bufferSize.value = maxVal
   return {
     launchMenu: JSON.stringify(_launchMenu.value),
     bufferSize: Number(_bufferSize.value),
@@ -49,6 +53,15 @@ const addItem = ():void => {
   }
 }
 
+//  Make sure _bufferSize is a number
+watch(_bufferSize, (_newVal, oldVal) => {
+  if (_bufferSize.value !== '') {
+    if (!/^\d+$/g.test(_bufferSize.value))
+      _bufferSize.value = oldVal
+  }
+})
+
+//  Fetch data
 onMounted(() => {
   window.settingsAPI.onUpdateSettings((settingsData:SettingsIpc) => {
     _launchMenu.value = JSON.parse(settingsData.launchMenu)

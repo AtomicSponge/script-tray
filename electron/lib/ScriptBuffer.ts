@@ -13,8 +13,8 @@ export class ScriptBuffer extends EventEmitter {
   #buffer:Array<string>
   #size:number
 
-  static #minSize:number = 10
-  static #maxSize:number = 500
+  static #minSize:ScriptBufferMin = 10
+  static #maxSize:ScriptBufferMax = 500
 
   /**
    * Create a new ScriptBuffer object

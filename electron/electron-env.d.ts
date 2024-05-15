@@ -71,4 +71,8 @@ declare global {
     args:Array<string>
     showConsole:boolean
   }
+
+  //  Min & max types for the Script Buffer
+  type ScriptBufferMin = 10
+  type ScriptBufferMax = 500
 }
