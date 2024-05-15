@@ -1,17 +1,17 @@
 {
-  "name": "script_tray",
+  "name": "script-tray",
   "private": true,
   "version": "1.9.9",
   "description": "Script Tray System Utility",
   "author": "Matthew Evans",
   "license": "MIT",
-  "homepage": "https://github.com/AtomicSponge/script_tray#readme",
+  "homepage": "https://github.com/AtomicSponge/script-tray#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AtomicSponge/script_tray.git"
+    "url": "https://github.com/AtomicSponge/script-tray.git"
   },
   "bugs": {
-    "url": "https://github.com/AtomicSponge/script_tray/issues"
+    "url": "https://github.com/AtomicSponge/script-tray/issues"
   },
   "main": "dist-electron/main.js",
   "scripts": {
