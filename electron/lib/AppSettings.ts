@@ -65,7 +65,10 @@ export class AppSettings {
     AppSettings.#startup = false
   }
 
-  /** Get entite settings */
+  /**
+   * Get entire settings data
+   * Launch menu seralized as string for Electron
+   */
   getData():SettingsIpc {
     return {
       launchMenu: JSON.stringify(AppSettings.#launchMenu),
@@ -76,26 +79,30 @@ export class AppSettings {
 
   /**
    * Set entire settings from an object
+   * Launch menu converted back from string to JSON
    * @param data Data to parse for settings
+   * @returns True if data successfully set, else false
    */
-  setData(data:SettingsIpc):void {
+  setData(data:SettingsIpc):boolean {
     try {
       if (data === undefined || data === null)
         throw new TrayError('No data received!', this.setData)
-      if (!data.hasOwnProperty('launchMenu'))
-        throw new TrayError('Invalid data format! Launch Menu is missing or incorrect format!', this.setData)
-      if (!data.hasOwnProperty('bufferSize'))
-        throw new TrayError('Invalid data format! Missing Buffer Size!', this.setData)
-      if (!data.hasOwnProperty('startup'))
-        throw new TrayError('Invalid data format! Missing startup flag!', this.setData)
+      if (!data.hasOwnProperty('launchMenu') || typeof data.launchMenu !== 'string')
+        throw new TrayError('Invalid data format! Missing or incorrect Launch Menu!', this.setData)
+      if (!data.hasOwnProperty('bufferSize') || typeof data.bufferSize !== 'number')
+        throw new TrayError('Invalid data format! Missing or incorrect Buffer Size!', this.setData)
+      if (!data.hasOwnProperty('startup') || typeof data.startup !== 'boolean')
+        throw new TrayError('Invalid data format! Missing or incorrect Startup flag!', this.setData)
+      AppSettings.#launchMenu = JSON.parse(data.launchMenu)
     } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
         `Error:  ${error.message}`)
-      return
+      return false
     }
-    AppSettings.#launchMenu = JSON.parse(data.launchMenu)
+
     AppSettings.#bufferSize = data.bufferSize
     AppSettings.#startup = data.startup
+    return true
   }
 
   /** Get the launch menu */

@@ -98,13 +98,15 @@ ipcMain.on('save-settings-data', (_event, data) => {
     type: 'question',
     title: `${appInfo.name} - Confirm`,
     buttons: [ 'Yes', 'No' ],
-    message: 'Save changes?'
+    message: 'Do you want to save changes?'
   }) === 0) {
-    appSettings.setData(data)
-    appSettings.save()
-    resBuff.size = appSettings.bufferSize
-    {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
-    appTray?.setContextMenu(buildMenu())
+    if(appSettings.setData(data)) {
+      appSettings.save()
+      resBuff.size = appSettings.bufferSize
+      {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
+      appTray?.setContextMenu(buildMenu())
+      settingsWin?.webContents.send('send-settings-data', appSettings.getData())
+    }
   }
 })
 
