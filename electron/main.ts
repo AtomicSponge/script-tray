@@ -102,8 +102,9 @@ ipcMain.on('save-settings-data', async (_event, data) => {
       message: 'Save changes?'
     }) === 0) {
       appSettings.setData(data)
-      resBuff.size = appSettings.bufferSize
       appSettings.save()
+      resBuff.size = appSettings.bufferSize
+      {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
       appTray?.setContextMenu(buildMenu())
     }
   }
