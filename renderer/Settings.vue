@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-import MenuBuilder from './components/MenuBuilder.vue';
+import MenuBuilder from './components/MenuBuilder.vue'
 
 const _launchMenu = ref()
 const _bufferSize = ref()
