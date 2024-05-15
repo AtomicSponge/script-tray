@@ -7,7 +7,9 @@
  * 
  */
 
-export class ScriptBuffer {
+import { EventEmitter } from 'node:events'
+
+export class ScriptBuffer extends EventEmitter {
   #buffer:Array<string>
   #size:number
 
@@ -19,6 +21,7 @@ export class ScriptBuffer {
    * @param size Size of the buffer
    */
   constructor(size = 100) {
+    super()
     this.#buffer = []
     this.#size = this.#check(size)
   }
@@ -40,6 +43,7 @@ export class ScriptBuffer {
   write(data:string):void {
     this.#buffer.push(data)
     this.#trim()
+    this.emit('script-buffer-updated')
   }
 
   /** Trim the buffer to max size */

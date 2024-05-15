@@ -53,8 +53,10 @@ const bufferWindow = ():void => {
   bufferWin.webContents.on('did-finish-load', () => {
     bufferWin?.webContents.send('send-buffer-data', resBuff.read())
   })
-  //Add a trigger buffer update
-  //bufferWin.webContents.send('send-buffer-data', resBuff.read())
+  //  Send when the buffer updates
+  resBuff.on('script-buffer-updated', () => {
+    bufferWin?.webContents.send('send-buffer-data', resBuff.read())
+  })
   bufferWin.on('close', (_event) => {
     bufferWin?.destroy()
   })
