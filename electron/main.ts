@@ -112,7 +112,7 @@ ipcMain.on('save-settings-data', (_event, data) => {
 
 /* Event handler for resetting settings */
 ipcMain.on('reset-settings-data', (_event, data) => {
-  if (!data) return
+  if (!data) return  //  Data should be 'true'
   if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
     type: 'question',
     title: `${appInfo.name} - Confirm`,
