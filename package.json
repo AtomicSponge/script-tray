@@ -16,7 +16,8 @@
   "main": "dist-electron/main.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && electron-builder"
+    "build": "vite build",
+    "package": "vite build && electron-builder"
   },
   "dependencies": {
     "vue": "^3.4.27"
