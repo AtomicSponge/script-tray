@@ -24,7 +24,7 @@
     "vue": "^3.4.27"
   },
   "devDependencies": {
-    "@spongex/async-for-each": "^1.0.0",
+    "@spongex/async-for-each": "^1.0.1",
     "@types/auto-launch": "^5.0.5",
     "@types/electron-json-storage": "^4.5.4",
     "@vitejs/plugin-vue": "^5.0.4",
