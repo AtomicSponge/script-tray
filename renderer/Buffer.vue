@@ -31,19 +31,18 @@ onMounted(() => {
 
 <template>
   <section>
-    <span v-html="_buffer"></span>
+    <div class="bufferView"><span v-html="_buffer"></span></div>
   </section>
 </template>
 
 <style lang="stylus" scoped>
 section
-  display flex
-  flex-flow column
-  align-items left
-  height 100vh
+  overflow auto
+
+.bufferView
   font-size smaller
   padding-top 2px
   padding-left 4px
   padding-right 4px
-  padding-bottom 2px
+  padding-bottom 0px
 </style>
