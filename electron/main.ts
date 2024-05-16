@@ -91,6 +91,7 @@ const settingsEditorWindow = ():void => {
   })
   settingsWin.on('close', (_event) => {
     settingsWin?.destroy()
+    appSettings.load()
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     settingsWin.loadURL('http://localhost:5174/html/settings.html') :
