@@ -21,6 +21,7 @@
     "package": "vite build && electron-builder"
   },
   "dependencies": {
+    "@spongex/async-for-each": "^1.0.0",
     "vue": "^3.4.27"
   },
   "devDependencies": {

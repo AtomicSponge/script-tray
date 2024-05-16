@@ -12,6 +12,7 @@ import path from 'node:path'
 
 import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'electron'
 import AutoLaunch from 'auto-launch'
+import { asyncForEach } from '@spongex/async-for-each'
 
 import { appInfo } from './appInfo'
 import { AppSettings } from './lib/AppSettings'
@@ -225,16 +226,6 @@ const buildMenu = ():Menu => {
           `Command:  ${cmd}\nError:  ${error.message}`)
         resBuff.write(`Command:  ${cmd}\nError:  ${error.message}`)
       }
-    }
-
-    /**
-     * Async version of forEach
-     * @param array Array of items
-     * @param callback Callback to run on each item
-     */
-    const asyncForEach = async (array:Array<any>, callback:Function):Promise<void> => {
-      for (let index = 0; index < array.length; index++)
-        await callback(array[index], index, array)
     }
 
     collection.forEach((item:any) => {
