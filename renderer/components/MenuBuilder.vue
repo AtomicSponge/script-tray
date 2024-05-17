@@ -29,7 +29,7 @@ const deleteItem = (item:any, idx:number) => {
       _launchMenu.value.splice(idx, 1)
     return
   }
-  if(item.separator !== undefined) _launchMenu.value.splice(idx, 1)
+  _launchMenu.value.splice(idx, 1)
 }
 </script>
 
