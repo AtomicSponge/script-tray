@@ -4,12 +4,11 @@
   See LICENSE.md
 -->
 
-<template><hr/></template>
+<template><hr class="separator"/></template>
 
 <style lang="stylus" scoped>
 @import './vars.styl'
 
-hr
-  border (table_border_size * 2) solid
-  color table_color
+.separator
+  border (table_border_size * 2) solid table_color
 </style>

@@ -37,7 +37,9 @@ const deleteItem = (item:any, idx:number) => {
   <table>
     <tr v-for="(item, idx) in _launchMenu" :key="idx" class="itemrow">
       <td v-if="item.label !== undefined && item.sub !== undefined" class="item">
+        <hr class="subDiv"/>
         <SubMenu v-model="_launchMenu[idx]"/>
+        <hr class="subDiv"/>
         <MenuBuilder v-model="_launchMenu[idx].sub"/>
       </td>
       <td v-else-if="item.label !== undefined && item.command !== undefined" class="item">
@@ -62,6 +64,8 @@ table
   border-collapse collapse
 .itemrow
   border table_border_size solid table_color
+.subDiv
+  border table_border_size dashed table_color
 .item
   min-width min_width
   text-align left
