@@ -12,6 +12,20 @@ import SubMenu from './SubMenu.vue'
 import Separator from './Separator.vue'
 
 const _launchMenu:ModelRef<any> = defineModel()
+
+const deleteItem = (item:any, idx:number) => {
+  if(item.label !== undefined && item.sub !== undefined) {
+    if(window.confirm(`Are you sure you want to delete sub-menu '${item.label}' and all of its content?`))
+      _launchMenu.value.splice(idx, 1)
+    return
+  }
+  if(item.label !== undefined && item.command !== undefined) {
+    if(window.confirm(`Delete command '${item.label}'?`))
+      _launchMenu.value.splice(idx, 1)
+    return
+  }
+  if(item.separator !== undefined) _launchMenu.value.splice(idx, 1)
+}
 </script>
 
 <template>
@@ -27,7 +41,9 @@ const _launchMenu:ModelRef<any> = defineModel()
       <td v-if="item.separator !== undefined" class="item">
         <Separator v-model="_launchMenu[idx]"/>
       </td>
-      <td class="delBtn">Delete</td>
+      <td class="delBtn">
+        <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
+      </td>
     </tr>
   </table>
 </template>
