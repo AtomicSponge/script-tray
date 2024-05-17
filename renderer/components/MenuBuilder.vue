@@ -13,6 +13,11 @@ import Separator from './Separator.vue'
 
 const _launchMenu:ModelRef<any> = defineModel()
 
+/**
+ * Delete an item from the menu
+ * @param item Item object to delete
+ * @param idx Item index
+ */
 const deleteItem = (item:any, idx:number) => {
   if(item.label !== undefined && item.sub !== undefined) {
     if(window.confirm(`Are you sure you want to delete sub-menu '${item.label}' and all of its content?`))
