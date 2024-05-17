@@ -40,12 +40,13 @@ const deleteItem = (item:any, idx:number) => {
         <SubMenu v-model="_launchMenu[idx]"/>
         <MenuBuilder v-model="_launchMenu[idx].sub"/>
       </td>
-      <td v-if="item.label !== undefined && item.command !== undefined" class="item">
+      <td v-else-if="item.label !== undefined && item.command !== undefined" class="item">
         <TrayCommand v-model="_launchMenu[idx]"/>
       </td>
-      <td v-if="item.separator !== undefined" class="item">
+      <td v-else-if="item.separator !== undefined" class="item">
         <Separator v-model="_launchMenu[idx]"/>
       </td>
+      <td v-else class="item">&nbsp;</td>  <!-- render error handling -->
       <td class="delBtn">
         <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
       </td>
