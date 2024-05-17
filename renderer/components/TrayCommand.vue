@@ -18,7 +18,6 @@ const trayCommand:ModelRef<any> = defineModel()
     <label for="showConsole">Show console:</label>
     <input type="checkbox" id="showConsole" v-model="trayCommand.showConsole"/>
   </div>
-  <input v-model="trayCommand" hidden/>
 </template>
 
 <style lang="stylus" scoped>

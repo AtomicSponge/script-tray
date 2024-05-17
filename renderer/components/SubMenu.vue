@@ -12,7 +12,6 @@ const subMenu:ModelRef<any> = defineModel()
 
 <template>
   <div><input v-model="subMenu.label"/></div>
-  <input v-model="subMenu" hidden/>
 </template>
 
 <style lang="stylus" scoped>

@@ -30,7 +30,6 @@ const _launchMenu:ModelRef<any> = defineModel()
       <td class="delBtn">Delete</td>
     </tr>
   </table>
-  <input v-model="_launchMenu" hidden/>
 </template>
 
 <style lang="stylus" scoped>
