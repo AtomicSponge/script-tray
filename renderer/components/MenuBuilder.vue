@@ -16,23 +16,37 @@ const _launchMenu:ModelRef<any> = defineModel()
 
 <template>
   <table>
-    <tr v-for="(item, idx) in _launchMenu" :key="idx">
-      <td v-if="item.label !== undefined && item.sub !== undefined">
+    <tr v-for="(item, idx) in _launchMenu" :key="idx" class="itemrow">
+      <td v-if="item.label !== undefined && item.sub !== undefined" class="item">
         <SubMenu v-model="_launchMenu[idx]"/>
         <MenuBuilder v-model="_launchMenu[idx].sub"/>
       </td>
-      <td v-if="item.label !== undefined && item.command !== undefined">
+      <td v-if="item.label !== undefined && item.command !== undefined" class="item">
         <TrayCommand v-model="_launchMenu[idx]"/>
       </td>
-      <td v-if="item.separator !== undefined">
+      <td v-if="item.separator !== undefined" class="item">
         <Separator v-model="_launchMenu[idx]"/>
       </td>
+      <td class="delBtn">Delete</td>
     </tr>
   </table>
   <input v-model="_launchMenu" hidden/>
 </template>
 
 <style lang="stylus" scoped>
+@import './vars.styl'
+
 table
-  margin-left 16px
+  margin-left table_margin
+  border-collapse collapse
+.itemrow
+  border table_border_size solid table_color
+.item
+  min-width min_width
+  text-align left
+  padding item_padding
+.delBtn
+  text-align right
+  vertical-align top
+  padding item_padding
 </style>

@@ -5,11 +5,13 @@
 -->
 
 <script setup lang="ts">
-const subMenu = defineModel()
+import type { ModelRef } from 'vue'
+
+const subMenu:ModelRef<any> = defineModel()
 </script>
 
 <template>
-  Sub-menu
+  <div><input v-model="subMenu.label"/></div>
   <input v-model="subMenu" hidden/>
 </template>
 
