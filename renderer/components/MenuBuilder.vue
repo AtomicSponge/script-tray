@@ -5,40 +5,30 @@
 -->
 
 <script setup lang="ts">
+import type { ModelRef } from 'vue'
+
 import TrayCommand from './TrayCommand.vue'
 import SubMenu from './SubMenu.vue'
 import Separator from './Separator.vue'
 
-const _launchMenu = defineModel()
-
-/** */
-const menuBuilder = (collection:Array<any>, _tabIdx:number = 0):void => {
-  collection.forEach(item => {
-    if (item.label !== undefined &&
-        item.sub !== undefined &&
-        Array.isArray(item.sub)) {
-      //
-      menuBuilder(item.sub, (_tabIdx++))
-      return
-    }
-    if (item.separator !== undefined) {
-      //
-      return
-    }
-    if (item.label !== undefined &&
-        item.cmd !== undefined &&
-        item.args !== undefined &&
-        item.showConsole !== undefined) {
-      //
-      return
-    }
-    // error with format
-  })
-}
+const _launchMenu:ModelRef<any> = defineModel()
 </script>
 
 <template>
-  <div>{{ _launchMenu }}</div>
+  <table>
+    <tr v-for="(item, idx) in _launchMenu" :key="idx">
+      <td v-if="item.sub !== undefined">
+        <SubMenu v-model="_launchMenu[idx]"/>
+        <MenuBuilder v-model="_launchMenu[idx].sub"/>
+      </td>
+      <td v-if="item.command !== undefined">
+        <TrayCommand v-model="_launchMenu[idx]"/>
+      </td>
+      <td v-if="item.separator !== undefined">
+        <Separator v-model="_launchMenu[idx]"/>
+      </td>
+    </tr>
+  </table>
   <input v-model="_launchMenu" hidden/>
 </template>
 

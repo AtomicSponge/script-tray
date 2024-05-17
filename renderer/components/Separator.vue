@@ -8,6 +8,7 @@
 </script>
 
 <template>
+  Separator
 </template>
 
 <style lang="stylus" scoped>

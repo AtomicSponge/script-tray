@@ -9,6 +9,7 @@ const subMenu = defineModel()
 </script>
 
 <template>
+  Sub-menu
   <input v-model="subMenu" hidden/>
 </template>
 

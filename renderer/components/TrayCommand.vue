@@ -9,6 +9,7 @@ const trayCommand = defineModel()
 </script>
 
 <template>
+  Command
   <input v-model="trayCommand" hidden/>
 </template>
 
