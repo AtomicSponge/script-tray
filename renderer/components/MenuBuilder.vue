@@ -17,11 +17,11 @@ const _launchMenu:ModelRef<any> = defineModel()
 <template>
   <table>
     <tr v-for="(item, idx) in _launchMenu" :key="idx">
-      <td v-if="item.sub !== undefined">
+      <td v-if="item.label !== undefined && item.sub !== undefined">
         <SubMenu v-model="_launchMenu[idx]"/>
         <MenuBuilder v-model="_launchMenu[idx].sub"/>
       </td>
-      <td v-if="item.command !== undefined">
+      <td v-if="item.label !== undefined && item.command !== undefined">
         <TrayCommand v-model="_launchMenu[idx]"/>
       </td>
       <td v-if="item.separator !== undefined">
@@ -33,4 +33,6 @@ const _launchMenu:ModelRef<any> = defineModel()
 </template>
 
 <style lang="stylus" scoped>
+table
+  margin-left 16px
 </style>
