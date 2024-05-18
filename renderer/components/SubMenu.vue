@@ -12,7 +12,7 @@ const subMenu:ModelRef<any> = defineModel({ required: true })
 
 <template>
   <section>
-    <label for="submenu">- Submenu:</label>
+    <label for="submenu">Submenu:</label>
     <input type="text" v-model="subMenu.label" id="submenu"/>
   </section>
 </template>

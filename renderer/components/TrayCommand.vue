@@ -18,15 +18,15 @@ const addArgument = () => {
   <section>
   <table>
     <tr>
-      <td><label for="cmdLabel">- Label:</label></td>
+      <td><label for="cmdLabel">Label:</label></td>
       <td><input type="text" v-model="trayCommand.label" id="cmdLabel"/></td>
     </tr>
     <tr>
-      <td><label for="cmdCommand">- Command:</label></td>
+      <td><label for="cmdCommand">Command:</label></td>
       <td><input type="text" v-model="trayCommand.command" id="cmdCommand"/></td>
     </tr>
     <tr>
-      <td>- Args <button @click="addArgument()">Add</button></td>
+      <td>Args <button @click="addArgument()">Add</button></td>
       <td>...</td>
     </tr>
     <tr>
