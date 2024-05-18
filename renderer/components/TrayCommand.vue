@@ -41,4 +41,7 @@ const addArgument = () => {
 </template>
 
 <style lang="stylus" scoped>
+button
+  vertical-align top
+  font-size 0.6em
 </style>
