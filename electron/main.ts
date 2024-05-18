@@ -137,7 +137,7 @@ ipcMain.on('reset-settings-data', (_event, data) => {
 const inputWindow = (data:InputPromptData):void => {
   inputWin = new BrowserWindow({
     icon: appInfo.icon,
-    title: `${appInfo.name} - ${data.label} ${data.argument}`,
+    title: `${appInfo.name} - ${data.label}: ${data.argument}`,
     width: 400,
     height: 128,
     fullscreen: false,
