@@ -81,7 +81,6 @@ const moveDown = (idx:number):void => {
 
 <style lang="stylus" scoped>
 button
-  vertical-align center
   font-size 0.66em
 table
   margin-left 16px
