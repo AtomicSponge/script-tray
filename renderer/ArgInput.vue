@@ -15,7 +15,13 @@ const displayData:InputPromptData = {
 const _argInput = ref('')
 
 /** Send input back to main app */
-const sendData = ():void => { window.inputAPI.sendInput(_argInput.value) }
+const sendData = ():void => {
+  if (_argInput.value === '') {
+    window.alert('Please enter a value!')
+    return
+  }
+  window.inputAPI.sendInput(_argInput.value)
+}
 
 /** Cancel running command */
 const cancelCmd = ():void => { window.close() }
