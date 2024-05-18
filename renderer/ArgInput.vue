@@ -9,7 +9,7 @@ import { ref, onMounted } from 'vue'
 
 const _displayLabel = ref()
 const _displayArgument = ref()
-const _argInput = ref()
+const _argInput = ref('')
 
 /** Send input back to main app */
 const sendData = ():void => {
