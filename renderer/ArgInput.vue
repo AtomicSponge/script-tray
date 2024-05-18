@@ -31,13 +31,15 @@ onMounted(() => {
 <template>
 <section>
   <div>
-    Command: <span>{{ displayData.command }}</span>
+    Command: <span class="bold">{{ displayData.command }}</span>
   </div>
   <div>
     <label for="argInput">
-      Enter argument <span>{{ displayData.argument }}</span>:
+      Enter argument <span class="bold">{{ displayData.argument }}</span>:
     </label>
-    <input type="text" id="argInput" v-model="_argInput"/>
+    <span>
+      <input type="text" id="argInput" v-model="_argInput"/>
+    </span>
   </div>
   <div>
     <button @click="sendData" class="left">Submit</button>
@@ -57,10 +59,10 @@ div
   padding-left 4px
   padding-right 8px
   padding-bottom 4px
-span
-  font-weight bold
 #argInput
   width 100px
+.bold
+  font-weight bold
 .left
   float left
 .right
