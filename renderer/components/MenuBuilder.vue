@@ -71,7 +71,6 @@ const moveDown = (idx:number):void => {
       <td class="delBtn">
         <button v-show="idx !== 0" @click="moveUp(idx)">&#8593;</button>
         <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
-        <br/>
         <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
       </td>
     </tr>
