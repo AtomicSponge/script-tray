@@ -1,7 +1,7 @@
 /**
  * 
  * @author Matthew Evans
- * @module script_tray
+ * @module script-tray
  * @see README.md
  * @copyright MIT see LICENSE.md
  * 
