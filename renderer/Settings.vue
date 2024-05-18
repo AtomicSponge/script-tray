@@ -47,7 +47,7 @@ const addItem = ():void => {
       _launchMenu.value.push({ label: 'New Sub Menu', sub: [] })
       return
     case 3:
-      _launchMenu.value.push({ separator:null })
+      _launchMenu.value.push({ separator: null })
       return
     default:
       return
