@@ -31,6 +31,24 @@ const deleteItem = (item:any, idx:number):void => {
   }
   _launchMenu.value.splice(idx, 1)
 }
+
+/**
+ * Move an item up in the array
+ * @param item Item to move
+ * @param idx Item index
+ */
+const moveUp = (item:any, idx:number):void => {
+  //
+}
+
+/**
+ * Move an item down in the array
+ * @param item Item to move
+ * @param idx Item index
+ */
+const moveDown = (item:any, idx:number):void => {
+  //
+}
 </script>
 
 <template>
@@ -50,6 +68,9 @@ const deleteItem = (item:any, idx:number):void => {
       </td>
       <td v-else class="item">&nbsp;</td>  <!-- render error handling -->
       <td class="delBtn">
+        <button v-show="idx !== 0" @click="moveUp(_launchMenu[idx], idx)">&#8593;</button>
+        <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(_launchMenu[idx], idx)">&#8595;</button>
+        <br/>
         <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
       </td>
     </tr>
@@ -60,6 +81,8 @@ const deleteItem = (item:any, idx:number):void => {
 table
   margin-left 16px
   border-collapse collapse
+  border 1px solid rgb(100, 100, 100, 0.1)
+  border-left 6px solid rgb(100, 100, 100, 0.1)
 .itemrow
   border 1px solid rgb(100, 100, 100, 0.1)
 .subDiv

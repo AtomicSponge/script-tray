@@ -15,6 +15,7 @@ const addArgument = () => {
 </script>
 
 <template>
+  <section>
   <table>
     <tr>
       <td><label for="cmdLabel">- Label:</label></td>
@@ -36,15 +37,8 @@ const addArgument = () => {
       </td>
     </tr>
   </table>
+  </section>
 </template>
 
 <style lang="stylus" scoped>
-table
-  margin-top 2px
-td
-  padding-left 0px
-  padding-top 1px
-  padding-bottom 1px
-td
-  padding 1px
 </style>
