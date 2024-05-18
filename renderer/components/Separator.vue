@@ -4,11 +4,18 @@
   See LICENSE.md
 -->
 
-<template><hr class="separator"/></template>
+<script setup lang="ts">
+import type { ModelRef } from 'vue'
+
+const separator:ModelRef<null> = defineModel({ required: true })
+</script>
+
+<template>
+  <hr class="separator"/>
+  <input v-model="separator" hidden disabled/>
+</template>
 
 <style lang="stylus" scoped>
-@import './vars.styl'
-
 .separator
-  border (table_border_size * 2) solid table_color
+  border 4px solid rgb(100, 100, 100, 0.1)
 </style>

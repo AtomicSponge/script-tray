@@ -110,10 +110,12 @@ section
   height 100vh
 header
   padding 2px
+  margin-bottom 1px
 #menuContents
   flex: auto
   overflow auto
 footer
+  margin-top 2px
   padding 2px
 .left
   float left
@@ -134,9 +136,6 @@ footer
 option
   color black
 #bufferInput
-  color inherit
-  background-color inherit
-  font-size large
   margin-left 4px
   margin-right 4px
 #bufferInput:focus

@@ -57,21 +57,18 @@ const deleteItem = (item:any, idx:number):void => {
 </template>
 
 <style lang="stylus" scoped>
-@import './vars.styl'
-
 table
-  margin-left table_margin
+  margin-left 16px
   border-collapse collapse
 .itemrow
-  border table_border_size solid table_color
+  border 1px solid rgb(100, 100, 100, 0.1)
 .subDiv
-  border table_border_size dashed table_color
+  border 1px dashed rgb(100, 100, 100, 0.1)
 .item
-  min-width min_width
   text-align left
-  padding item_padding
+  padding 6px
 .delBtn
   text-align right
   vertical-align top
-  padding item_padding
+  padding 6px
 </style>
