@@ -43,13 +43,13 @@ onMounted(() => {
     <label for="argInput">
       Enter argument <span class="bold">{{ displayData.argument }}</span>:
     </label>
-    <span>
-      <input type="text" id="argInput" v-model="_argInput"/>
-    </span>
   </div>
   <div>
-    <button @click="sendData" class="left">Submit</button>
-    <button @click="cancelCmd" class="right">Cancel Command</button>
+    <input type="text" id="argInput" v-model="_argInput" @keyup.enter="sendData()"/>
+  </div>
+  <div>
+    <button @click="sendData()" class="left">Submit</button>
+    <button @click="cancelCmd()" class="right">Cancel Command</button>
   </div>
 </section>
 </template>
@@ -66,7 +66,7 @@ div
   padding-right 8px
   padding-bottom 4px
 #argInput
-  width 100px
+  width 98%
 .bold
   font-weight bold
 .left

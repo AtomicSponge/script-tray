@@ -137,7 +137,7 @@ const inputWindow = (data:InputPromptData):void => {
     icon: appInfo.icon,
     title: `${appInfo.name} - ${data.command} ${data.argument}`,
     width: 400,
-    height: 100,
+    height: 128,
     fullscreen: false,
     fullscreenable: false,
     autoHideMenuBar: true,
