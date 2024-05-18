@@ -11,14 +11,14 @@ const _subMenu:ModelRef<any> = defineModel({ required: true })
 </script>
 
 <template>
-  <section>
+  <div class="submenu">
     <label for="submenu">Submenu:</label>
     <input type="text" v-model="_subMenu.label" id="submenu"/>
-  </section>
+  </div>
 </template>
 
 <style lang="stylus" scoped>
-section
+.submenu
   margin-top 2px
   margin-left 2px
 #submenu
