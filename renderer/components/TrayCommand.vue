@@ -11,8 +11,8 @@ const trayCommand:ModelRef<any> = defineModel()
 </script>
 
 <template>
-  <div><input v-model="trayCommand.label"/></div>
-  <div><input v-model="trayCommand.command"/></div>
+  <div><input type="text" v-model="trayCommand.label"/></div>
+  <div><input type="text" v-model="trayCommand.command"/></div>
   <div>Args:</div>
   <div>
     <label for="showConsole">Show console:</label>

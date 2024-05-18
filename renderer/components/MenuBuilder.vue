@@ -11,7 +11,7 @@ import TrayCommand from './TrayCommand.vue'
 import SubMenu from './SubMenu.vue'
 import Separator from './Separator.vue'
 
-const _launchMenu:ModelRef<any> = defineModel()
+const _launchMenu:ModelRef<any> = defineModel({ required: true })
 
 /**
  * Delete an item from the menu
