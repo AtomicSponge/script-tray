@@ -29,13 +29,35 @@ onMounted(() => {
 </script>
 
 <template>
-  Command: {{ displayData.command }}<br/>
-  <label for="argInput">Enter argument {{ displayData.argument }}:</label>
-  <input type="text" id="argInput" v-model="_argInput"/>
-  <button @click="sendData">Submit</button>
-  <br/>
-  <button @click="cancelCmd">Cancel Command</button>
+  <section>
+  <div>
+    Command: <span>{{ displayData.command }}</span>
+  </div>
+  <div>
+    <label for="argInput">
+      Enter argument <span>{{ displayData.argument }}</span>:
+    </label>
+    <input type="text" id="argInput" v-model="_argInput"/>
+  </div>
+  <div>
+    <button @click="sendData" class="left">Submit</button>
+    <button @click="cancelCmd" class="right">Cancel Command</button>
+  </div>
+  </section>
 </template>
 
 <style lang="stylus" scoped>
+div
+  padding-top 2px
+  padding-left 4px
+  padding-right 8px
+  padding-bottom 4px
+span
+  font-weight bold
+#argInput
+  width 100px
+.left
+  float left
+.right
+  float right
 </style>
