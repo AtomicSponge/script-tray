@@ -71,9 +71,19 @@ const moveDown = (idx:number):void => {
       </td>
       <td v-else class="item">&nbsp;</td>  <!-- render error handling -->
       <td class="delBtn">
-        <button v-show="idx !== 0" @click="moveUp(idx)">&#8593;</button>
-        <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
-        <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
+        <div>
+          <button v-show="idx !== 0" @click="moveUp(idx)">&#8593;</button>
+          <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
+          <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
+        </div>
+        <div class="move">
+          <label for="moveSelect">Move:</label>
+          <select id="moveSelect">
+            <option>Main</option>
+            <option>test sub 1ff</option>
+            <option>test sub 2d</option>
+          </select>
+        </div>
       </td>
     </tr>
   </table>
@@ -90,7 +100,7 @@ table
 .itemrow
   border 1px solid rgb(100, 100, 100, 0.1)
 .subDiv
-  border 1px dashed rgb(100, 100, 100, 0.1)
+  border 1px dashed rgba(255, 255, 255, 0.87)
 .item
   text-align left
   padding 6px
@@ -98,4 +108,9 @@ table
   text-align right
   vertical-align top
   padding 6px
+select
+  font-size 0.96em
+.move
+  padding-top 2px
+  font-size 0.66em
 </style>

@@ -88,7 +88,7 @@ onMounted(() => {
   <div id="menuContents"><MenuBuilder v-model="_launchMenu"/></div>
   <footer>
     <div class="left">
-      <select id="menu-select" v-model="_menuSelect">
+      <select id="menuSelect" v-model="_menuSelect">
         <option value="1">Command Launcher</option>
         <option value="2">Sub Menu</option>
         <option value="3">Separator</option>
@@ -122,22 +122,9 @@ footer
   float left
 .right
   float right
-#menu-select
-  color inherit
-  background-color inherit
-  cursor pointer
-  border none
-  font-family inherit
+#menuSelect
   font-size medium
-  margin-left 4px
-  margin-right 6px
-#menu-select:focus
-  outline none
-option
-  color black
 #bufferInput
   margin-left 4px
   margin-right 4px
-#bufferInput:focus
-  outline none
 </style>

@@ -4,26 +4,14 @@
  * See LICENSE.md
  */
 
-app_font = Inter, system-ui, Avenir, Helvetica, Arial, sans-serif
-app_font_size = medium
-app_line_height = 1.5
-app_font_weight = 400
-
-app_bg_color = rgb(36, 36, 36)
-app_fg_color = rgba(255, 255, 255, 0.87)
-
-button_fg_color = app_fg_color
-button_bg_color = rgb(26, 26, 26)
-button_hv_color = rgb(100, 108, 255)
-
 :root
-  font-family app_font
-  font-size app_font_size
-  line-height app_line_height
-  font-weight app_font_weight
+  font-family Inter, system-ui, Avenir, Helvetica, Arial, sans-serif
+  font-size medium
+  line-height 1.5
+  font-weight 400
 
-  color app_fg_color
-  background-color app_bg_color
+  color rgba(255, 255, 255, 0.87)
+  background-color rgb(36, 36, 36)
 
   font-synthesis none
   text-rendering optimizeLegibility
@@ -42,20 +30,35 @@ input
 input:focus
   outline none
 
+select
+  color inherit
+  background-color inherit
+  cursor pointer
+  border none
+  font-family inherit
+  margin-left 4px
+  margin-right 6px
+select:focus
+  outline none
+option
+  color rgb(0, 0, 0)
+
 button
   border-radius 16px
   border 1px solid transparent
   padding 0.4em 1.0em
   font-size 0.8em
-  font-weight (app_font_weight + 100)
+  font-weight 500
   font-family inherit
-  color button_fg_color
-  background-color button_bg_color
+  color rgba(255, 255, 255, 0.87)
+  background-color rgb(26, 26, 26)
   cursor pointer
   transition border-color 0.25s
   box-shadow 1px 2px rgb(153, 153, 153)
 button:hover
-  border-color button_hv_color
+  border-color rgb(100, 108, 255)
 button:active
   box-shadow 0px 0px
   transform translateX(1px) translateY(2px)
+button:focus
+  outline none
