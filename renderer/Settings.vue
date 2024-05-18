@@ -42,13 +42,13 @@ const addItem = ():void => {
         label: 'New Label', command: 'New Command',
         args: [], showConsole: false
       })
-      break
+      return
     case 2:
       _launchMenu.value.push({ label: 'New Sub Menu', sub: [] })
-      break
+      return
     case 3:
       _launchMenu.value.push({ separator:null })
-      break
+      return
     default:
       return
   }
