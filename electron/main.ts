@@ -48,6 +48,7 @@ const bufferWindow = ():void => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      spellcheck: false,
       preload: path.join(__dirname, '../dist-electron/preload.js'),
     }
   })
@@ -84,6 +85,7 @@ const settingsEditorWindow = ():void => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      spellcheck: false,
       preload: path.join(__dirname, '../dist-electron/preload.js'),
     }
   })
@@ -135,7 +137,7 @@ ipcMain.on('reset-settings-data', (_event, data) => {
 const inputWindow = (data:InputPromptData):void => {
   inputWin = new BrowserWindow({
     icon: appInfo.icon,
-    title: `${appInfo.name} - ${data.command} ${data.argument}`,
+    title: `${appInfo.name} - ${data.label} ${data.argument}`,
     width: 400,
     height: 128,
     fullscreen: false,
@@ -144,6 +146,7 @@ const inputWindow = (data:InputPromptData):void => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      spellcheck: false,
       preload: path.join(__dirname, '../dist-electron/preload.js'),
     }
   })
@@ -256,7 +259,7 @@ const buildMenu = ():Menu => {
                 let runCanceled:boolean = false
                 let runCmd:string = <string>item.command
                 await asyncForEach(<Array<string>>item.args, async (arg:string) => {
-                  inputWindow({ command: <string>item.label, argument: arg })
+                  inputWindow({ label: <string>item.label, argument: arg })
                   await resolveInputWin.promise.then(resStr => {
                     runCmd += ' ' + resStr
                   }).catch(_res => { runCanceled = true })

@@ -8,7 +8,7 @@
 import { ref, onMounted } from 'vue'
 
 const displayData:InputPromptData = {
-  command: '',
+  label: '',
   argument: ''
 }
 
@@ -28,7 +28,7 @@ const cancelCmd = ():void => { window.close() }
 
 onMounted(() => {
   window.inputAPI.onReceiveData((inputData:InputPromptData) => {
-    displayData.command = inputData.command
+    displayData.label = inputData.label
     displayData.argument = inputData.argument
   })
 })
@@ -37,7 +37,7 @@ onMounted(() => {
 <template>
 <section>
   <div>
-    Command: <span class="highlight">{{ displayData.command }}</span>
+    Command: <span class="highlight">{{ displayData.label }}</span>
   </div>
   <div>
     <label for="argInput">

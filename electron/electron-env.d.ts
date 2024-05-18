@@ -60,7 +60,7 @@ declare global {
 
   /** Prompt data passed to the Input window */
   interface InputPromptData {
-    command:string
+    label:string
     argument:string
   }
 
