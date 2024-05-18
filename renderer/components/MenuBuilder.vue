@@ -37,6 +37,7 @@ const deleteItem = (item:any, idx:number):void => {
  * @param idx Index of item to move
  */
 const moveUp = (idx:number):void => {
+  if(idx === 0) return
   const elem = _launchMenu.value.splice(idx, 1)[0]
   _launchMenu.value.splice(--idx, 0, elem)
 }
@@ -46,6 +47,7 @@ const moveUp = (idx:number):void => {
  * @param idx Index of item to move
  */
 const moveDown = (idx:number):void => {
+  if(idx === (_launchMenu.value.length - 1)) return
   const elem = _launchMenu.value.splice(idx, 1)[0]
   console.log(elem)
   _launchMenu.value.splice(++idx, 0, elem)
