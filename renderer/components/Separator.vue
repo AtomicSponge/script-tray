@@ -7,12 +7,12 @@
 <script setup lang="ts">
 import type { ModelRef } from 'vue'
 
-const separator:ModelRef<null> = defineModel({ required: true })
+const _separator:ModelRef<null> = defineModel({ required: true })
 </script>
 
 <template>
   <hr class="separator"/>
-  <input v-model="separator" hidden disabled/>
+  <input v-model="_separator" hidden disabled/>
 </template>
 
 <style lang="stylus" scoped>
