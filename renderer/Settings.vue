@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
+import { testNumeric } from '@spongex/regexps'
 
 import MenuBuilder from './components/MenuBuilder.vue'
 
@@ -56,7 +57,7 @@ const addItem = ():void => {
 //  Make sure _bufferSize is a number
 watch(_bufferSize, (_newVal, oldVal) => {
   if (_bufferSize.value !== '') {
-    if (!/^\d+$/g.test(_bufferSize.value))
+    if (!testNumeric(_bufferSize.value))
       _bufferSize.value = oldVal
   }
 })
