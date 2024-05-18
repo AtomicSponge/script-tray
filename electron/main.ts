@@ -256,7 +256,7 @@ const buildMenu = ():Menu => {
                 let runCanceled:boolean = false
                 let runCmd:string = <string>item.command
                 await asyncForEach(<Array<string>>item.args, async (arg:string) => {
-                  inputWindow({ command: <string>item.command, argument: arg })
+                  inputWindow({ command: <string>item.label, argument: arg })
                   await resolveInputWin.promise.then(resStr => {
                     runCmd += ' ' + resStr
                   }).catch(_res => { runCanceled = true })

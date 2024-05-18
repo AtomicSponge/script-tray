@@ -37,11 +37,11 @@ onMounted(() => {
 <template>
 <section>
   <div>
-    Command: <span class="bold">{{ displayData.command }}</span>
+    Command: <span class="highlight">{{ displayData.command }}</span>
   </div>
   <div>
     <label for="argInput">
-      Enter argument <span class="bold">{{ displayData.argument }}</span>:
+      Enter value for <span class="highlight">{{ displayData.argument }}</span>:
     </label>
   </div>
   <div>
@@ -67,7 +67,7 @@ div
   padding-bottom 4px
 #argInput
   width 98%
-.bold
+.highlight
   font-weight bold
 .left
   float left
