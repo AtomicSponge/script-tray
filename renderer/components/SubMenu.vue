@@ -5,14 +5,9 @@
 -->
 
 <script setup lang="ts">
-import { watch } from 'vue'
 import type { ModelRef } from 'vue'
 
 const _subMenu:ModelRef<any> = defineModel({ required: true })
-
-watch(_subMenu.value.label, (_newVal, _oldVal) => {
-  //
-})
 </script>
 
 <template>
