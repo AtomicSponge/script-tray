@@ -110,18 +110,17 @@ section
   height 100vh
 header
   padding 2px
-  margin-bottom 1px
+  padding-bottom 6px
 #menuContents
   flex: auto
   overflow auto
 footer
-  margin-top 2px
   padding 2px
+  padding-top 4px
 .left
   float left
 .right
   float right
-
 #menu-select
   color inherit
   background-color inherit
