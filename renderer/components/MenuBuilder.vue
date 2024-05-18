@@ -55,38 +55,38 @@ const moveDown = (idx:number):void => {
 </script>
 
 <template>
-  <table>
-    <tr v-for="(item, idx) in _launchMenu" :key="idx" class="itemrow">
-      <td v-if="item.label !== undefined && item.sub !== undefined" class="item">
-        <hr class="subDiv"/>
-        <SubMenu v-model="_launchMenu[idx]"/>
-        <hr class="subDiv"/>
-        <MenuBuilder v-model="_launchMenu[idx].sub"/>
-      </td>
-      <td v-else-if="item.label !== undefined && item.command !== undefined" class="item">
-        <TrayCommand v-model="_launchMenu[idx]"/>
-      </td>
-      <td v-else-if="item.separator !== undefined" class="item">
-        <Separator v-model="_launchMenu[idx]"/>
-      </td>
-      <td v-else class="item">&nbsp;</td>  <!-- render error handling -->
-      <td class="delBtn">
-        <div>
-          <button v-show="idx !== 0" @click="moveUp(idx)">&#8593;</button>
-          <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
-          <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
-        </div>
-        <div class="move">
-          <label for="moveSelect">Move:</label>
-          <select id="moveSelect">
-            <option>Main</option>
-            <option>test sub 1ff</option>
-            <option>test sub 2d</option>
-          </select>
-        </div>
-      </td>
-    </tr>
-  </table>
+<table>
+  <tr v-for="(item, idx) in _launchMenu" :key="idx" class="itemrow">
+    <td v-if="item.label !== undefined && item.sub !== undefined" class="item">
+      <hr class="subDiv"/>
+      <SubMenu v-model="_launchMenu[idx]"/>
+      <hr class="subDiv"/>
+      <MenuBuilder v-model="_launchMenu[idx].sub"/>
+    </td>
+    <td v-else-if="item.label !== undefined && item.command !== undefined" class="item">
+      <TrayCommand v-model="_launchMenu[idx]"/>
+    </td>
+    <td v-else-if="item.separator !== undefined" class="item">
+      <Separator v-model="_launchMenu[idx]"/>
+    </td>
+    <td v-else class="item">&nbsp;</td>  <!-- render error handling -->
+    <td class="delBtn">
+      <div>
+        <button v-show="idx !== 0" @click="moveUp(idx)">&#8593;</button>
+        <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
+        <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
+      </div>
+      <div class="move">
+        <label for="moveSelect">Move:</label>
+        <select id="moveSelect">
+          <option>Main</option>
+          <option>test sub 1ff</option>
+          <option>test sub 2d</option>
+        </select>
+      </div>
+    </td>
+  </tr>
+</table>
 </template>
 
 <style lang="stylus" scoped>

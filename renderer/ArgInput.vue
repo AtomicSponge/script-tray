@@ -29,7 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section>
+<section>
   <div>
     Command: <span>{{ displayData.command }}</span>
   </div>
@@ -43,10 +43,15 @@ onMounted(() => {
     <button @click="sendData" class="left">Submit</button>
     <button @click="cancelCmd" class="right">Cancel Command</button>
   </div>
-  </section>
+</section>
 </template>
 
 <style lang="stylus" scoped>
+section
+  display flex
+  flex-flow column
+  align-items stretch
+  height 100vh
 div
   padding-top 2px
   padding-left 4px
