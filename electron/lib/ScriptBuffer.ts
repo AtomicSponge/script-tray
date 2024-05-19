@@ -10,7 +10,7 @@
 import { EventEmitter } from 'node:events'
 
 export class ScriptBuffer extends EventEmitter {
-  #buffer:Array<string>
+  #buffer:Array<ScriptBufferData>
   #size:number
 
   static #minSize:ScriptBufferMin = 10
@@ -25,6 +25,7 @@ export class ScriptBuffer extends EventEmitter {
     this.#buffer = []
     this.#size = this.#check(size)
 
+    //  Listen for write events
     this.on('script-buffer-write', (data) => {
       this.#write(data)
     })
@@ -32,19 +33,17 @@ export class ScriptBuffer extends EventEmitter {
 
   /**
    * Read the script buffer
-   * @returns The entire buffer formatted as a single string
+   * @returns The entire buffer
    */
-  read():string {
-    let resStr = ''
-    this.#buffer.forEach(str => resStr += `${str}\n`)
-    return resStr
+  read():Array<ScriptBufferData> {
+    return this.#buffer
   }
 
   /**
    * Write to the script buffer
    * @param data Data to write
    */
-  #write(data:string):void {
+  #write(data:ScriptBufferData):void {
     this.#buffer.push(data)
     this.#trim()
     this.emit('script-buffer-updated')

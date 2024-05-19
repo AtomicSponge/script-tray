@@ -7,7 +7,7 @@
  * 
  */
 
-import { execSync } from 'node:child_process'
+import { exec } from 'node:child_process'
 import path from 'node:path'
 
 import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'electron'
@@ -223,14 +223,24 @@ const buildMenu = ():Menu => {
      * @param cmd Command to run
      */
     const CommandRunner = (cmd:string, item:TrayCommand):void => {
-      try {
-        const cmdRes = execSync(cmd, { windowsHide: item.showConsole })
-        resBuff.emit('script-buffer-write', `Command:  ${cmd}\n${cmdRes.toString()}`)
-      } catch (error:any) {
-        dialog.showErrorBox(`${appInfo.name} - ${item.command}`,
-          `Command:  ${cmd}\nError:  ${error.message}`)
-        resBuff.emit('script-buffer-write', `Command:  ${cmd}\nError:  ${error.message}`)
-      }
+      const startTime = performance.now()
+      const startDate = Date.now()
+      exec(cmd, { windowsHide: true }, (error, stdout, stderr) => {
+        const endTime = performance.now()
+        const endDate = Date.now()
+        if(error) {
+          dialog.showErrorBox(`${appInfo.name} - ${item.command}`,
+            `Command:  ${cmd}\nError:  ${error.message}`)
+        }
+        resBuff.emit('script-buffer-write', {
+          command: cmd,
+          start: startDate,
+          stop: endDate,
+          duration: endTime - startTime,
+          out: stdout,
+          err: stderr
+        })
+      })
     }
 
     collection.forEach((item:any) => {

@@ -51,6 +51,15 @@ declare global {
     startup:boolean
   }
 
+  interface ScriptBufferData {
+    command:string
+    start:Date
+    stop:Date
+    duration:number
+    out:string
+    err:string
+  }
+
   /** Settings data format for Electron Ipc */
   interface SettingsIpc {
     launchMenu:string
