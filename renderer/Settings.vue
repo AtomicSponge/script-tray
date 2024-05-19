@@ -56,7 +56,7 @@ const addItem = ():void => {
 
 //  Make sure _bufferSize is a number
 watch(_bufferSize, (newVal, oldVal) => {
-  if (_bufferSize.value !== '') {
+  if (newVal !== '') {
     if (!testNumeric(newVal)) _bufferSize.value = oldVal
     if (newVal > 500) _bufferSize.value = 500
   }
