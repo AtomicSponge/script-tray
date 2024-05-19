@@ -142,6 +142,7 @@ const inputWindow = (data:InputPromptData):void => {
     height: 128,
     fullscreen: false,
     fullscreenable: false,
+    resizable: false,
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: false,

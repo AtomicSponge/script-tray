@@ -15,9 +15,7 @@ const _argInput = ref('')
 const sendData = ():void => {
   if (_argInput.value === '') {
     window.alert('Please enter a value!')
-    return
-  }
-  window.inputAPI.sendInput(_argInput.value)
+  } else window.inputAPI.sendInput(_argInput.value)
 }
 
 /** Cancel running command */
@@ -42,7 +40,7 @@ onMounted(() => {
     </label>
   </div>
   <div>
-    <input type="text" id="argInput" v-model="_argInput" @keyup.enter="sendData()"/>
+    <input type="text" id="argInput" v-model="_argInput" @keyup.enter="sendData()" autofocus/>
   </div>
   <div>
     <button @click="sendData()" class="left">Submit</button>
