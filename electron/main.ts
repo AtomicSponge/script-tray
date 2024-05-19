@@ -24,6 +24,8 @@ process.argv.forEach(arg => {
   if(arg === '--no-load-traydata') loadTrayData = false
 })
 
+const __locale = Intl.DateTimeFormat().resolvedOptions().locale
+
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 const appSettings = new AppSettings(loadTrayData)
 const resBuff = new ScriptBuffer(appSettings.bufferSize)
@@ -224,10 +226,10 @@ const buildMenu = ():Menu => {
      */
     const CommandRunner = (cmd:string, item:TrayCommand):void => {
       const startTime = performance.now()
-      const startDate = new Date().toLocaleString()
+      const startDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
       exec(cmd, { windowsHide: true }, (error, stdout, stderr) => {
         const endTime = performance.now()
-        const endDate = new Date().toLocaleString()
+        const endDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
         if(error) {
           dialog.showErrorBox(`${appInfo.name} - ${item.command}`,
             `Command:  ${cmd}\nError:  ${error.message}`)
