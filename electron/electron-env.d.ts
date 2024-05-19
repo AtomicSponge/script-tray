@@ -53,8 +53,8 @@ declare global {
 
   interface ScriptBufferData {
     command:string
-    start:Date
-    stop:Date
+    start:string
+    stop:string
     duration:number
     out:string
     err:string

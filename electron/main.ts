@@ -224,10 +224,10 @@ const buildMenu = ():Menu => {
      */
     const CommandRunner = (cmd:string, item:TrayCommand):void => {
       const startTime = performance.now()
-      const startDate = Date.now()
+      const startDate = new Date().toLocaleString()
       exec(cmd, { windowsHide: true }, (error, stdout, stderr) => {
         const endTime = performance.now()
-        const endDate = Date.now()
+        const endDate = new Date().toLocaleString()
         if(error) {
           dialog.showErrorBox(`${appInfo.name} - ${item.command}`,
             `Command:  ${cmd}\nError:  ${error.message}`)
