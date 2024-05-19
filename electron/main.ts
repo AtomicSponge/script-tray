@@ -19,17 +19,17 @@ import { appInfo } from './appInfo'
 import { AppSettings } from './lib/AppSettings'
 import { ScriptBuffer } from './lib/ScriptBuffer'
 
-let loadTrayData = true
+let loadTrayData:boolean = true
 process.argv.forEach(arg => {
   if(arg === '--no-load-traydata') loadTrayData = false
 })
 
 const __locale = Intl.DateTimeFormat().resolvedOptions().locale
 
-const autoLauncher = new AutoLaunch({ name: 'script_tray' })
-const appSettings = new AppSettings(loadTrayData)
-const resBuff = new ScriptBuffer(appSettings.bufferSize)
-let resolveInputWin = new AsyncResolver()
+const autoLauncher:AutoLaunch = new AutoLaunch({ name: 'script_tray' })
+const appSettings:AppSettings = new AppSettings(loadTrayData)
+const resBuff:ScriptBuffer = new ScriptBuffer(appSettings.bufferSize)
+let resolveInputWin:AsyncResolver = new AsyncResolver()
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null
