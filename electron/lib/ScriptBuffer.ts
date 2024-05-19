@@ -24,6 +24,10 @@ export class ScriptBuffer extends EventEmitter {
     super()
     this.#buffer = []
     this.#size = this.#check(size)
+
+    this.on('script-buffer-write', (data) => {
+      this.#write(data)
+    })
   }
 
   /**
@@ -40,7 +44,7 @@ export class ScriptBuffer extends EventEmitter {
    * Write to the script buffer
    * @param data Data to write
    */
-  write(data:string):void {
+  #write(data:string):void {
     this.#buffer.push(data)
     this.#trim()
     this.emit('script-buffer-updated')

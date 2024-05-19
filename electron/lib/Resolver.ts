@@ -7,10 +7,16 @@
  * 
  */
 
-/** Wrapper to Promise class to access functions */
+/**
+ * Wrapper to Promise class to access functions
+ * Used for waiting to receive asynchronous data
+ */
 export class Resolver {
+  /** Promise object */
   promise:Promise<any>
+  /** Reject the resolver */
   reject:Function = () => {}
+  /** Resolve the resolver */
   resolve:Function = () => {}
   constructor() {
     this.promise = new Promise((resolve, reject) => {
