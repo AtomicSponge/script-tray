@@ -254,7 +254,7 @@ const buildMenu = ():Menu => {
           item.showConsole !== undefined) {
         menu.append(new MenuItem({
           label: item.label,
-          click: async () => {
+          click: () => {
             if (item.args === undefined) CommandRunner(<string>item.command, item)
             else {
               (async () => {
