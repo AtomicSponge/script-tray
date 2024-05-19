@@ -225,8 +225,8 @@ const buildMenu = ():Menu => {
      * @param item Menu item calling the run
      */
     const CommandRunner = (cmd:string, item:TrayCommand):void => {
-      const startTime = performance.now()
       const startDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
+      const startTime = performance.now()
       exec(cmd, { windowsHide: true }, (error, stdout, stderr) => {
         const endTime = performance.now()
         const endDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
