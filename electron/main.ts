@@ -267,7 +267,7 @@ const buildMenu = ():Menu => {
         menu.append(new MenuItem({
           label: item.label,
           click: () => {
-            if (item.args === undefined) CommandRunner(<string>item.command, item)
+            if (item.args.length === 0) CommandRunner(<string>item.command, item)
             else {
               (async () => {
                 let runCanceled:boolean = false
