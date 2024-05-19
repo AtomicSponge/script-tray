@@ -27,7 +27,7 @@ process.argv.forEach(arg => {
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 const appSettings = new AppSettings(loadTrayData)
 const resBuff = new ScriptBuffer(appSettings.bufferSize)
-const resolveInputWin = new Resolver()
+let resolveInputWin = new Resolver()
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null
@@ -135,6 +135,7 @@ ipcMain.on('reset-settings-data', (_event, data) => {
 
 /** Window for argument input */
 const inputWindow = (data:InputPromptData):void => {
+  resolveInputWin = new Resolver()
   inputWin = new BrowserWindow({
     icon: appInfo.icon,
     title: `${appInfo.name} - ${data.label}: ${data.argument}`,
@@ -253,7 +254,7 @@ const buildMenu = ():Menu => {
           item.showConsole !== undefined) {
         menu.append(new MenuItem({
           label: item.label,
-          click: () => {
+          click: async () => {
             if (item.args === undefined) CommandRunner(<string>item.command, item)
             else {
               (async () => {
