@@ -219,8 +219,8 @@ const buildMenu = ():Menu => {
   const buildLauncher = (menu:Menu, collection:Array<any>):void => {
     /**
      * Function to run a command
-     * @param item Menu item calling the run
      * @param cmd Command to run
+     * @param item Menu item calling the run
      */
     const CommandRunner = (cmd:string, item:TrayCommand):void => {
       const startTime = performance.now()
