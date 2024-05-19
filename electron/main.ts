@@ -13,11 +13,11 @@ import path from 'node:path'
 import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'electron'
 import AutoLaunch from 'auto-launch'
 import { asyncForEach } from '@spongex/async-for-each'
+import { AsyncResolver } from '@spongex/async-resolver'
 
 import { appInfo } from './appInfo'
 import { AppSettings } from './lib/AppSettings'
 import { ScriptBuffer } from './lib/ScriptBuffer'
-import { Resolver } from './lib/Resolver'
 
 let loadTrayData = true
 process.argv.forEach(arg => {
@@ -29,7 +29,7 @@ const __locale = Intl.DateTimeFormat().resolvedOptions().locale
 const autoLauncher = new AutoLaunch({ name: 'script_tray' })
 const appSettings = new AppSettings(loadTrayData)
 const resBuff = new ScriptBuffer(appSettings.bufferSize)
-let resolveInputWin = new Resolver()
+let resolveInputWin = new AsyncResolver()
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null
@@ -137,7 +137,7 @@ ipcMain.on('reset-settings-data', (_event, data) => {
 
 /** Window for argument input */
 const inputWindow = (data:InputPromptData):void => {
-  resolveInputWin = new Resolver()
+  resolveInputWin = new AsyncResolver()
   inputWin = new BrowserWindow({
     icon: appInfo.icon,
     title: `${appInfo.name} - ${data.label}: ${data.argument}`,
