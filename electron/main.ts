@@ -155,7 +155,7 @@ const inputWindow = (data:InputPromptData):void => {
     }
   })
   inputWin.on('close', (_event) => {
-    resolveInputWin.reject('winCanceledEvent')
+    resolveInputWin.reject(true)
     inputWin?.destroy()
   })
   inputWin.webContents.on('did-finish-load', () => {
@@ -276,7 +276,7 @@ const buildMenu = ():Menu => {
                   inputWindow({ label: <string>item.label, argument: arg })
                   await resolveInputWin.promise.then(resStr => {
                     runCmd += ' ' + resStr
-                  }).catch(_res => { runCanceled = true })
+                  }).catch(res => { runCanceled = res })
                 })
                 if (runCanceled) {
                   dialog.showMessageBox({
