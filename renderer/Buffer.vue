@@ -50,7 +50,7 @@ onMounted(() => {
             </div>
             <div>
               <span class="highlight">Duration:</span>
-              {{ item.duration }}
+              {{ item.duration }} ms
             </div>
           </td>
         </tr>

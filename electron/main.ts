@@ -236,7 +236,7 @@ const buildMenu = ():Menu => {
           command: cmd,
           start: startDate,
           stop: endDate,
-          duration: endTime - startTime,
+          duration: (endTime - startTime).toFixed(3),
           out: stdout,
           err: stderr
         })
