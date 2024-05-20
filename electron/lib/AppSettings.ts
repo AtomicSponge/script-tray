@@ -7,10 +7,8 @@
  * 
  */
 
-import { dialog } from 'electron'
 import storage from 'electron-json-storage'
 
-import { appInfo } from '../appInfo'
 import { TrayError } from './TrayError'
 
 export class AppSettings {
@@ -25,7 +23,13 @@ export class AppSettings {
 
   constructor(load:boolean) {
     storage.setDataPath()
-    if(load) this.load()
+    if(load) {
+      try {
+        this.load()
+      } catch (error:any) {
+        throw error
+      }
+    }
   }
 
   /** Load settings */
@@ -41,10 +45,7 @@ export class AppSettings {
           if (temp.startup !== undefined) AppSettings.#startup = temp.startup
         }
       })
-    } catch (error:any) {
-      dialog.showErrorBox(`${appInfo.name}`,
-        `Error loading settings!\n\n${error.message}`)
-    }
+    } catch (error:any) { throw new TrayError(error.message, this.load) }
   }
 
   /** Save settings */
@@ -56,10 +57,7 @@ export class AppSettings {
         'encoding': AppSettings.#encoding,
         'startup': AppSettings.#startup
       }, (error) => { if (error) throw error })
-    } catch (error:any) {
-      dialog.showErrorBox(`${appInfo.name}`,
-        `Error saving settings!\n\n${error.message}`)
-    }
+    } catch (error:any) { throw new TrayError(error.message, this.save) }
   }
 
   /** Reset settings */
@@ -103,8 +101,6 @@ export class AppSettings {
         throw new TrayError('Invalid data format! Missing or incorrect Startup flag!', this.setData)
       AppSettings.#launchMenu = JSON.parse(data.launchMenu)
     } catch (error:any) {
-      dialog.showErrorBox(`${appInfo.name}`,
-        `Error:  ${error.message}`)
       return false
     }
 

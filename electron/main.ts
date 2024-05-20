@@ -7,8 +7,8 @@
  * 
  */
 
-import { exec } from 'node:child_process'
 import path from 'node:path'
+import { exec } from 'node:child_process'
 
 import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'electron'
 import AutoLaunch from 'auto-launch'
@@ -16,15 +16,33 @@ import { asyncForEach } from '@spongex/async-for-each'
 import { AsyncResolver } from '@spongex/async-resolver'
 import { __locale } from '@spongex/system-locale'
 
-import { appInfo } from './appInfo'
 import { AppSettings } from './lib/AppSettings'
 import { ScriptBuffer } from './lib/ScriptBuffer'
 import { ProcessManager } from './lib/ProcessManager'
 
+process.env.APP_ROOT = path.join(__dirname, '..')
+export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
+export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
+process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
+
+//  Process command arguments
 let loadTrayData:boolean = true
 process.argv.forEach(arg => {
   if(arg === '--no-load-traydata') loadTrayData = false
 })
+
+/** App information */
+const appInfo = {
+  name: 'Script Tray',
+  version: '1.9.9',
+  author: 'Matthew Evans',
+  websiteURL: 'https://github.com/AtomicSponge/script-tray',
+  license: 'MIT',
+  licenseURL: 'https://mit-license.org',
+  icon: path.join(process.env.VITE_PUBLIC, 'robot.png'),
+  iconURL: 'http://www.onlinewebfonts.com',
+  iconLicenseURL: 'https://creativecommons.org/licenses/by/4.0/'
+}
 
 const autoLauncher:AutoLaunch = new AutoLaunch({ name: 'script_tray' })
 const appSettings:AppSettings = new AppSettings(loadTrayData)
@@ -98,7 +116,14 @@ const settingsEditorWindow = ():void => {
   })
   settingsWin.on('close', (_event) => {
     settingsWin?.destroy()
-    if (loadTrayData) appSettings.load()
+    if (loadTrayData) {
+      try {
+        appSettings.load()
+      } catch (error:any) {
+        dialog.showErrorBox(`${appInfo.name}`,
+          `Error loading settings!\n\n${error.message}`)
+      }
+    }
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     settingsWin.loadURL('http://localhost:5174/html/settings.html') :
@@ -114,11 +139,18 @@ ipcMain.on('save-settings-data', (_event, data) => {
     message: 'Do you want to save changes?'
   }) === 0) {
     if(appSettings.setData(data)) {
-      appSettings.save()
+      try {
+        appSettings.save()
+      } catch (error:any) {
+        dialog.showErrorBox(`${appInfo.name}`,
+          `Error saving settings!\n\n${error.message}`)
+      }
       resBuff.size = appSettings.bufferSize
       {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
       appTray?.setContextMenu(buildMenu())
       settingsWin?.webContents.send('send-settings-data', appSettings.getData())
+    } else {
+      dialog.showErrorBox(`${appInfo.name}`, `Error:  Error setting data!`)
     }
   }
 })
