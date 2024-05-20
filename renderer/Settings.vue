@@ -14,9 +14,7 @@ const _launchMenu = ref()
 const _bufferSize = ref()
 const _startup = ref()
 const _encodingSelect = ref()
-
 const _menuSelect = ref(1)
-
 const _encoding_types = ref([
   'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
 ])
