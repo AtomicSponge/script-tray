@@ -14,6 +14,7 @@ import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'elect
 import AutoLaunch from 'auto-launch'
 import { asyncForEach } from '@spongex/async-for-each'
 import { AsyncResolver } from '@spongex/async-resolver'
+import { __locale } from '@spongex/system-locale'
 
 import { appInfo } from './appInfo'
 import { AppSettings } from './lib/AppSettings'
@@ -24,8 +25,6 @@ let loadTrayData:boolean = true
 process.argv.forEach(arg => {
   if(arg === '--no-load-traydata') loadTrayData = false
 })
-
-const __locale = Intl.DateTimeFormat().resolvedOptions().locale
 
 const autoLauncher:AutoLaunch = new AutoLaunch({ name: 'script_tray' })
 const appSettings:AppSettings = new AppSettings(loadTrayData)
