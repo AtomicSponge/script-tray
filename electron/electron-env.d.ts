@@ -50,14 +50,6 @@ declare global {
     jobMgrAPI:IjobMgrAPI
   }
 
-  /** Settings data format */
-  interface SettingsData {
-    launchMenu:Array<Object>
-    bufferSize:number
-    encoding:string
-    startup:boolean
-  }
-
   /** Script Buffer data format */
   interface ScriptBufferData {
     command:string

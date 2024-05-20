@@ -28,8 +28,10 @@ process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(process.en
 
 //  Process command arguments
 let loadTrayData:boolean = true
+let loadBufferData:boolean = true
 process.argv.forEach(arg => {
   if(arg === '--no-load-traydata') loadTrayData = false
+  if(arg === '--no-load-bufferdata') loadBufferData = false
 })
 
 /** App information */
@@ -55,7 +57,15 @@ const appSettings:AppSettings = (() => {
     process.exit(1)
   }
 })()
-const resBuff:ScriptBuffer = new ScriptBuffer(appSettings.bufferSize)
+const resBuff:ScriptBuffer = (() => {
+  try {
+    return new ScriptBuffer(loadBufferData, appSettings.bufferSize)
+  } catch (error:any) {
+    console.error(`Unable to load previous buffer!  ${error.message}`)
+    console.error(`Try running with the --no-load-bufferdata flag.`)
+    process.exit(1)
+  }
+})()
 const runningJobs:ProcessManager = new ProcessManager()
 let resolveInputWin:AsyncResolver = new AsyncResolver()
 
@@ -445,8 +455,7 @@ app.whenReady().then(() => {
     if (appSettings.startup) autoLauncher.enable()
   }).catch((error:any) => {
     dialog.showErrorBox(`${appInfo.name}`,
-      `Error enabling auto launcher!\n\n` +
-      `${error.message}`)
+      `Error enabling auto launcher!\n\n${error.message}`)
   })
 
   appTray = new Tray(appInfo.icon)

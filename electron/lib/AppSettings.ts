@@ -9,6 +9,14 @@
 
 import storage from 'electron-json-storage'
 
+/** App Settings save data format */
+interface AppSettingsSaveData {
+  launchMenu:Array<Object>
+  bufferSize:number
+  encoding:string
+  startup:boolean
+}
+
 export class AppSettings {
   /** Tree of commands to build menu from */
   static #launchMenu:Array<Object> = []
@@ -19,6 +27,10 @@ export class AppSettings {
   /** Load on startup */
   static #startup:boolean = false
 
+  /**
+   * Create a new AppSettings object
+   * @param load Load data or not
+   */
   constructor(load:boolean) {
     if(load) {
       try {
@@ -29,13 +41,16 @@ export class AppSettings {
     }
   }
 
-  /** Load settings */
+  /**
+   * Load settings from storage
+   * @throws Error on load
+   */
   load():void {
     try {
       storage.has('settings', (error, hasKey) => {
         if (error) throw error
         if (hasKey) {
-          const temp = <SettingsData>storage.getSync('settings')
+          const temp = <AppSettingsSaveData>storage.getSync('settings')
           if (temp.launchMenu !== undefined) AppSettings.#launchMenu = temp.launchMenu
           if (temp.bufferSize !== undefined) AppSettings.#bufferSize = temp.bufferSize
           if (temp.encoding !== undefined) AppSettings.#encoding = temp.encoding
@@ -45,7 +60,10 @@ export class AppSettings {
     } catch (error:any) { throw new AppSettingsError(error.message, this.load) }
   }
 
-  /** Save settings */
+  /**
+   * Save settings to storage
+   * @throws Error on save
+   */
   save():void {
     try {
       storage.set('settings', {
