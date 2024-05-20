@@ -18,6 +18,8 @@ export class AppSettings {
   static #launchMenu:Array<Object> = []
   /** Buffer size */
   static #bufferSize:number = 100
+  /** System encoding */
+  static #encoding:string = 'utf8'
   /** Load on startup */
   static #startup:boolean = false
 
@@ -35,6 +37,7 @@ export class AppSettings {
           const temp = <SettingsData>storage.getSync('settings')
           if (temp.launchMenu !== undefined) AppSettings.#launchMenu = temp.launchMenu
           if (temp.bufferSize !== undefined) AppSettings.#bufferSize = temp.bufferSize
+          if (temp.encoding !== undefined) AppSettings.#encoding = temp.encoding
           if (temp.startup !== undefined) AppSettings.#startup = temp.startup
         }
       })
@@ -50,6 +53,7 @@ export class AppSettings {
       storage.set('settings', {
         'launchMenu': AppSettings.#launchMenu,
         'bufferSize': AppSettings.#bufferSize,
+        'encoding': AppSettings.#encoding,
         'startup': AppSettings.#startup
       }, (error) => { if (error) throw error })
     } catch (error:any) {
@@ -62,6 +66,7 @@ export class AppSettings {
   reset():void {
     AppSettings.#launchMenu = []
     AppSettings.#bufferSize = 100
+    AppSettings.#encoding = 'utf8'
     AppSettings.#startup = false
   }
 
@@ -73,6 +78,7 @@ export class AppSettings {
     return {
       launchMenu: JSON.stringify(AppSettings.#launchMenu),
       bufferSize: AppSettings.#bufferSize,
+      encoding: AppSettings.#encoding,
       startup: AppSettings.#startup
     }
   }
@@ -91,6 +97,8 @@ export class AppSettings {
         throw new TrayError('Invalid data format! Missing or incorrect Launch Menu!', this.setData)
       if (!data.hasOwnProperty('bufferSize') || typeof data.bufferSize !== 'number')
         throw new TrayError('Invalid data format! Missing or incorrect Buffer Size!', this.setData)
+      if (!data.hasOwnProperty('encoding') || typeof data.encoding !== 'string')
+        throw new TrayError('Invalid data format! Missing or incorrect System Encoding!', this.setData)
       if (!data.hasOwnProperty('startup') || typeof data.startup !== 'boolean')
         throw new TrayError('Invalid data format! Missing or incorrect Startup flag!', this.setData)
       AppSettings.#launchMenu = JSON.parse(data.launchMenu)
@@ -101,6 +109,7 @@ export class AppSettings {
     }
 
     AppSettings.#bufferSize = data.bufferSize
+    AppSettings.#encoding = data.encoding
     AppSettings.#startup = data.startup
     return true
   }
@@ -109,6 +118,8 @@ export class AppSettings {
   get launchMenu():Array<Object> { return AppSettings.#launchMenu }
   /** Get the buffer size */
   get bufferSize():number { return AppSettings.#bufferSize }
+  /** Get the system encoding */
+  get encoding():BufferEncoding { return <BufferEncoding>AppSettings.#encoding }
   /** Get the startup flag */
   get startup():boolean { return AppSettings.#startup }
 }

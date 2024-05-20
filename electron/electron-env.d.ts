@@ -54,6 +54,7 @@ declare global {
   interface SettingsData {
     launchMenu:Array<Object>
     bufferSize:number
+    encoding:string
     startup:boolean
   }
 
@@ -79,6 +80,7 @@ declare global {
   interface SettingsIpc {
     launchMenu:string
     bufferSize:number
+    encoding:string
     startup:boolean
   }
 

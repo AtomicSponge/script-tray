@@ -284,7 +284,7 @@ const buildMenu = ():Menu => {
     const CommandRunner = (cmd:string, item:TrayCommand):void => {
       const startDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
       const startTime = performance.now()
-      const job = exec(cmd, { encoding: 'utf8', windowsHide: true }, (error, stdout, stderr) => {
+      const job = exec(cmd, { encoding: appSettings.encoding, windowsHide: true }, (error, stdout, stderr) => {
         const endTime = performance.now()
         const endDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
         if(error) {
