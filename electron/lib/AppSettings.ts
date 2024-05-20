@@ -9,8 +9,6 @@
 
 import storage from 'electron-json-storage'
 
-import { TrayError } from './TrayError'
-
 export class AppSettings {
   /** Tree of commands to build menu from */
   static #launchMenu:Array<Object> = []
@@ -45,7 +43,7 @@ export class AppSettings {
           if (temp.startup !== undefined) AppSettings.#startup = temp.startup
         }
       })
-    } catch (error:any) { throw new TrayError(error.message, this.load) }
+    } catch (error:any) { throw new AppSettingsError(error.message, this.load) }
   }
 
   /** Save settings */
@@ -57,7 +55,7 @@ export class AppSettings {
         'encoding': AppSettings.#encoding,
         'startup': AppSettings.#startup
       }, (error) => { if (error) throw error })
-    } catch (error:any) { throw new TrayError(error.message, this.save) }
+    } catch (error:any) { throw new AppSettingsError(error.message, this.save) }
   }
 
   /** Reset settings */
@@ -85,29 +83,29 @@ export class AppSettings {
    * Set entire settings from an object
    * Launch menu converted back from string to JSON
    * @param data Data to parse for settings
-   * @returns True if data successfully set, else false
+   * @returns A success flag and a result message in an object
    */
-  setData(data:SettingsIpc):boolean {
+  setData(data:SettingsIpc):{ success:boolean, message:string } {
     try {
       if (data === undefined || data === null)
-        throw new TrayError('No data received!', this.setData)
+        throw new AppSettingsError('No data received!', this.setData)
       if (!data.hasOwnProperty('launchMenu') || typeof data.launchMenu !== 'string')
-        throw new TrayError('Invalid data format! Missing or incorrect Launch Menu!', this.setData)
+        throw new AppSettingsError('Invalid data format! Missing or incorrect Launch Menu!', this.setData)
       if (!data.hasOwnProperty('bufferSize') || typeof data.bufferSize !== 'number')
-        throw new TrayError('Invalid data format! Missing or incorrect Buffer Size!', this.setData)
+        throw new AppSettingsError('Invalid data format! Missing or incorrect Buffer Size!', this.setData)
       if (!data.hasOwnProperty('encoding') || typeof data.encoding !== 'string')
-        throw new TrayError('Invalid data format! Missing or incorrect System Encoding!', this.setData)
+        throw new AppSettingsError('Invalid data format! Missing or incorrect System Encoding!', this.setData)
       if (!data.hasOwnProperty('startup') || typeof data.startup !== 'boolean')
-        throw new TrayError('Invalid data format! Missing or incorrect Startup flag!', this.setData)
+        throw new AppSettingsError('Invalid data format! Missing or incorrect Startup flag!', this.setData)
       AppSettings.#launchMenu = JSON.parse(data.launchMenu)
     } catch (error:any) {
-      return false
+      return { success: false, message: error.message }
     }
 
     AppSettings.#bufferSize = data.bufferSize
     AppSettings.#encoding = data.encoding
     AppSettings.#startup = data.startup
-    return true
+    return { success: true, message: 'success' }
   }
 
   /** Get the launch menu */
@@ -118,4 +116,31 @@ export class AppSettings {
   get encoding():BufferEncoding { return <BufferEncoding>AppSettings.#encoding }
   /** Get the startup flag */
   get startup():boolean { return AppSettings.#startup }
+}
+
+/**
+ * Class for handling App Settings errors
+ * @extends Error
+ */
+class AppSettingsError extends Error {
+  message:string
+  code:Object
+  exitCode:number
+
+  /**
+   * Constructs the AppSettingsError class
+   * @param message Error message
+   * @param code Error code
+   * @param exitCode Exit code
+   */
+  constructor(message:string, code:Object, exitCode?:number) {
+		super()
+
+		this.name = this.constructor.name
+    this.message = message
+		this.code = code
+		this.exitCode = exitCode || 1
+
+    this.stack = new Error().stack
+	}
 }
