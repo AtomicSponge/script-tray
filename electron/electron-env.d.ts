@@ -95,7 +95,6 @@ declare global {
     label:string
     command:string
     args:Array<string>
-    showConsole:boolean
   }
 
   //  Min & max types for the Script Buffer

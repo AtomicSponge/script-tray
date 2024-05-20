@@ -13,8 +13,13 @@ import MenuBuilder from './components/MenuBuilder.vue'
 const _launchMenu = ref()
 const _bufferSize = ref()
 const _startup = ref()
+const _encodingSelect = ref()
 
 const _menuSelect = ref(1)
+
+const _encoding_types = ref([
+  'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
+])
 
 /** Reset settings button action */
 const resetSettings = ():void => { window.settingsAPI.resetSettings() }
@@ -30,6 +35,7 @@ const parseData = ():SettingsIpc => {
   return {
     launchMenu: JSON.stringify(_launchMenu.value),
     bufferSize: Number(_bufferSize.value),
+    encoding: _encodingSelect.value,
     startup: Boolean(_startup.value)
   }
 }
@@ -67,6 +73,7 @@ onMounted(() => {
   window.settingsAPI.onUpdateSettings((settingsData:SettingsIpc) => {
     _launchMenu.value = JSON.parse(settingsData.launchMenu)
     _bufferSize.value = settingsData.bufferSize
+    _encodingSelect.value = settingsData.encoding
     _startup.value = settingsData.startup
   })
 })
@@ -78,6 +85,11 @@ onMounted(() => {
     <div class="left">
       <input type="checkbox" id="startupInput" v-model="_startup"/>
       <label for="startupInput">Load on startup</label>
+      &emsp;&emsp;
+      <label for="encodingSelect">System Encoding:</label>
+      <select id="encodingSelect" v-model="_encodingSelect">
+        <option v-for="item in _encoding_types" :value=item>{{ item }}</option>
+      </select>
     </div>
     <div class="right">
       <button @click="resetSettings">Reset Settings</button>

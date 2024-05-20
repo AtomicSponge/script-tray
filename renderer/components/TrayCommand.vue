@@ -45,13 +45,6 @@ const deleteArgument = (idx:number) => {
       </ul>
     </td>
   </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>
-      <label for="showConsole">Show console:</label>
-      <input type="checkbox" id="showConsole" v-model="_trayCommand.showConsole"/>
-    </td>
-  </tr>
 </table>
 </section>
 </template>
