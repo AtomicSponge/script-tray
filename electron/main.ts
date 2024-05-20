@@ -44,8 +44,16 @@ const appInfo = {
   iconLicenseURL: 'https://creativecommons.org/licenses/by/4.0/'
 }
 
-const autoLauncher:AutoLaunch = new AutoLaunch({ name: 'script_tray' })
-const appSettings:AppSettings = new AppSettings(loadTrayData)
+const autoLauncher:AutoLaunch = new AutoLaunch({ name: 'script-tray' })
+const appSettings:AppSettings = (() => {
+  try {
+    return new AppSettings(loadTrayData)
+  } catch (error:any) {
+    console.error(`Unable to load settings!  ${error.message}`)
+    console.error(`Try running with the --no-load-traydata flag.`)
+    process.exit(1)
+  }
+})()
 const resBuff:ScriptBuffer = new ScriptBuffer(appSettings.bufferSize)
 const runningJobs:ProcessManager = new ProcessManager()
 let resolveInputWin:AsyncResolver = new AsyncResolver()
