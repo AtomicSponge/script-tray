@@ -19,7 +19,7 @@ export const appInfo = {
   name: 'Script Tray',
   version: '1.9.9',
   author: 'Matthew Evans',
-  websiteURL: 'https://github.com/AtomicSponge/script_tray',
+  websiteURL: 'https://github.com/AtomicSponge/script-tray',
   license: 'MIT',
   licenseURL: 'https://mit-license.org',
   icon: path.join(process.env.VITE_PUBLIC, 'robot.png'),
