@@ -152,7 +152,7 @@ ipcMain.on('save-settings-data', (_event, data) => {
       settingsWin?.webContents.send('send-settings-data', appSettings.getData())
     } else {
       dialog.showErrorBox(`${appInfo.name}`,
-        `Error:  Error setting data!\n\n${res.message}`)
+        `Error setting data while trying to save settings!\n\n${res.message}`)
     }
   }
 })
