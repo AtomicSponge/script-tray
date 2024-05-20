@@ -1,7 +1,14 @@
-![Script Tray](https://github.com/AtomicSponge/script-tray/blob/master/public/icon/robot.png)
-
-#  Script Tray
-Run commands from your system tray
+<table align="center">
+<tr>
+  <td>
+    <img src="https://github.com/AtomicSponge/script-tray/blob/master/public/icon/robot.png"/>
+  </td>
+  <th>
+    <h1>Script Tray</h1>
+    Run commands from your system tray
+  </th>
+</tr>
+</table>
 
 ## WIP
 ### Upgrading to TypeScript/Vue and building with Vite
