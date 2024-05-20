@@ -23,6 +23,10 @@ export default defineConfig(() => {
         {
           name: 'settings',
           config: 'vite.settings.config.ts',
+        },
+        {
+          name: 'jobmgr',
+          config: 'vite.jobmgr.config.ts',
         }
       ])
     ],

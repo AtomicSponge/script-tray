@@ -18,6 +18,7 @@ import { AsyncResolver } from '@spongex/async-resolver'
 import { appInfo } from './appInfo'
 import { AppSettings } from './lib/AppSettings'
 import { ScriptBuffer } from './lib/ScriptBuffer'
+import { ProcessManager } from './lib/ProcessManager'
 
 let loadTrayData:boolean = true
 process.argv.forEach(arg => {
@@ -29,12 +30,14 @@ const __locale = Intl.DateTimeFormat().resolvedOptions().locale
 const autoLauncher:AutoLaunch = new AutoLaunch({ name: 'script_tray' })
 const appSettings:AppSettings = new AppSettings(loadTrayData)
 const resBuff:ScriptBuffer = new ScriptBuffer(appSettings.bufferSize)
+const runningJobs:ProcessManager = new ProcessManager()
 let resolveInputWin:AsyncResolver = new AsyncResolver()
 
 //  Windows & tray objects
 let bufferWin:BrowserWindow | null
 let settingsWin:BrowserWindow | null
 let inputWin:BrowserWindow | null
+let jobMgrWin:BrowserWindow | null
 let appTray:Tray | null
 
 /** Window for output buffer */
@@ -172,6 +175,57 @@ ipcMain.on('recieve-input-data', (_event, data) => {
   inputWin?.destroy()
 })
 
+/** Window for Job Manager */
+const jobManagerWindow = ():void => {
+  jobMgrWin = new BrowserWindow({
+    icon: appInfo.icon,
+    title: `${appInfo.name} - Job Manager`,
+    width: 840,
+    height: 500,
+    fullscreen: false,
+    fullscreenable: false,
+    resizable: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      spellcheck: false,
+      preload: path.join(__dirname, '../dist-electron/preload.js'),
+    }
+  })
+  jobMgrWin.webContents.on('did-finish-load', () => {
+    jobMgrWin?.webContents.send('send-job-data', runningJobs.read())
+  })
+
+  //  Send when the buffer updates
+  runningJobs.on('process-manager-updated', () => {
+    jobMgrWin?.webContents.send('send-job-data', runningJobs.read())
+  })
+  runningJobs.on('error', (error:any) => {
+    dialog.showErrorBox(`${appInfo.name}`, `Job Manager Event Error:  ${error.message}`)
+  })
+
+  jobMgrWin.on('close', (_event) => {
+    jobMgrWin?.destroy()
+  })
+  {(process.env.VITE_DEV_SERVER_URL) ?
+    jobMgrWin.loadURL('http://localhost:5176/html/jobmgr.html') :
+    jobMgrWin.loadFile(path.join(__dirname, '../dist/html/jobmgr.html'))}
+}
+
+/* Event handler for process termination */
+ipcMain.on('send-term-process', (_event, data) => {
+  if (dialog.showMessageBoxSync(<BrowserWindow>jobMgrWin, {
+    type: 'question',
+    title: `${appInfo.name} - Confirm`,
+    buttons: [ 'Yes', 'No' ],
+    message: `Are you sure you want to terminate running process ${data}?`
+  }) === 0) {
+    runningJobs.term(data)
+    jobMgrWin?.webContents.send('send-job-data', runningJobs.read())
+  }
+})
+
 /** About message box */
 const aboutMessageBox = ():void => {
   dialog.showMessageBox({
@@ -198,10 +252,13 @@ const buildMenu = ():Menu => {
   const buildMain = (menu:Menu):void => {
     menu.append(new MenuItem({ type: 'separator' }))
     menu.append(new MenuItem({
-      label: `Show Output Buffer`,
+      label: `Output Buffer`,
       click: () => { bufferWindow() }
     }))
-    menu.append(new MenuItem({ type: 'separator' }))
+    menu.append(new MenuItem({
+      label: `Job Manager`,
+      click: () => { jobManagerWindow() }
+    }))
     menu.append(new MenuItem({ label: 'Settings',
       click: () => { settingsEditorWindow() }
     }))
@@ -227,7 +284,7 @@ const buildMenu = ():Menu => {
     const CommandRunner = (cmd:string, item:TrayCommand):void => {
       const startDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
       const startTime = performance.now()
-      exec(cmd, { windowsHide: true }, (error, stdout, stderr) => {
+      const job = exec(cmd, { encoding: 'utf8', windowsHide: true }, (error, stdout, stderr) => {
         const endTime = performance.now()
         const endDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
         if(error) {
@@ -242,6 +299,15 @@ const buildMenu = ():Menu => {
           out: stdout,
           err: stderr
         })
+      })
+      runningJobs.emit('process-manager-add', {
+        label: item.label,
+        command: cmd,
+        start: startDate,
+        pid: job.pid
+      }, job)
+      job.on('close', () => {
+        runningJobs.emit('process-manager-remove', job.pid)
       })
     }
 

@@ -36,12 +36,18 @@ export interface IinputAPI {
   onReceiveData: (callback:Function) => void
 }
 
+export interface IjobMgrAPI {
+  termProcess: (data:number) => void
+  onReceiveData: (callback:Function) => void
+}
+
 declare global {
   /** Preload APIs */
   interface Window {
     bufferAPI:IbufferAPI
     settingsAPI:IsettingsAPI
     inputAPI:IinputAPI
+    jobMgrAPI:IjobMgrAPI
   }
 
   /** Settings data format */
@@ -51,6 +57,7 @@ declare global {
     startup:boolean
   }
 
+  /** Script Buffer data format */
   interface ScriptBufferData {
     command:string
     start:string
@@ -58,6 +65,14 @@ declare global {
     duration:number
     out:string
     err:string
+  }
+
+  /** Process manager data format */
+  interface ProcessManagerData {
+    label:string
+    command:string
+    start:string
+    pid:number
   }
 
   /** Settings data format for Electron Ipc */

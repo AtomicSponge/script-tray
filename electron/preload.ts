@@ -35,3 +35,12 @@ contextBridge.exposeInMainWorld('inputAPI', {
     ipcRenderer.on('send-input-data', (_event, value) => callback(value))
   }
 })
+
+contextBridge.exposeInMainWorld('jobMgrAPI', {
+  termProcess: (data:number):void => {
+    ipcRenderer.send('send-term-process', data)
+  },
+  onReceiveData: (callback:Function):void => {
+    ipcRenderer.on('send-job-data', (_event, value) => callback(value))
+  }
+})
