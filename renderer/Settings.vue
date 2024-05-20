@@ -60,9 +60,10 @@ const addItem = ():void => {
 
 //  Make sure _bufferSize is a number
 watch(_bufferSize, (newVal, oldVal) => {
+  const maxVal:ScriptBufferMax = 500
   if (newVal !== '') {
     if (!testNumeric(newVal)) _bufferSize.value = oldVal
-    if (newVal > 500) _bufferSize.value = 500
+    if (newVal > maxVal) _bufferSize.value = maxVal
   }
 })
 
