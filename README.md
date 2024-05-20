@@ -14,7 +14,7 @@
 ### Upgrading to TypeScript/Vue and building with Vite
 ### See the 'old' repository for the old JavaScript version
 
-<small>
+<sub><sup>
 Robot icon made from <a href="http://www.onlinewebfonts.com">Web Fonts</a>
 is licensed by <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-</small>
+</sup></sub>
