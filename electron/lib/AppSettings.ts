@@ -20,7 +20,6 @@ export class AppSettings {
   static #startup:boolean = false
 
   constructor(load:boolean) {
-    storage.setDataPath()
     if(load) {
       try {
         this.load()
