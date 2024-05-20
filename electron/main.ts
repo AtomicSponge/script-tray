@@ -91,7 +91,7 @@ const bufferWindow = ():void => {
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     bufferWin.loadURL(path.posix.join(process.env.VITE_DEV_SERVER_URL, 'html/buffer.html')) :
-    bufferWin.loadFile(path.join(RENDERER_DIST, 'html/buffer.html'))}
+    bufferWin.loadFile(path.join(RENDERER_DIST, 'html', 'buffer.html'))}
 }
 
 /** Window for editing settings */
@@ -127,7 +127,7 @@ const settingsEditorWindow = ():void => {
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     settingsWin.loadURL('http://localhost:5174/html/settings.html') :
-    settingsWin.loadFile(path.join(RENDERER_DIST, 'html/settings.html'))}
+    settingsWin.loadFile(path.join(RENDERER_DIST, 'html', 'settings.html'))}
 }
 
 /* Event handler for saving settings */
@@ -199,7 +199,7 @@ const inputWindow = (data:InputPromptData):void => {
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     inputWin.loadURL('http://localhost:5175/html/arg-input.html') :
-    inputWin.loadFile(path.join(RENDERER_DIST, 'html/arg-input.html'))}
+    inputWin.loadFile(path.join(RENDERER_DIST, 'html', 'arg-input.html'))}
 }
 
 /* Event handler for receiving data from the input box */
@@ -243,7 +243,7 @@ const jobManagerWindow = ():void => {
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     jobMgrWin.loadURL('http://localhost:5176/html/jobmgr.html') :
-    jobMgrWin.loadFile(path.join(RENDERER_DIST, 'html/jobmgr.html'))}
+    jobMgrWin.loadFile(path.join(RENDERER_DIST, 'html', 'jobmgr.html'))}
 }
 
 /* Event handler for process termination */
