@@ -44,7 +44,7 @@ const addItem = ():void => {
     case 1:
       _launchMenu.value.push({
         label: 'New Label', command: 'New Command',
-        args: [], showConsole: false
+        args: [], cwd: 'default'
       })
       return
     case 2:

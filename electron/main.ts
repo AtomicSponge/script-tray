@@ -7,6 +7,7 @@
  * 
  */
 
+import fs from 'node:fs'
 import path from 'node:path'
 import { exec } from 'node:child_process'
 
@@ -319,21 +320,30 @@ const buildMenu = ():Menu => {
   const buildLauncher = (menu:Menu, collection:Array<any>):void => {
     /**
      * Function to run a command
-     * @param cmd Command to run
+     * @param execCmd Command to run
      * @param item Menu item calling the run
      */
-    const CommandRunner = (cmd:string, item:TrayCommand):void => {
+    const CommandRunner = (execCmd:string, item:TrayCommand):void => {
+      const cmdCwd = (() => {
+        if(fs.existsSync(item.cwd)) return item.cwd
+        else return process.cwd()
+      })()
+      const execOpts = {
+        encoding: appSettings.encoding,
+        cwd: cmdCwd,
+        windowsHide: true
+      }
       const startDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
       const startTime = performance.now()
-      const job = exec(cmd, { encoding: appSettings.encoding, windowsHide: true }, (error, stdout, stderr) => {
+      const job = exec(execCmd, execOpts, (error, stdout, stderr) => {
         const endTime = performance.now()
         const endDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
-        if(error) {
+        if (error) {
           dialog.showErrorBox(`${appInfo.name} - ${item.command}`,
-            `Command:  ${cmd}\nError:  ${error.message}`)
+            `Command:  ${execCmd}\nError:  ${error.message}`)
         }
         resBuff.emit('script-buffer-write', {
-          command: cmd,
+          command: execCmd,
           start: startDate,
           stop: endDate,
           duration: (endTime - startTime).toFixed(3),
@@ -343,7 +353,7 @@ const buildMenu = ():Menu => {
       })
       runningJobs.emit('process-manager-add', {
         label: item.label,
-        command: cmd,
+        command: execCmd,
         start: startDate,
         pid: job.pid
       }, job)

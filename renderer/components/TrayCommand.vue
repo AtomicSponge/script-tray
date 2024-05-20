@@ -35,6 +35,10 @@ const deleteArgument = (idx:number) => {
     <td><input type="text" v-model="_trayCommand.command" id="cmdCommand"/></td>
   </tr>
   <tr>
+    <td><label for="cmdCwd">CWD:</label></td>
+    <td><input type="text" v-model="_trayCommand.cwd" id="cmdCwd"/></td>
+  </tr>
+  <tr>
     <td class="args">Args <button @click="addArgument()">Add</button></td>
     <td>
       <ul>

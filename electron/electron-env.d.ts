@@ -99,6 +99,7 @@ declare global {
   interface TrayCommand {
     label:string
     command:string
+    cwd:string
     args:Array<string>
   }
 
