@@ -328,8 +328,7 @@ const buildMenu = ():Menu => {
       //  Item is a command
       if (item.label !== undefined && item.label !== '' &&
           item.command !== undefined && item.command !== '' &&
-          item.args !== undefined && Array.isArray(item.args) &&
-          item.showConsole !== undefined) {
+          item.args !== undefined && Array.isArray(item.args)) {
         menu.append(new MenuItem({
           label: item.label,
           click: () => {
