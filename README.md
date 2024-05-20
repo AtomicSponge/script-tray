@@ -1,7 +1,7 @@
 <table align="center">
 <tr>
   <td>
-    <img src="https://github.com/AtomicSponge/script-tray/blob/master/public/icon/robot.png"/>
+    <img src="./public/icon/robot.png"/>
   </td>
   <th>
     <h1>Script Tray</h1>
