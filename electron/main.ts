@@ -71,7 +71,7 @@ const bufferWindow = ():void => {
       nodeIntegration: false,
       contextIsolation: true,
       spellcheck: false,
-      preload: path.join(__dirname, '../dist-electron/preload.js'),
+      preload: path.join(MAIN_DIST, 'preload.js')
     }
   })
   bufferWin.webContents.on('did-finish-load', () => {
@@ -91,7 +91,7 @@ const bufferWindow = ():void => {
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     bufferWin.loadURL(path.posix.join(process.env.VITE_DEV_SERVER_URL, 'html/buffer.html')) :
-    bufferWin.loadFile(path.join(__dirname, '../dist/html/buffer.html'))}
+    bufferWin.loadFile(path.join(RENDERER_DIST, 'html/buffer.html'))}
 }
 
 /** Window for editing settings */
@@ -108,7 +108,7 @@ const settingsEditorWindow = ():void => {
       nodeIntegration: false,
       contextIsolation: true,
       spellcheck: false,
-      preload: path.join(__dirname, '../dist-electron/preload.js'),
+      preload: path.join(MAIN_DIST, 'preload.js')
     }
   })
   settingsWin.webContents.on('did-finish-load', () => {
@@ -127,7 +127,7 @@ const settingsEditorWindow = ():void => {
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     settingsWin.loadURL('http://localhost:5174/html/settings.html') :
-    settingsWin.loadFile(path.join(__dirname, '../dist/html/settings.html'))}
+    settingsWin.loadFile(path.join(RENDERER_DIST, 'html/settings.html'))}
 }
 
 /* Event handler for saving settings */
@@ -187,7 +187,7 @@ const inputWindow = (data:InputPromptData):void => {
       nodeIntegration: false,
       contextIsolation: true,
       spellcheck: false,
-      preload: path.join(__dirname, '../dist-electron/preload.js'),
+      preload: path.join(MAIN_DIST, 'preload.js')
     }
   })
   inputWin.on('close', (_event) => {
@@ -199,7 +199,7 @@ const inputWindow = (data:InputPromptData):void => {
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     inputWin.loadURL('http://localhost:5175/html/arg-input.html') :
-    inputWin.loadFile(path.join(__dirname, '../dist/html/arg-input.html'))}
+    inputWin.loadFile(path.join(RENDERER_DIST, 'html/arg-input.html'))}
 }
 
 /* Event handler for receiving data from the input box */
@@ -223,7 +223,7 @@ const jobManagerWindow = ():void => {
       nodeIntegration: false,
       contextIsolation: true,
       spellcheck: false,
-      preload: path.join(__dirname, '../dist-electron/preload.js'),
+      preload: path.join(MAIN_DIST, 'preload.js')
     }
   })
   jobMgrWin.webContents.on('did-finish-load', () => {
@@ -243,7 +243,7 @@ const jobManagerWindow = ():void => {
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
     jobMgrWin.loadURL('http://localhost:5176/html/jobmgr.html') :
-    jobMgrWin.loadFile(path.join(__dirname, '../dist/html/jobmgr.html'))}
+    jobMgrWin.loadFile(path.join(RENDERER_DIST, 'html/jobmgr.html'))}
 }
 
 /* Event handler for process termination */
