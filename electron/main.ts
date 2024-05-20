@@ -22,8 +22,8 @@ import { ScriptBuffer } from './lib/ScriptBuffer'
 import { ProcessManager } from './lib/ProcessManager'
 
 process.env.APP_ROOT = path.join(__dirname, '..')
-export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
-export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
+const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
+const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
 //  Process command arguments
