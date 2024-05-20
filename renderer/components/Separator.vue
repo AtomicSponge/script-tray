@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import type { ModelRef } from 'vue'
 
-const _separator:ModelRef<null> = defineModel({ required: true })
+const _separator:ModelRef<Separator> = defineModel({ required: true })
 </script>
 
 <template>

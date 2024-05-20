@@ -101,4 +101,13 @@ declare global {
     command:string
     args:Array<string>
   }
+
+  /** Sub menu object used in menu building */
+  interface SubMenu {
+    label:string
+    sub:Array<Object>
+  }
+
+  /** Separator type used in menu building */
+  type Separator = null
 }

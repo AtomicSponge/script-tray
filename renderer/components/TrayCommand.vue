@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import type { ModelRef } from 'vue'
 
-const _trayCommand:ModelRef<any> = defineModel({ required: true })
+const _trayCommand:ModelRef<TrayCommand> = defineModel({ required: true })
 
 /** Add a new argument */
 const addArgument = () => {

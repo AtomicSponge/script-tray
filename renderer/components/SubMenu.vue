@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import type { ModelRef } from 'vue'
 
-const _subMenu:ModelRef<any> = defineModel({ required: true })
+const _subMenu:ModelRef<SubMenu> = defineModel({ required: true })
 </script>
 
 <template>
