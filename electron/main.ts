@@ -412,6 +412,7 @@ app.on('before-quit', () => {
   bufferWin?.destroy()
   settingsWin?.destroy()
   inputWin?.destroy()
+  jobMgrWin?.destroy()
   appTray?.destroy()
 })
 
