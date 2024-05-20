@@ -68,6 +68,11 @@ declare global {
     err:string
   }
 
+  /** Min type for the Script Buffer */
+  type ScriptBufferMin = 10
+  /** Max type for the Script Buffer */
+  type ScriptBufferMax = 500
+
   /** Process manager data format */
   interface ProcessManagerData {
     label:string
@@ -96,8 +101,4 @@ declare global {
     command:string
     args:Array<string>
   }
-
-  //  Min & max types for the Script Buffer
-  type ScriptBufferMin = 10
-  type ScriptBufferMax = 500
 }
