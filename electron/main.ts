@@ -27,10 +27,7 @@ const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
 //  Process command arguments
-const flags = {
-  trayData: true,
-  bufferData: true
-}
+const flags = { trayData: true, bufferData: true }
 process.argv.forEach(arg => {
   if(arg === '--no-load-traydata') flags.trayData = false
   if(arg === '--no-load-bufferdata') flags.bufferData = false
