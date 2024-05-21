@@ -15,7 +15,7 @@ const _bufferSize = ref()
 const _startup = ref()
 const _encodingSelect = ref()
 const _menuSelect = ref(1)
-const _encoding_types = ref([
+const _encodingTypes = ref([
   'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
 ])
 
@@ -87,7 +87,7 @@ onMounted(() => {
       &emsp;&emsp;
       <label for="encodingSelect">System Encoding:</label>
       <select id="encodingSelect" v-model="_encodingSelect">
-        <option v-for="item in _encoding_types" :value=item>{{ item }}</option>
+        <option v-for="item in _encodingTypes" :value=item>{{ item }}</option>
       </select>
     </div>
     <div class="right">
