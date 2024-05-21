@@ -27,11 +27,13 @@ const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
 //  Process command arguments
-let loadTrayData:boolean = true
-let loadBufferData:boolean = true
+const flags = {
+  trayData: true,
+  bufferData: true
+}
 process.argv.forEach(arg => {
-  if(arg === '--no-load-traydata') loadTrayData = false
-  if(arg === '--no-load-bufferdata') loadBufferData = false
+  if(arg === '--no-load-traydata') flags.trayData = false
+  if(arg === '--no-load-bufferdata') flags.bufferData = false
 })
 
 /** App information */
@@ -50,7 +52,7 @@ const appInfo = {
 const autoLauncher:AutoLaunch = new AutoLaunch({ name: 'script-tray' })
 const appSettings:AppSettings = (() => {
   try {
-    return new AppSettings(loadTrayData)
+    return new AppSettings(flags.trayData)
   } catch (error:any) {
     console.error(`Unable to load settings!  ${error.message}`)
     console.error(`Try running with the --no-load-traydata flag.`)
@@ -59,7 +61,7 @@ const appSettings:AppSettings = (() => {
 })()
 const resBuff:ScriptBuffer = (() => {
   try {
-    return new ScriptBuffer(loadBufferData, appSettings.bufferSize)
+    return new ScriptBuffer(flags.bufferData, appSettings.bufferSize)
   } catch (error:any) {
     console.error(`Unable to load previous buffer!  ${error.message}`)
     console.error(`Try running with the --no-load-bufferdata flag.`)
@@ -135,7 +137,7 @@ const settingsEditorWindow = ():void => {
   })
   settingsWin.on('close', (_event) => {
     settingsWin?.destroy()
-    if (loadTrayData) {
+    if (flags.trayData) {
       try {
         appSettings.load()
       } catch (error:any) {
