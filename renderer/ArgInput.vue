@@ -40,11 +40,11 @@ onMounted(() => {
     </label>
   </div>
   <div>
-    <input type="text" id="argInput" v-model="_argInput" @keyup.enter="sendData()" autofocus/>
+    <input type="text" id="argInput" v-model="_argInput" @keyup.enter="sendData" autofocus/>
   </div>
   <div>
-    <button @click="sendData()" class="left">Submit</button>
-    <button @click="cancelCmd()" class="right">Cancel Command</button>
+    <button @click="sendData" class="left">Submit</button>
+    <button @click="cancelCmd" class="right">Cancel Command</button>
   </div>
 </section>
 </template>

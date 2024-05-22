@@ -11,7 +11,12 @@ import TrayCommand from './TrayCommand.vue'
 import SubMenu from './SubMenu.vue'
 import Separator from './Separator.vue'
 
-const _launchMenu:ModelRef<any> = defineModel({ required: true })
+const _launchMenu:ModelRef<any> = defineModel('launchMenu', { required: true })
+const _moveSelect:ModelRef<any> = defineModel('menuMover', { required: true })
+
+defineEmits<{
+  (e: 'moveItem', from:number, to:number, idx:number):void
+}>()
 
 /**
  * Delete an item from the menu
@@ -61,7 +66,11 @@ const moveDown = (idx:number):void => {
       <hr class="subDiv"/>
       <SubMenu v-model="_launchMenu[idx]"/>
       <hr class="subDiv"/>
-      <MenuBuilder v-model="_launchMenu[idx].sub"/>
+      <MenuBuilder
+        v-model:launch-menu="_launchMenu[idx].sub"
+        v-model:menu-mover="_moveSelect"
+        @move-item="$emit('moveItem', _launchMenu[idx].id, _moveSelect.id, idx)">
+      </MenuBuilder>
     </td>
     <td v-else-if="item.label !== undefined && item.command !== undefined" class="item">
       <TrayCommand v-model="_launchMenu[idx]"/>
@@ -76,12 +85,10 @@ const moveDown = (idx:number):void => {
         <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
         <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
       </div>
-      <div class="move">
-        <label for="moveSelect">Move:</label>
-        <select id="moveSelect">
-          <option>Main</option>
-          <option>test sub 1ff</option>
-          <option>test sub 2d</option>
+      <div v-show="_moveSelect.length > 1" class="move">
+        <button @click="$emit('moveItem', _launchMenu[idx].id, _moveSelect.id, idx)">Move</button>
+        <select id="moveSelect" v-model="_moveSelect">
+          <option v-for="item in _moveSelect" :value=item.id>{{ item.label }}</option>
         </select>
       </div>
     </td>

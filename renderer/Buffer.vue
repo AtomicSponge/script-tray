@@ -34,9 +34,7 @@ onMounted(() => {
 <template>
   <section>
     <table v-for="item in _buffer">
-      <tr>
-        <th>{{ item.command }}</th>
-      </tr>
+      <tr><th>{{ item.command }}</th></tr>
       <tr>
         <td>
           <div>

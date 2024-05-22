@@ -14,15 +14,25 @@ const _launchMenu = ref()
 const _bufferSize = ref()
 const _startup = ref()
 const _encodingSelect = ref()
-const _menuSelect = ref(1)
+const _newItemSelect = ref(1)
+const _menuList = ref()
 const _encodingTypes = ref([
   'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
 ])
 
-/** Reset settings button action */
-const resetSettings = ():void => { window.settingsAPI.resetSettings() }
-/** Save settings button action */
-const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
+/** Build a list of menus and their IDs */
+const buildMenuList = ():void => {
+  _menuList.value = []
+  _menuList.value.push({ id: 0, label: 'Main' })
+
+  _launchMenu.value.forEach((item:SubMenu) => {
+    if (item.hasOwnProperty('id') &&
+        item.hasOwnProperty('label') &&
+        item.hasOwnProperty('sub')) {
+      _menuList.value.push({ id: item.id, label: item.label })
+    }
+  })
+}
 
 /** Parse data from the settings window */
 const parseData = ():SettingsIpc => {
@@ -38,9 +48,33 @@ const parseData = ():SettingsIpc => {
   }
 }
 
+/**
+ * Creates a random number with a fixed amount of digits
+ * @param digits Number of digits to generate
+ * @returns A random number of the specified length
+ */
+const randomFixedInteger = (digits:number):number => {
+  return Math.floor(Math.pow(10, digits - 1) + Math.random() * (Math.pow(10, digits) - Math.pow(10, digits - 1) - 1))
+}
+
+/** Reset settings button action */
+const resetSettings = ():void => { window.settingsAPI.resetSettings() }
+/** Save settings button action */
+const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
+
+/**
+ * Move an item from one menu to another
+ * @param from Menu ID to move from
+ * @param to Menu ID to move to
+ * @param idx Item index to move
+ */
+const moveItem = (from:number, to:number, idx:number):void => {
+  window.alert(`moving ${from} ${to} ${idx}`)
+}
+
 /** Add a new item to the launch menu */
 const addItem = ():void => {
-  switch(Number(_menuSelect.value)) {
+  switch(Number(_newItemSelect.value)) {
     case 1:
       _launchMenu.value.push({
         label: 'New Label', command: 'New Command',
@@ -48,7 +82,11 @@ const addItem = ():void => {
       })
       return
     case 2:
-      _launchMenu.value.push({ label: 'New Sub Menu', sub: [] })
+      _launchMenu.value.push({
+        id: randomFixedInteger(16),
+        label: 'New Sub Menu', sub: []
+      })
+      buildMenuList()
       return
     case 3:
       _launchMenu.value.push({ separator: null })
@@ -74,6 +112,7 @@ onMounted(() => {
     _bufferSize.value = settingsData.bufferSize
     _encodingSelect.value = settingsData.encoding
     _startup.value = settingsData.startup
+    buildMenuList()
   })
 })
 </script>
@@ -96,10 +135,16 @@ onMounted(() => {
       <button @click="saveSettings">Save Settings</button>
     </div>
   </header>
-  <div id="menuContents"><MenuBuilder v-model="_launchMenu"/></div>
+  <div id="menuContents">
+    <MenuBuilder
+      v-model:launch-menu="_launchMenu"
+      v-model:menu-mover="_menuList"
+      @move-item="moveItem">
+    </MenuBuilder>
+  </div>
   <footer>
     <div class="left">
-      <select id="menuSelect" v-model="_menuSelect">
+      <select id="menuSelect" v-model="_newItemSelect">
         <option value="1">Command Launcher</option>
         <option value="2">Sub Menu</option>
         <option value="3">Separator</option>

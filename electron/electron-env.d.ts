@@ -97,6 +97,7 @@ declare global {
 
   /** Sub menu object used in menu building */
   interface SubMenu {
+    id:number
     label:string
     sub:Array<Object>
   }

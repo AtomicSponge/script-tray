@@ -39,7 +39,7 @@ const deleteArgument = (idx:number) => {
     <td><input type="text" v-model="_trayCommand.cwd" id="cmdCwd"/></td>
   </tr>
   <tr>
-    <td class="args">Args <button @click="addArgument()">Add</button></td>
+    <td class="args">Args <button @click="addArgument">Add</button></td>
     <td>
       <ul>
         <li v-for="(_arg, idx) in _trayCommand.args">
