@@ -29,18 +29,18 @@ const buildMenuList = ():void => {
    * Recursive function to build entire menu
    * @param menu Menu object to build from
    */
-  const builder = (menu:Array<any>):void => {
+  const menuBuilder = (menu:Array<any>):void => {
     menu.forEach((item:SubMenu) => {
       if (item.hasOwnProperty('id') &&
           item.hasOwnProperty('label') &&
           item.hasOwnProperty('sub')) {
         _menuList.value.push({ id: item.id, label: item.label })
-        builder(item.sub)
+        menuBuilder(item.sub)
       }
     })
   }
 
-  builder(_launchMenu.value)
+  menuBuilder(_launchMenu.value)
 }
 
 /** Parse data from the settings window */
