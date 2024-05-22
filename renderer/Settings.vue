@@ -138,7 +138,7 @@ onMounted(() => {
   <div id="menuContents">
     <MenuBuilder
       v-model:launch-menu="_launchMenu"
-      v-model:menu-mover="_menuList"
+      v-model:menu-list="_menuList"
       @move-item="moveItem">
     </MenuBuilder>
   </div>
