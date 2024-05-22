@@ -148,7 +148,8 @@ onMounted(() => {
     <MenuBuilder
       v-model:launch-menu="_launchMenu"
       v-model:menu-list="_menuList"
-      @move-item="moveItem">
+      @move-item="moveItem"
+      :menu-id=0>
     </MenuBuilder>
   </div>
   <footer>

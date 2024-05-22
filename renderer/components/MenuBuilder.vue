@@ -17,6 +17,8 @@ const _menuList:ModelRef<any> = defineModel('menuList', { required: true })
 
 const _menuSelect = ref(0)
 
+defineProps<{ menuId:number }>()
+
 defineEmits<{
   (e: 'moveItem', from:number, to:number, idx:number):void
 }>()
@@ -72,7 +74,8 @@ const moveDown = (idx:number):void => {
       <MenuBuilder
         v-model:launch-menu="_launchMenu[idx].sub"
         v-model:menu-list="_menuList"
-        @move-item="$emit('moveItem', 0, _menuSelect, idx)">
+        @move-item="$emit('moveItem', menuId, _menuSelect, idx)"
+        :menu-id=_launchMenu[idx].id>
       </MenuBuilder>
     </td>
     <td v-else-if="item.label !== undefined && item.command !== undefined" class="item">
@@ -89,7 +92,7 @@ const moveDown = (idx:number):void => {
         <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
       </div>
       <div v-show="_menuList.length > 1" class="moveMenu">
-        <button @click="$emit('moveItem', 0, _menuSelect, idx)">Move</button>
+        <button @click="$emit('moveItem', menuId, _menuSelect, idx)">Move</button>
         <select id="moveSelect" v-model="_menuSelect">
           <option v-for="item in _menuList" :value=item.id>{{ item.label }}</option>
         </select>
