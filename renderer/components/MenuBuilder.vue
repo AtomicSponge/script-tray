@@ -15,13 +15,9 @@ import Separator from './Separator.vue'
 const _launchMenu:ModelRef<any> = defineModel('launchMenu', { required: true })
 const _menuList:ModelRef<any> = defineModel('menuList', { required: true })
 
-const _menuSelect = ref(0)
+const _menuSelect = ref()
 
 defineProps<{ menuId:number }>()
-
-defineEmits<{
-  (e: 'moveItem', from:number, to:number, idx:number):void
-}>()
 
 /**
  * Delete an item from the menu
@@ -62,6 +58,18 @@ const moveDown = (idx:number):void => {
   console.log(elem)
   _launchMenu.value.splice(++idx, 0, elem)
 }
+
+/**
+ * Move an item from one menu to another
+ * @param to Menu ID to move to
+ * @param idx Item index to move
+ */
+ const moveMenus = (idx:number):void => {
+  if(_menuSelect.value === Number.MAX_SAFE_INTEGER)
+    window.alert(`main idx ${idx}`)
+  else
+    window.alert(`moving ${_menuList.value[_menuSelect.value].label} idx ${idx}`)
+}
 </script>
 
 <template>
@@ -74,7 +82,6 @@ const moveDown = (idx:number):void => {
       <MenuBuilder
         v-model:launch-menu="_launchMenu[idx].sub"
         v-model:menu-list="_menuList"
-        @move-item="$emit('moveItem', menuId, _menuSelect, idx)"
         :menu-id=_launchMenu[idx].id>
       </MenuBuilder>
     </td>
@@ -91,10 +98,12 @@ const moveDown = (idx:number):void => {
         <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
         <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
       </div>
-      <div v-show="_menuList.length > 1" class="moveMenu">
-        <button @click="$emit('moveItem', menuId, _menuSelect, idx)">Move</button>
+      <div v-show="_menuList.length > 0" class="moveMenu">
+        <button @click="moveMenus(idx)">Move</button>
         <select id="moveSelect" v-model="_menuSelect">
-          <option v-for="item in _menuList" :value=item.id>{{ item.label }}</option>
+          <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId" :key="idx" :value=idx>
+            {{ item.label }}
+          </option>
         </select>
       </div>
     </td>

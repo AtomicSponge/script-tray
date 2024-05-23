@@ -65,9 +65,9 @@ th
 .pid
   width 60px
 .label
-  width 160px
+  width 20%
 .time
-  width 220px
+  width 20%
 .term
   width 50px
 tr:nth-child(odd)

@@ -20,27 +20,33 @@ const _encodingTypes = ref([
   'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
 ])
 
-/** Build a list of menus and their IDs */
+/** Build a reference list of submenus */
 const buildMenuList = ():void => {
-  _menuList.value = []
-  _menuList.value.push({ id: 0, label: 'Main' })
+  _menuList.value = []  //  Reset
+
+  //  Push a reference to the main menu
+  _menuList.value.push({
+    id: Number.MAX_SAFE_INTEGER,
+    label: 'Main',
+    sub: _launchMenu.value
+  })
 
   /**
-   * Recursive function to build entire menu
-   * @param menu Menu object to build from
+   * Recursive function to find all menus
+   * @param menu Menu object to parse
    */
-  const menuBuilder = (menu:Array<any>):void => {
-    menu.forEach((item:SubMenu) => {
+  const buildMenu = (menu:Array<any>):void => {
+    menu.forEach((item:any) => {
       if (item.hasOwnProperty('id') &&
           item.hasOwnProperty('label') &&
           item.hasOwnProperty('sub')) {
-        _menuList.value.push({ id: item.id, label: item.label })
-        menuBuilder(item.sub)
+        _menuList.value.push(item)
+        buildMenu(item.sub)
       }
     })
   }
 
-  menuBuilder(_launchMenu.value)
+  buildMenu(_launchMenu.value)
 }
 
 /** Parse data from the settings window */
@@ -71,16 +77,6 @@ const resetSettings = ():void => { window.settingsAPI.resetSettings() }
 /** Save settings button action */
 const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
 
-/**
- * Move an item from one menu to another
- * @param from Menu ID to move from
- * @param to Menu ID to move to
- * @param idx Item index to move
- */
-const moveItem = (from:number, to:number, idx:number):void => {
-  window.alert(`moving ${from} ${to} ${idx}`)
-}
-
 /** Add a new item to the launch menu */
 const addItem = ():void => {
   switch(Number(_newItemSelect.value)) {
@@ -91,11 +87,15 @@ const addItem = ():void => {
       })
       return
     case 2:
-      _launchMenu.value.push({
-        id: randomFixedInteger(16),
-        label: 'New Sub Menu', sub: []
-      })
-      buildMenuList()
+      //  Make sure array size will never equal MAX INT
+      if(_menuList.value.length < Number.MAX_SAFE_INTEGER) {
+        _launchMenu.value.push({
+          id: randomFixedInteger(16),
+          label: 'New Sub Menu', sub: []
+        })
+      } else {
+        window.alert('Maximum submenus reached!')
+      }
       return
     case 3:
       _launchMenu.value.push({ separator: null })
@@ -113,6 +113,9 @@ watch(_bufferSize, (newVal, oldVal) => {
     if (newVal > maxVal) _bufferSize.value = maxVal
   }
 })
+
+//  Keep the menu list up to date with any changes
+watch(_launchMenu, () => { buildMenuList() })
 
 //  Fetch data
 onMounted(() => {
@@ -148,8 +151,7 @@ onMounted(() => {
     <MenuBuilder
       v-model:launch-menu="_launchMenu"
       v-model:menu-list="_menuList"
-      @move-item="moveItem"
-      :menu-id=0>
+      :menu-id=Number.MAX_SAFE_INTEGER>  <!-- Main menu starts at MAX INT -->
     </MenuBuilder>
   </div>
   <footer>
