@@ -373,22 +373,22 @@ const buildMenu = ():Menu => {
 
     collection.forEach((item:any) => {
       //  Item is a sub menu
-      if (item.label !== undefined && item.label !== '' &&
-          item.sub !== undefined && Array.isArray(item.sub)) {
+      if (item.hasOwnProperty('label') && item.label !== '' &&
+          item.hasOwnProperty('sub') && Array.isArray(item.sub)) {
         const tempMenu = new Menu()
         buildLauncher(tempMenu, item.sub)  //  Build submenu
         menu.append(new MenuItem({ label: item.label, submenu: tempMenu}))
         return  //  Next item
       }
       //  Item is a seperator
-      if (item.separator !== undefined && item.separator === null) {
+      if (item.hasOwnProperty('separator') && item.separator === null) {
         menu.append(new MenuItem({ type: 'separator' }))
         return  //  Next item
       }
       //  Item is a command
-      if (item.label !== undefined && item.label !== '' &&
-          item.command !== undefined && item.command !== '' &&
-          item.args !== undefined && Array.isArray(item.args)) {
+      if (item.hasOwnProperty('label') && item.label !== '' &&
+          item.hasOwnProperty('command') && item.command !== '' &&
+          item.hasOwnProperty('args') && Array.isArray(item.args)) {
         menu.append(new MenuItem({
           label: item.label,
           click: () => {

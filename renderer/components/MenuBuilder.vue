@@ -75,7 +75,7 @@ const moveDown = (idx:number):void => {
 <template>
 <table>
   <tr v-for="(item, idx) in _launchMenu" :key="idx" class="itemrow">
-    <td v-if="item.hasOwnProperty('label') && item.hasOwnProperty('sub')" class="item">
+    <td v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" class="item">
       <hr class="subDiv"/>
       <SubMenu v-model="_launchMenu[idx]"/>
       <hr class="subDiv"/>
@@ -100,7 +100,7 @@ const moveDown = (idx:number):void => {
       </div>
       <div v-show="_menuList.length > 0" class="moveMenu">
         <button @click="moveMenus(idx)">Move</button>
-        <select v-if="item.hasOwnProperty('label') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_menuSelect">
+        <select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_menuSelect">
           <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId && item.id !== _launchMenu[idx].id" :key="idx" :value=idx>
             {{ item.label }}
           </option>
