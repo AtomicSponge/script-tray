@@ -17,7 +17,7 @@ const _menuList:ModelRef<any> = defineModel('menuList', { required: true })
 
 const _menuSelect = ref()
 
-defineProps<{ menuId:number }>()
+const props = defineProps<{ menuId:number }>()
 
 /**
  * Delete an item from the menu
@@ -97,15 +97,15 @@ const moveDown = (idx:number):void => {
       </div>
       <div v-show="_menuList.length > 0" class="moveMenu">
         <button @click="moveMenus(idx)">Move</button>
-        <!-- Render select for a submenu item - WIP:  not working in main (shows own menu) -->
+        <!-- Render select for a submenu item -->
         <select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_menuSelect">
-          <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId && item.id !== _launchMenu[idx].id" :key=idx :value=idx>
+          <option v-for="(item, _idx) in _menuList" v-show="item.id !== props.menuId && item.id !== _launchMenu[idx].id" :key=_idx :value=_idx>
             {{ item.label }}
           </option>
         </select>
         <!-- Render select for all other non submenu items -->
         <select v-else id="moveSelect" v-model="_menuSelect">
-          <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId" :key=idx :value=idx>
+          <option v-for="(item, _idx) in _menuList" v-show="item.id !== props.menuId" :key=_idx :value=_idx>
             {{ item.label }}
           </option>
         </select>
