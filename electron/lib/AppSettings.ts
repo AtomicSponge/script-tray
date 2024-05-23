@@ -51,10 +51,10 @@ export class AppSettings {
         if (error) throw error
         if (hasKey) {
           const temp = <AppSettingsSaveData>storage.getSync('settings')
-          if (temp.launchMenu !== undefined) AppSettings.#launchMenu = temp.launchMenu
-          if (temp.bufferSize !== undefined) AppSettings.#bufferSize = temp.bufferSize
-          if (temp.encoding !== undefined) AppSettings.#encoding = temp.encoding
-          if (temp.startup !== undefined) AppSettings.#startup = temp.startup
+          if (temp.hasOwnProperty('launchMenu')) AppSettings.#launchMenu = temp.launchMenu
+          if (temp.hasOwnProperty('bufferSize')) AppSettings.#bufferSize = temp.bufferSize
+          if (temp.hasOwnProperty('encoding')) AppSettings.#encoding = temp.encoding
+          if (temp.hasOwnProperty('startup')) AppSettings.#startup = temp.startup
         }
       })
     } catch (error:any) { throw new AppSettingsError(error.message, this.load) }

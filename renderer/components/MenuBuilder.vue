@@ -25,12 +25,12 @@ defineProps<{ menuId:number }>()
  * @param idx Item index
  */
 const deleteItem = (item:any, idx:number):void => {
-  if(item.label !== undefined && item.sub !== undefined) {
+  if(item.hasOwnProperty('label') && item.hasOwnProperty('sub')) {
     if(window.confirm(`Are you sure you want to delete sub-menu '${item.label}' and all of its content?`))
       _launchMenu.value.splice(idx, 1)
     return
   }
-  if(item.label !== undefined && item.command !== undefined) {
+  if(item.hasOwnProperty('label') && item.hasOwnProperty('command')) {
     if(window.confirm(`Delete command '${item.label}'?`))
       _launchMenu.value.splice(idx, 1)
     return
@@ -85,7 +85,7 @@ const moveDown = (idx:number):void => {
         :menu-id=_launchMenu[idx].id>
       </MenuBuilder>
     </td>
-    <td v-else-if="item.hasOwnProperty('label') && item.hasOwnProperty('command') !== undefined" class="item">
+    <td v-else-if="item.hasOwnProperty('label') && item.hasOwnProperty('command')" class="item">
       <TrayCommand v-model="_launchMenu[idx]"/>
     </td>
     <td v-else-if="item.hasOwnProperty('separator')" class="item">

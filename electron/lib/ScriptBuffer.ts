@@ -67,7 +67,7 @@ export class ScriptBuffer extends EventEmitter {
         if (error) throw error
         if (hasKey) {
           const temp = <ScriptBufferSaveData>storage.getSync('script-buffer')
-          if (temp.buffer !== undefined) ScriptBuffer.#buffer = temp.buffer
+          if (temp.hasOwnProperty('buffer')) ScriptBuffer.#buffer = temp.buffer
         }
       })
     } catch (error:any) { throw new ScriptBufferError(error.message, this.load) }
