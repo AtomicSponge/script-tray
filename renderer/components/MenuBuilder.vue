@@ -61,7 +61,7 @@ const moveDown = (idx:number):void => {
 
 /**
  * Move an item from one menu to another
- * @param idx Item index to move
+ * @param idx Index of item to move relative to current menu
  */
  const moveMenus = (idx:number):void => {
   const elem = _launchMenu.value.splice(idx, 1)[0]
