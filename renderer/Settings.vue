@@ -16,13 +16,16 @@ const _startup = ref()
 const _encodingSelect = ref()
 const _newItemSelect = ref(1)
 const _menuList = ref()
+const _itemCount = ref()
 const _encodingTypes = ref([
   'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
 ])
 
 /** Build a reference list of submenus */
 const buildMenuList = ():void => {
-  _menuList.value = []  //  Reset
+  //  Reset
+  _menuList.value = []
+  _itemCount.value = 1
 
   //  Push a reference to the main menu
   _menuList.value.push({
@@ -37,6 +40,7 @@ const buildMenuList = ():void => {
    */
   const buildMenu = (menu:Array<any>):void => {
     menu.forEach((item:any) => {
+      _itemCount.value++
       if (item.hasOwnProperty('id') &&
           item.hasOwnProperty('label') &&
           item.hasOwnProperty('sub')) {
@@ -81,24 +85,32 @@ const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
 const addItem = ():void => {
   switch(Number(_newItemSelect.value)) {
     case 1:
-      _launchMenu.value.push({
-        label: 'New Label', command: 'New Command',
-        args: [], cwd: 'default'
-      })
+      if (_itemCount.value < Number.MAX_SAFE_INTEGER) {
+        _launchMenu.value.push({
+          label: 'New Label', command: 'New Command',
+          args: [], cwd: 'default'
+        })
+      } else {
+        window.alert('Maximum items reached!')
+      }
       return
     case 2:
       //  Make sure array size will never equal MAX INT
-      if(_menuList.value.length < Number.MAX_SAFE_INTEGER) {
+      if (_menuList.value.length < Number.MAX_SAFE_INTEGER &&
+          _itemCount.value < Number.MAX_SAFE_INTEGER) {
         _launchMenu.value.push({
           id: randomFixedInteger(16),
           label: 'New Sub Menu', sub: []
         })
       } else {
-        window.alert('Maximum submenus reached!')
+        window.alert('Maximum items reached!')
       }
       return
     case 3:
-      _launchMenu.value.push({ separator: null })
+      if(_itemCount.value < Number.MAX_SAFE_INTEGER)
+        _launchMenu.value.push({ separator: null })
+      else
+        window.alert('Maximum items reached!')
       return
     default:
       return
