@@ -124,7 +124,6 @@ onMounted(() => {
     _bufferSize.value = settingsData.bufferSize
     _encodingSelect.value = settingsData.encoding
     _startup.value = settingsData.startup
-    buildMenuList()
   })
 })
 </script>
