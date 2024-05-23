@@ -9,6 +9,7 @@
     "baseUrl": ".",
     /* Linting */
     "strict": true,
+    "strictNullChecks": true,
     "isolatedModules": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
