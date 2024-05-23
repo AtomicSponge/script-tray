@@ -88,7 +88,7 @@ const moveDown = (idx:number):void => {
     <td v-else-if="item.hasOwnProperty('separator')" class="item">
       <Separator v-model="_launchMenu[idx]"/>
     </td>
-    <td v-else class="item">&nbsp;</td>  <!-- render error handling -->
+    <td v-else class="item">&nbsp;</td>  <!-- Render error handling -->
     <td class="delBtn">
       <div>
         <button v-show="idx > 0" @click="moveUp(idx)">&#8593;</button>
