@@ -100,11 +100,13 @@ const moveDown = (idx:number):void => {
       </div>
       <div v-show="_menuList.length > 0" class="moveMenu">
         <button @click="moveMenus(idx)">Move</button>
+        <!-- Render select for a submenu item - WIP:  not working in main -->
         <select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_menuSelect">
           <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId && item.id !== _launchMenu[idx].id" :key="idx" :value=idx>
             {{ item.label }}
           </option>
         </select>
+        <!-- Render select for all other non submenu items -->
         <select v-else id="moveSelect" v-model="_menuSelect">
           <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId" :key="idx" :value=idx>
             {{ item.label }}
