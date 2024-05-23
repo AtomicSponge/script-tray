@@ -74,7 +74,7 @@ const moveDown = (idx:number):void => {
 
 <template>
 <table>
-  <tr v-for="(item, idx) in _launchMenu" :key="idx" class="itemrow">
+  <tr v-for="(item, idx) in _launchMenu" :key=idx class="itemrow">
     <td v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" class="item">
       <hr class="subDiv"/>
       <SubMenu v-model="_launchMenu[idx]"/>
@@ -100,15 +100,15 @@ const moveDown = (idx:number):void => {
       </div>
       <div v-show="_menuList.length > 0" class="moveMenu">
         <button @click="moveMenus(idx)">Move</button>
-        <!-- Render select for a submenu item - WIP:  not working in main -->
+        <!-- Render select for a submenu item - WIP:  not working in main (shows own menu) -->
         <select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_menuSelect">
-          <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId && item.id !== _launchMenu[idx].id" :key="idx" :value=idx>
+          <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId && item.id !== _launchMenu[idx].id" :key=idx :value=idx>
             {{ item.label }}
           </option>
         </select>
         <!-- Render select for all other non submenu items -->
         <select v-else id="moveSelect" v-model="_menuSelect">
-          <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId" :key="idx" :value=idx>
+          <option v-for="(item, idx) in _menuList" v-show="item.id !== menuId" :key=idx :value=idx>
             {{ item.label }}
           </option>
         </select>
