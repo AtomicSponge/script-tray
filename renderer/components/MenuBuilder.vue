@@ -61,14 +61,11 @@ const moveDown = (idx:number):void => {
 
 /**
  * Move an item from one menu to another
- * @param to Menu ID to move to
  * @param idx Item index to move
  */
  const moveMenus = (idx:number):void => {
-  if(_menuSelect.value === Number.MAX_SAFE_INTEGER)
-    window.alert(`main idx ${idx}`)
-  else
-    window.alert(`moving ${_menuList.value[_menuSelect.value].label} idx ${idx}`)
+  const elem = _launchMenu.value.splice(idx, 1)[0]
+  _menuList.value[_menuSelect.value].sub.push(elem)
 }
 </script>
 
