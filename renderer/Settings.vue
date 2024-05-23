@@ -77,9 +77,14 @@ const randomFixedInteger = (digits:number):number => {
 }
 
 /** Reset settings button action */
-const resetSettings = ():void => { window.settingsAPI.resetSettings() }
+const resetSettings = ():void => {
+  window.settingsAPI.resetSettings()
+  buildMenuList()
+}
 /** Save settings button action */
-const saveSettings = ():void => { window.settingsAPI.saveSettings(parseData()) }
+const saveSettings = ():void => {
+  window.settingsAPI.saveSettings(parseData())
+}
 
 /** Add a new item to the launch menu */
 const addItem = ():void => {
@@ -102,6 +107,7 @@ const addItem = ():void => {
           id: randomFixedInteger(16),
           label: 'New Sub Menu', sub: []
         })
+        buildMenuList()
       } else {
         window.alert('Maximum items reached!')
       }
@@ -126,9 +132,6 @@ watch(_bufferSize, (newVal, oldVal) => {
   }
 })
 
-//  Keep the menu list up to date with any changes
-watch(_launchMenu, () => { buildMenuList() })
-
 //  Fetch data
 onMounted(() => {
   window.settingsAPI.onUpdateSettings((settingsData:SettingsIpc) => {
@@ -136,6 +139,7 @@ onMounted(() => {
     _bufferSize.value = settingsData.bufferSize
     _encodingSelect.value = settingsData.encoding
     _startup.value = settingsData.startup
+    buildMenuList()
   })
 })
 </script>
