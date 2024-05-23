@@ -32,7 +32,7 @@ const buildMenuList = ():void => {
   })
 
   /**
-   * Recursive function to find all menus
+   * Recursive function to find all submenus
    * @param menu Menu object to parse
    */
   const buildMenu = (menu:Array<any>):void => {
