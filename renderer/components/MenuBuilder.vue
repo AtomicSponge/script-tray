@@ -43,7 +43,7 @@ const deleteItem = (item:any, idx:number):void => {
  * @param idx Index of item to move
  */
 const moveUp = (idx:number):void => {
-  if(idx === 0) return
+  if(idx <= 0) return
   const elem = _launchMenu.value.splice(idx, 1)[0]
   _launchMenu.value.splice(--idx, 0, elem)
 }
@@ -53,7 +53,7 @@ const moveUp = (idx:number):void => {
  * @param idx Index of item to move
  */
 const moveDown = (idx:number):void => {
-  if(idx === (_launchMenu.value.length - 1)) return
+  if(idx >= (_launchMenu.value.length - 1)) return
   const elem = _launchMenu.value.splice(idx, 1)[0]
   console.log(elem)
   _launchMenu.value.splice(++idx, 0, elem)
@@ -91,8 +91,8 @@ const moveDown = (idx:number):void => {
     <td v-else class="item">&nbsp;</td>  <!-- render error handling -->
     <td class="delBtn">
       <div>
-        <button v-show="idx !== 0" @click="moveUp(idx)">&#8593;</button>
-        <button v-show="idx !== (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
+        <button v-show="idx > 0" @click="moveUp(idx)">&#8593;</button>
+        <button v-show="idx < (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
         <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
       </div>
       <div v-show="_menuList.length > 0" class="moveMenu">
