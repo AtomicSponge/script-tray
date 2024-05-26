@@ -87,12 +87,18 @@ declare global {
     argument:string
   }
 
+  /** Object for argument display label and replacement variable */
+  interface Argument {
+    label:string
+    variable:string
+  }
+
   /** Command object used in menu building */
   interface TrayCommand {
     label:string
     command:string
     cwd:string
-    args:Array<string>
+    args:Array<Argument>
   }
 
   /** Sub menu object used in menu building */

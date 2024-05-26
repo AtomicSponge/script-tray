@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
+/** Reference for storing a list of running jobs */
 const _runningJobs = ref()
 
 /**

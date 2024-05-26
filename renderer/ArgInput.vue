@@ -7,8 +7,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-const _displayLabel = ref()
-const _displayArgument = ref()
+/** Command display reference */
+const _inputLabel = ref()
+/** Argument display reference */
+const _argumentLabel = ref()
+/** Reference for argument input */
 const _argInput = ref('')
 
 /** Send input back to main app */
@@ -23,8 +26,8 @@ const cancelCmd = ():void => { window.close() }
 
 onMounted(() => {
   window.inputAPI.onReceiveData((inputData:InputPromptData) => {
-    _displayLabel.value = inputData.label
-    _displayArgument.value = inputData.argument
+    _inputLabel.value = inputData.label
+    _argumentLabel.value = inputData.argument
   })
 })
 </script>
@@ -32,11 +35,11 @@ onMounted(() => {
 <template>
 <section>
   <div>
-    Command: <span class="highlight">{{ _displayLabel }}</span>
+    Command: <span class="highlight">{{ _inputLabel }}</span>
   </div>
   <div>
     <label for="argInput">
-      Enter value for <span class="highlight">{{ _displayArgument }}</span>:
+      Enter value for <span class="highlight">{{ _argumentLabel }}</span>:
     </label>
   </div>
   <div>

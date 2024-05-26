@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import type { ModelRef } from 'vue'
 
+/** Separator model - should always be null */
 const _separator:ModelRef<Separator> = defineModel({ required: true })
 </script>
 

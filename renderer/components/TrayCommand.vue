@@ -7,11 +7,12 @@
 <script setup lang="ts">
 import type { ModelRef } from 'vue'
 
+/** Model for the tray command reference  */
 const _trayCommand:ModelRef<TrayCommand> = defineModel({ required: true })
 
 /** Add a new argument */
 const addArgument = () => {
-  _trayCommand.value.args.push('new arg')
+  _trayCommand.value.args.push({ label: 'new arg', variable: 'variable_name' })
 }
 
 /**
@@ -43,8 +44,20 @@ const deleteArgument = (idx:number) => {
     <td>
       <ul>
         <li v-for="(_arg, idx) in _trayCommand.args">
-          <input type="text" v-model="_trayCommand.args[idx]"/>
-          <button @click="deleteArgument(idx)">Delete</button>
+          <table>
+            <tr>
+              <td><label for="argLabel">Label:</label></td>
+              <td><input type="text" v-model="_trayCommand.args[idx].label" id="argLabel"/></td>
+              <td rowspan="2">
+                <button @click="deleteArgument(idx)">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="argVariable">Variable:</label></td>
+              <td><input type="text" v-model="_trayCommand.args[idx].variable" id="argVariable"/></td>
+            </tr>
+          </table>
+          <hr v-show="idx < (_trayCommand.args.length - 1)"/>
         </li>
       </ul>
     </td>
@@ -54,10 +67,20 @@ const deleteArgument = (idx:number) => {
 </template>
 
 <style lang="stylus" scoped>
+table
+  table-layout fixed
+hr
+  border 1px solid rgb(100, 100, 100, 0.1)
 #cmdLabel
-  width 180px
+  width 200px
 #cmdCommand
-  width 280px
+  width 320px
+#cmdCwd
+  width 200px
+#argLabel
+  width 180px
+#argVariable
+  width 180px
 .args
   vertical-align top
 button

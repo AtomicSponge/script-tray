@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
 
+/** Reference for storing the buffer */
 const _buffer = ref()
 
 /**

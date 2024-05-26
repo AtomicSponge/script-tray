@@ -12,12 +12,26 @@ import TrayCommand from './TrayCommand.vue'
 import SubMenu from './SubMenu.vue'
 import Separator from './Separator.vue'
 
+/** Main menu or submenu used to build each section of the recurision loop  */
 const _launchMenu:ModelRef<any> = defineModel('launchMenu', { required: true })
+/** The menu referenced passed unmodified to each MenuBuilder instance */
 const _menuList:ModelRef<any> = defineModel('menuList', { required: true })
+/** Select menu for moving an item to another menu */
+const _moveMenuSelect = ref()
 
-const _menuSelect = ref()
-
+/**
+ * Component properties
+ * @prop menuId Reference ID to the current menu being built
+ */
 const props = defineProps<{ menuId:number }>()
+
+/**
+ * Event emitters
+ * 'rebuild' - Sends event to rebuild the menu list
+ */
+const emit = defineEmits<{
+  (e: 'rebuild'):void
+}>()
 
 /**
  * Delete an item from the menu
@@ -26,8 +40,10 @@ const props = defineProps<{ menuId:number }>()
  */
 const deleteItem = (item:any, idx:number):void => {
   if(item.hasOwnProperty('label') && item.hasOwnProperty('sub')) {
-    if(window.confirm(`Are you sure you want to delete sub-menu '${item.label}' and all of its content?`))
+    if(window.confirm(`Are you sure you want to delete sub-menu '${item.label}' and all of its content?`)) {
       _launchMenu.value.splice(idx, 1)
+      emit('rebuild')
+    }
     return
   }
   if(item.hasOwnProperty('label') && item.hasOwnProperty('command')) {
@@ -65,7 +81,7 @@ const moveDown = (idx:number):void => {
  */
  const moveMenus = (idx:number):void => {
   const elem = _launchMenu.value.splice(idx, 1)[0]
-  _menuList.value[_menuSelect.value].sub.push(elem)
+  _menuList.value[_moveMenuSelect.value].sub.push(elem)
 }
 </script>
 
@@ -76,9 +92,11 @@ const moveDown = (idx:number):void => {
       <hr class="subDiv"/>
       <SubMenu v-model="_launchMenu[idx]"/>
       <hr class="subDiv"/>
+      <!-- Recursion call for submenu building, passes emit back to parent -->
       <MenuBuilder
         v-model:launch-menu="_launchMenu[idx].sub"
         v-model:menu-list="_menuList"
+        @rebuild="$emit('rebuild')"
         :menu-id=_launchMenu[idx].id>
       </MenuBuilder>
     </td>
@@ -98,13 +116,13 @@ const moveDown = (idx:number):void => {
       <div v-show="_menuList.length > 0" class="moveMenu">
         <button @click="moveMenus(idx)">Move</button>
         <!-- Render select for a submenu item -->
-        <select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_menuSelect">
+        <select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_moveMenuSelect">
           <option v-for="(_item, _idx) in _menuList" v-show="_item.id !== props.menuId && _item.id !== _launchMenu[idx].id" :key=_idx :value=_idx>
             {{ _item.label }}
           </option>
         </select>
         <!-- Render select for all other non submenu items -->
-        <select v-else id="moveSelect" v-model="_menuSelect">
+        <select v-else id="moveSelect" v-model="_moveMenuSelect">
           <option v-for="(_item, _idx) in _menuList" v-show="_item.id !== props.menuId" :key=_idx :value=_idx>
             {{ _item.label }}
           </option>

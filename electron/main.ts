@@ -397,10 +397,12 @@ const buildMenu = ():Menu => {
               (async () => {
                 let runCanceled:boolean = false
                 let runCmd:string = <string>item.command
-                await asyncForEach(<Array<string>>item.args, async (arg:string) => {
-                  inputWindow({ label: <string>item.label, argument: arg })
-                  await resolveInputWin.promise.then(resStr => {
-                    runCmd += ' ' + resStr
+                await asyncForEach(<Array<Argument>>item.args, async (arg:Argument) => {
+                  inputWindow({ label: <string>item.label, argument: arg.label })
+                  await resolveInputWin.promise.then(res => {
+                    runCmd = runCmd.replace(`?<| ${arg.variable} |>`, res)
+                    //const regex = new RegExp(`\?<|\s${arg.variable}\s|>$`)
+                    //runCmd = runCmd.replace(regex, res)
                   }).catch(res => { runCanceled = res })
                 })
                 if (runCanceled) {

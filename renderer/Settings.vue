@@ -10,16 +10,27 @@ import { testNumeric } from '@spongex/regexps'
 
 import MenuBuilder from './components/MenuBuilder.vue'
 
+/** Entire menu contents for displaying in settings */
 const _launchMenu = ref()
+/** Buffer size amount */
 const _bufferSize = ref()
+/** Launch on startup settings flag */
 const _startup = ref()
+/** Select menu for encoding type */
 const _encodingSelect = ref()
+/** Select menu for adding a new item */
 const _newItemSelect = ref(1)
+/** Select menu for menu option when adding a new item */
+const _menuSelect = ref(0)
+/** Array containing a reference to menu items */
 const _menuList = ref()
+/** Total count of all menu items */
 const _itemCount = ref()
-const _encodingTypes = ref([
+
+/** Allowed encoding types */
+const _encodingTypes = [
   'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
-])
+]
 
 /** Build a reference list of submenus */
 const buildMenuList = ():void => {
@@ -51,6 +62,7 @@ const buildMenuList = ():void => {
   }
 
   buildMenu(_launchMenu.value)
+  _menuSelect.value = 0
 }
 
 /** Parse data from the settings window */
@@ -91,7 +103,7 @@ const addItem = ():void => {
   switch(Number(_newItemSelect.value)) {
     case 1:
       if (_itemCount.value < Number.MAX_SAFE_INTEGER) {
-        _launchMenu.value.push({
+        _menuList.value[_menuSelect.value].sub.push({
           label: 'New Label', command: 'New Command',
           args: [], cwd: 'default'
         })
@@ -103,7 +115,7 @@ const addItem = ():void => {
       //  Make sure array size will never equal MAX INT
       if (_menuList.value.length < Number.MAX_SAFE_INTEGER &&
           _itemCount.value < Number.MAX_SAFE_INTEGER) {
-        _launchMenu.value.push({
+        _menuList.value[_menuSelect.value].sub.push({
           id: randomFixedInteger(16),
           label: 'New Sub Menu', sub: []
         })
@@ -114,7 +126,7 @@ const addItem = ():void => {
       return
     case 3:
       if(_itemCount.value < Number.MAX_SAFE_INTEGER)
-        _launchMenu.value.push({ separator: null })
+      _menuList.value[_menuSelect.value].sub.push({ separator: null })
       else
         window.alert('Maximum items reached!')
       return
@@ -166,12 +178,18 @@ onMounted(() => {
     <MenuBuilder
       v-model:launch-menu="_launchMenu"
       v-model:menu-list="_menuList"
+      @rebuild="buildMenuList"
       :menu-id=Number.MAX_SAFE_INTEGER>  <!-- Main menu starts at MAX INT -->
     </MenuBuilder>
   </div>
   <footer>
     <div class="left">
-      <select id="menuSelect" v-model="_newItemSelect">
+      <select id="menuSelect" v-model="_menuSelect">
+        <option v-for="(_item, _idx) in _menuList" :key=_idx :value=_idx>
+          {{ _item.label }}
+        </option>
+      </select>
+      <select v-model="_newItemSelect">
         <option value="1">Command Launcher</option>
         <option value="2">Sub Menu</option>
         <option value="3">Separator</option>
@@ -205,8 +223,10 @@ footer
   float left
 .right
   float right
-#menuSelect
+select
   font-size medium
+#menuSelect
+  width 160px
 #bufferInput
   margin-left 4px
   margin-right 4px
