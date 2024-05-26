@@ -393,7 +393,7 @@ const buildMenu = ():Menu => {
           label: item.label,
           click: () => {
             const args = item.command.match(/(?<=\?<\|)(.*?)(?=\|>)/g)
-            if (args.length === 0) CommandRunner(<string>item.command, item)
+            if (args === null) CommandRunner(<string>item.command, item)
             else {
               (async () => {
                 let runCanceled = false
