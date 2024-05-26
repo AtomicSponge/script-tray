@@ -409,7 +409,7 @@ const buildMenu = ():Menu => {
                   dialog.showMessageBox({
                     type: 'info',
                     title: appInfo.name,
-                    message: `Command '${item.label}' canceled!`,
+                    message: `Command canceled!`,
                     detail: `Command:  ${item.command}`,
                     icon: appInfo.icon
                   })
