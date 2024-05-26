@@ -395,8 +395,8 @@ const buildMenu = ():Menu => {
             if (item.args.length === 0) CommandRunner(<string>item.command, item)
             else {
               (async () => {
-                let runCanceled:boolean = false
-                let runCmd:string = <string>item.command
+                let runCanceled = false
+                let runCmd = <string>item.command
                 await asyncForEach(<Array<Argument>>item.args, async (arg:Argument) => {
                   if(runCanceled) return
                   inputWindow({ label: <string>item.label, argument: arg.label })
