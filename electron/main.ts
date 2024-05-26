@@ -392,18 +392,17 @@ const buildMenu = ():Menu => {
         menu.append(new MenuItem({
           label: item.label,
           click: () => {
-            if (item.args.length === 0) CommandRunner(<string>item.command, item)
+            const args = item.command.match(/(?<=\?<\|)(.*?)(?=\|>)/g)
+            if (args.length === 0) CommandRunner(<string>item.command, item)
             else {
               (async () => {
                 let runCanceled = false
                 let runCmd = <string>item.command
-                await asyncForEach(<Array<Argument>>item.args, async (arg:Argument) => {
+                await asyncForEach(<Array<string>>args, async (arg:string) => {
                   if (runCanceled) return
-                  inputWindow({ label: <string>item.label, argument: arg.label })
+                  inputWindow({ label: <string>item.label, argument: arg.trim() })
                   await resolveInputWin.promise.then(res => {
-                    runCmd = runCmd.replace(`?<| ${arg.variable} |>`, res)
-                    //const regex = new RegExp(`\?<|\s${arg.variable}\s|>$`)
-                    //runCmd = runCmd.replace(regex, res)
+                    runCmd = runCmd.replace(`?<|${arg}|>`, res)
                   }).catch(res => { runCanceled = res })
                 })
                 if (runCanceled) {
