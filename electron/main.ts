@@ -398,6 +398,7 @@ const buildMenu = ():Menu => {
                 let runCanceled:boolean = false
                 let runCmd:string = <string>item.command
                 await asyncForEach(<Array<Argument>>item.args, async (arg:Argument) => {
+                  if(runCanceled) return
                   inputWindow({ label: <string>item.label, argument: arg.label })
                   await resolveInputWin.promise.then(res => {
                     runCmd = runCmd.replace(`?<| ${arg.variable} |>`, res)
@@ -409,8 +410,8 @@ const buildMenu = ():Menu => {
                   dialog.showMessageBox({
                     type: 'info',
                     title: appInfo.name,
-                    message: `Command canceled!`,
-                    detail: `Command:  ${item.command}`,
+                    message: `Command '${item.label}' canceled!`,
+                    detail: `Command:  ${runCmd}`,
                     icon: appInfo.icon
                   })
                 } else CommandRunner(runCmd, item)
