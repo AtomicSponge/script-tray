@@ -331,11 +331,13 @@ const buildMenu = ():Menu => {
     }
 
     menu.append(new MenuItem({ type: 'separator' }))
+
     const bufferMenu = new Menu()
     bufferMenu.append(new MenuItem({
       label: `Show Output Buffer`,
       click: () => { bufferWindow() }
     }))
+
     bufferMenu.append(new MenuItem({
       label: `Save as JSON`,
       click: () => {
@@ -354,6 +356,7 @@ const buildMenu = ():Menu => {
         }
       }
     }))
+
     bufferMenu.append(new MenuItem({
       label: `Save as Log`,
       click: () => {
@@ -374,6 +377,7 @@ const buildMenu = ():Menu => {
         }
       }
     }))
+
     menu.append(new MenuItem({ label: `Output Buffer`, submenu: bufferMenu}))
     menu.append(new MenuItem({
       label: `Job Manager`,
