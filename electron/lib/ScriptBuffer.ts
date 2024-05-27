@@ -52,6 +52,17 @@ export class ScriptBuffer extends EventEmitter {
         throw error
       }
     })
+
+    //  Listen for clear events
+    this.on('script-buffer-clear', () => {
+      ScriptBuffer.#buffer = []
+      try {
+        this.#save()
+      } catch (error:any) {
+        throw new ScriptBufferError(error.message, this.#write)
+      }
+      this.emit('script-buffer-updated')
+    })
   }
 
   /**

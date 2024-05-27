@@ -332,6 +332,7 @@ const buildMenu = ():Menu => {
       label: `Show Output Buffer`,
       click: () => { bufferWindow() }
     }))
+    bufferMenu.append(new MenuItem({ type: 'separator' }))
 
     bufferMenu.append(new MenuItem({
       label: `Save as JSON`,
@@ -371,6 +372,23 @@ const buildMenu = ():Menu => {
         } catch (error:any) {
           dialog.showErrorBox(`${appInfo.name}`,
             `Error saving buffer!\n\n${error.message}`)
+        }
+      }
+    }))
+    bufferMenu.append(new MenuItem({ type: 'separator' }))
+
+    bufferMenu.append(new MenuItem({
+      label: 'Clear Buffer',
+      click: async () => {
+        const { response } = await dialog.showMessageBox({
+          type: 'question',
+          title: `${appInfo.name} - Confirm`,
+          buttons: [ 'Yes', 'No' ],
+          message: 'Are you sure you want to clear the buffer?'
+        })
+        if (response === 0) {
+          resBuff.emit('script-buffer-clear')
+          bufferWin?.webContents.send('send-buffer-data', resBuff.read())
         }
       }
     }))
