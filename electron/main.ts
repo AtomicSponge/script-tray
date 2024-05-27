@@ -154,6 +154,7 @@ ipcMain.on('save-settings-data', (_event, data) => {
   if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
     type: 'question',
     title: `${appInfo.name} - Confirm`,
+    icon: `${appInfo.icon}`,
     buttons: [ 'Yes', 'No' ],
     message: 'Do you want to save changes?'
   }) === 0) {
@@ -177,11 +178,37 @@ ipcMain.on('reset-settings-data', (_event, data) => {
   if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
     type: 'question',
     title: `${appInfo.name} - Confirm`,
+    icon: `${appInfo.icon}`,
     buttons: [ 'Yes', 'No' ],
     message: 'Are you sure you want to reset settings?'
   }) === 0) {
     appSettings.reset()
     settingsWin?.webContents.send('send-settings-data', appSettings.getData())
+  }
+})
+
+ipcMain.on('verify-cwd', (_event, data) => {
+  /**
+   * Dialog box for the CWD verification
+   * @param message Message to display
+   * @param type Dialog box type
+   */
+  const verifyDialog = (message:string, type:string) => {
+    dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
+      title: `${appInfo.name}`,
+      icon: `${appInfo.icon}`,
+      type: <any>type,
+      message: message
+    })
+  }
+
+  try {
+    const stats = fs.lstatSync(data)
+    stats.isDirectory() ?
+      verifyDialog(`Path "${data}" exists.`, `info`) :
+      verifyDialog(`Path "${data}" does not exist!`, `warning`)
+  } catch (error:any) {
+    verifyDialog(`Path "${data}" does not exist!`, `warning`)
   }
 })
 
@@ -265,6 +292,7 @@ ipcMain.on('send-term-process', (_event, data) => {
   if (dialog.showMessageBoxSync(<BrowserWindow>jobMgrWin, {
     type: 'question',
     title: `${appInfo.name} - Confirm`,
+    icon: `${appInfo.icon}`,
     buttons: [ 'Yes', 'No' ],
     message: `Are you sure you want to terminate running process ${data}?`
   }) === 0) {
@@ -357,6 +385,7 @@ const buildMenu = ():Menu => {
         const { response } = await dialog.showMessageBox({
           type: 'question',
           title: `${appInfo.name} - Confirm`,
+          icon: `${appInfo.icon}`,
           buttons: [ 'Yes', 'No' ],
           message: 'Are you sure you want to clear the buffer?'
         })
@@ -471,9 +500,9 @@ const buildMenu = ():Menu => {
                   dialog.showMessageBox({
                     type: 'info',
                     title: appInfo.name,
+                    icon: appInfo.icon,
                     message: `Command '${item.label}' canceled!`,
-                    detail: `Command:  ${runCmd}`,
-                    icon: appInfo.icon
+                    detail: `Command:  ${runCmd}`
                   })
                 } else CommandRunner(runCmd, item)
               })()

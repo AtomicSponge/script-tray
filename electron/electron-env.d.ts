@@ -29,6 +29,7 @@ export interface IsettingsAPI {
   saveSettings: (data:SettingsInterface) => void
   resetSettings: () => void
   onUpdateSettings: (callback:Function) => void
+  verifyCwd: (data:string) => void
 }
 
 export interface IinputAPI {

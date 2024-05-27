@@ -24,6 +24,9 @@ contextBridge.exposeInMainWorld('settingsAPI', {
   },
   onUpdateSettings: (callback:Function):void => {
     ipcRenderer.on('send-settings-data', (_event, value) => callback(value))
+  },
+  verifyCwd: (data:string):void => {
+    ipcRenderer.send('verify-cwd', data)
   }
 })
 

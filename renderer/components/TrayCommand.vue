@@ -15,7 +15,7 @@ const _trayCommand:ModelRef<TrayCommand> = defineModel({ required: true })
 const _showCmdWarn = ref(false)
 
 /** Check the command field to make sure multiple variable names are not used */
-const check = () => {
+const checkCmd = () => {
   if (_trayCommand.value.command !== '') {
     const args = _trayCommand.value.command.match(/(?<=\?<\|)(.*?)(?=\|>)/g)
     if (args !== null) {
@@ -24,6 +24,11 @@ const check = () => {
       else _showCmdWarn.value = false
     }
   }
+}
+
+/** Verify the current working directory */
+const verifyCwd = () => {
+  window.settingsAPI.verifyCwd(_trayCommand.value.cwd)
 }
 </script>
 
@@ -36,14 +41,17 @@ const check = () => {
   </tr>
   <tr>
     <td><label for="cmdCommand">Command:</label></td>
-    <td><input type="text" v-model="_trayCommand.command" @input="check()" id="cmdCommand"/></td>
+    <td><input type="text" v-model="_trayCommand.command" @input="checkCmd" id="cmdCommand"/></td>
   </tr>
   <tr v-show="_showCmdWarn" id="cmdWarn">
     <td colspan="2">Warning:  Duplicate variable names detected in command!</td>
   </tr>
   <tr>
     <td><label for="cmdCwd">CWD:</label></td>
-    <td><input type="text" v-model="_trayCommand.cwd" id="cmdCwd"/></td>
+    <td>
+      <input type="text" v-model="_trayCommand.cwd" id="cmdCwd"/>
+      <button @click="verifyCwd">Verify</button>
+    </td>
   </tr>
 </table>
 </section>
