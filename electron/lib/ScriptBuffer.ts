@@ -59,7 +59,7 @@ export class ScriptBuffer extends EventEmitter {
       try {
         this.#save()
       } catch (error:any) {
-        throw new ScriptBufferError(error.message, this.#write)
+        throw error
       }
       this.emit('script-buffer-updated')
     })
