@@ -156,21 +156,16 @@ ipcMain.on('save-settings-data', (_event, data) => {
     buttons: [ 'Yes', 'No' ],
     message: 'Do you want to save changes?'
   }) === 0) {
-    const res = appSettings.setData(data)
-    if(res.success) {
-      try {
-        appSettings.save()
-      } catch (error:any) {
-        dialog.showErrorBox(`${appInfo.name}`,
-          `Error saving settings!\n\n${error.message}`)
-      }
+    try {
+      appSettings.setData(data)
+      appSettings.save()
       resBuff.size = appSettings.bufferSize
       {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
       appTray?.setContextMenu(buildMenu())
       settingsWin?.webContents.send('send-settings-data', appSettings.getData())
-    } else {
+    } catch (error:any) {
       dialog.showErrorBox(`${appInfo.name}`,
-        `Error setting data while trying to save settings!\n\n${res.message}`)
+        `Error saving settings!\n\n${error.message}`)
     }
   }
 })

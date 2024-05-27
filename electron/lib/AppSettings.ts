@@ -100,29 +100,27 @@ export class AppSettings {
    * Set entire settings from an object
    * Launch menu converted back from string to JSON
    * @param data Data to parse for settings
-   * @returns A success flag and a result message in an object
+   * @throws Errors setting the data
    */
-  setData(data:SettingsIpc):{ success:boolean, message:string } {
+  setData(data:SettingsIpc):void {
     try {
       if (data === undefined || data === null)
-        throw new AppSettingsError('No data received!', this.setData)
+        throw new Error('No data received!')
       if (!data.hasOwnProperty('launchMenu') || typeof data.launchMenu !== 'string')
-        throw new AppSettingsError('Invalid data format! Missing or incorrect Launch Menu!', this.setData)
+        throw new Error('Invalid data format! Missing or incorrect Launch Menu!')
       if (!data.hasOwnProperty('bufferSize') || typeof data.bufferSize !== 'number')
-        throw new AppSettingsError('Invalid data format! Missing or incorrect Buffer Size!', this.setData)
+        throw new Error('Invalid data format! Missing or incorrect Buffer Size!')
       if (!data.hasOwnProperty('encoding') || typeof data.encoding !== 'string')
-        throw new AppSettingsError('Invalid data format! Missing or incorrect System Encoding!', this.setData)
+        throw new Error('Invalid data format! Missing or incorrect System Encoding!')
       if (!data.hasOwnProperty('startup') || typeof data.startup !== 'boolean')
-        throw new AppSettingsError('Invalid data format! Missing or incorrect Startup flag!', this.setData)
+        throw new Error('Invalid data format! Missing or incorrect Startup flag!')
       AppSettings.#launchMenu = JSON.parse(data.launchMenu)
+      AppSettings.#bufferSize = data.bufferSize
+      AppSettings.#encoding = data.encoding
+      AppSettings.#startup = data.startup
     } catch (error:any) {
-      return { success: false, message: error.message }
+      throw new AppSettingsError(error.message, this.setData)
     }
-
-    AppSettings.#bufferSize = data.bufferSize
-    AppSettings.#encoding = data.encoding
-    AppSettings.#startup = data.startup
-    return { success: true, message: 'success' }
   }
 
   /** Get the launch menu */
