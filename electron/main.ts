@@ -204,8 +204,7 @@ ipcMain.on('verify-cwd', (_event, data) => {
   }
 
   try {
-    const stats = fs.lstatSync(data)
-    stats.isDirectory() ?
+    fs.lstatSync(data).isDirectory() ?
       verifyDialog(`Path "${data}" exists.`, `info`) :
       verifyDialog(`"${data}" is not a directory!`, `warning`)
   } catch (error:any) {
