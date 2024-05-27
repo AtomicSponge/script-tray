@@ -17,6 +17,7 @@ import { asyncForEach } from '@spongex/async-for-each'
 import { AsyncResolver } from '@spongex/async-resolver'
 import { __locale } from '@spongex/system-locale'
 
+import { formatDate } from './lib/formatDate'
 import { AppSettings } from './lib/AppSettings'
 import { ScriptBuffer } from './lib/ScriptBuffer'
 import { ProcessManager } from './lib/ProcessManager'
@@ -296,37 +297,6 @@ const buildMenu = ():Menu => {
    * @param menu Menu item to append to
    */
   const buildMain = (menu:Menu):void => {
-    /**
-     * Format a date object as YYYY-MM-DD-HH:MM:SS
-     * Adapted from:
-     * https://github.com/bobbyhadz/javascript-format-date-yyyy-mm-dd-hh-mm-ss
-     * @param date Date object to format
-     * @returns Formatted date as a string
-     */
-    const formatDate = (date:Date):string => {
-      /**
-       * Pad a number to two digits
-       * @param num Number to pad
-       * @returns Modified string
-       */
-      const padToTwoDigits = (num:number):string => {
-        return num.toString().padStart(2, '0');
-      }
-      return (
-        [
-          date.getFullYear(),
-          padToTwoDigits(date.getMonth() + 1),
-          padToTwoDigits(date.getDate()),
-        ].join('-') +
-        '-' +
-        [
-          padToTwoDigits(date.getHours()),
-          padToTwoDigits(date.getMinutes()),
-          padToTwoDigits(date.getSeconds()),
-        ].join(':')
-      );
-    }
-
     menu.append(new MenuItem({ type: 'separator' }))
 
     const bufferMenu = new Menu()
