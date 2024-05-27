@@ -298,6 +298,8 @@ const buildMenu = ():Menu => {
   const buildMain = (menu:Menu):void => {
     /**
      * Format a date object as YYYY-MM-DD-HH:MM:SS
+     * Adapted from:
+     * https://github.com/bobbyhadz/javascript-format-date-yyyy-mm-dd-hh-mm-ss
      * @param date Date object to format
      * @returns Formatted date as a string
      */
