@@ -301,11 +301,80 @@ const buildMenu = ():Menu => {
    * @param menu Menu item to append to
    */
   const buildMain = (menu:Menu):void => {
+    /**
+     * Format a date object as YYYY-MM-DD-HH:MM:SS
+     * @param date Date object to format
+     * @returns Formatted date as a string
+     */
+    const formatDate = (date:Date):string => {
+      /**
+       * Pad a number to two digits
+       * @param num Number to pad
+       * @returns Modified string
+       */
+      const padToTwoDigits = (num:number):string => {
+        return num.toString().padStart(2, '0');
+      }
+      return (
+        [
+          date.getFullYear(),
+          padToTwoDigits(date.getMonth() + 1),
+          padToTwoDigits(date.getDate()),
+        ].join('-') +
+        '-' +
+        [
+          padToTwoDigits(date.getHours()),
+          padToTwoDigits(date.getMinutes()),
+          padToTwoDigits(date.getSeconds()),
+        ].join(':')
+      );
+    }
+
     menu.append(new MenuItem({ type: 'separator' }))
-    menu.append(new MenuItem({
-      label: `Output Buffer`,
+    const bufferMenu = new Menu()
+    bufferMenu.append(new MenuItem({
+      label: `Show Output Buffer`,
       click: () => { bufferWindow() }
     }))
+    bufferMenu.append(new MenuItem({
+      label: `Save as JSON`,
+      click: () => {
+        const filePath = dialog.showSaveDialogSync({
+          title: `${appInfo.name} - Saving Buffer JSON`,
+          defaultPath: `script-tray-buffer-${ formatDate(new Date()) }.json`,
+          filters: [ { name: 'JSON', extensions: [ 'json' ] } ],
+          properties: [ 'createDirectory', 'showOverwriteConfirmation' ]
+        })
+        if (filePath === '') return
+        try {
+          resBuff.saveJSON(filePath, appSettings.encoding)
+        } catch (error:any) {
+          dialog.showErrorBox(`${appInfo.name}`,
+            `Error saving buffer!\n\n${error.message}`)
+        }
+      }
+    }))
+    bufferMenu.append(new MenuItem({
+      label: `Save as Log`,
+      click: () => {
+        const filePath =  dialog.showSaveDialogSync({
+          title: `${appInfo.name} - Saving Buffer Log`,
+          defaultPath: `script-tray-buffer-${ formatDate(new Date()) }.log`,
+          filters: [
+            { name: 'Log', extensions: [ 'log' ] },
+            { name: 'Text', extensions: [ 'txt' ] } ],
+          properties: [ 'createDirectory', 'showOverwriteConfirmation' ]
+        })
+        if (filePath === '') return
+        try {
+          resBuff.saveLog(filePath, appSettings.encoding)
+        } catch (error:any) {
+          dialog.showErrorBox(`${appInfo.name}`,
+            `Error saving buffer!\n\n${error.message}`)
+        }
+      }
+    }))
+    menu.append(new MenuItem({ label: `Output Buffer`, submenu: bufferMenu}))
     menu.append(new MenuItem({
       label: `Job Manager`,
       click: () => { jobManagerWindow() }

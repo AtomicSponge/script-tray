@@ -7,6 +7,7 @@
  * 
  */
 
+import fs from 'node:fs'
 import { EventEmitter } from 'node:events'
 
 import storage from 'electron-json-storage'
@@ -71,6 +72,46 @@ export class ScriptBuffer extends EventEmitter {
         }
       })
     } catch (error:any) { throw new ScriptBufferError(error.message, this.load) }
+  }
+
+  /**
+   * Save the buffer as a JSON file
+   * @param filePath Save location
+   * @throws Error when trying to write the file
+   */
+  saveJSON(filePath:string, encoding:string):void {
+    try {
+      fs.writeFileSync(filePath,
+        JSON.stringify(ScriptBuffer.#buffer, null, 2), {
+          encoding: <BufferEncoding>encoding })
+    } catch (error:any) {
+      throw error
+    }
+  }
+
+  /**
+   * Save the buffer as a Log (txt) file
+   * @param filePath Save location
+   * @throws Error when trying to write the file
+   */
+  saveLog(filePath:string, encoding:string):void {
+    let data = ''
+    ScriptBuffer.#buffer.forEach((item, idx) => {
+      data += `Command:  ${item.command}\n`
+      data += `Start:  ${item.start}\n`
+      data += `Stop:  ${item.stop}\n`
+      data += `Duration:  ${item.duration} ms\n\n`
+      data += `Stdout:\n${item.out}\n\n`
+      data += `Stderr:\n${item.err}\n`
+      if(idx < (ScriptBuffer.#buffer.length - 1))
+        data += `\n${'-'.repeat(16)}\n\n`
+    })
+    try {
+      fs.writeFileSync(filePath, data, {
+        encoding: <BufferEncoding>encoding })
+    } catch (error:any) {
+      throw error
+    }
   }
 
   /**
