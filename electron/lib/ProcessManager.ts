@@ -50,7 +50,9 @@ export class ProcessManager extends EventEmitter {
    */
   term(pid:number):void {
     this.#processBuffer.forEach(proc => {
-      if (proc.pid === pid) proc.kill()
+      try {
+        if (proc.pid === pid) proc.kill()
+      } catch (error:any) {}
     })
   }
 }
