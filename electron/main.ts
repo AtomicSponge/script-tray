@@ -187,6 +187,7 @@ ipcMain.on('reset-settings-data', (_event, data) => {
   }
 })
 
+/** Event handler for verifying a current working directory */
 ipcMain.on('verify-cwd', (_event, data) => {
   /**
    * Dialog box for the CWD verification
@@ -206,7 +207,7 @@ ipcMain.on('verify-cwd', (_event, data) => {
     const stats = fs.lstatSync(data)
     stats.isDirectory() ?
       verifyDialog(`Path "${data}" exists.`, `info`) :
-      verifyDialog(`Path "${data}" does not exist!`, `warning`)
+      verifyDialog(`"${data}" is not a directory!`, `warning`)
   } catch (error:any) {
     verifyDialog(`Path "${data}" does not exist!`, `warning`)
   }
