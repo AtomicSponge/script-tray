@@ -89,6 +89,7 @@ const bufferWindow = ():void => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: true,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -126,6 +127,7 @@ const settingsEditorWindow = ():void => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: true,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -227,6 +229,7 @@ const inputWindow = (data:InputPromptData):void => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: true,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -263,6 +266,7 @@ const jobManagerWindow = ():void => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: true,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
