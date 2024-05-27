@@ -335,14 +335,15 @@ const buildMenu = ():Menu => {
 
     bufferMenu.append(new MenuItem({
       label: `Save as JSON`,
-      click: () => {
-        const filePath = dialog.showSaveDialogSync({
+      click: async () => {
+        const savePath = path.join(app.getPath('documents'), `script-tray-buffer-${ formatDate(new Date()) }.json`)
+        const { canceled, filePath } = await dialog.showSaveDialog({
           title: `${appInfo.name} - Saving Buffer JSON`,
-          defaultPath: `script-tray-buffer-${ formatDate(new Date()) }.json`,
+          defaultPath: savePath,
           filters: [ { name: 'JSON', extensions: [ 'json' ] } ],
           properties: [ 'createDirectory', 'showOverwriteConfirmation' ]
         })
-        if (filePath === '') return
+        if (canceled) return
         try {
           resBuff.saveJSON(filePath, appSettings.encoding)
         } catch (error:any) {
@@ -354,16 +355,17 @@ const buildMenu = ():Menu => {
 
     bufferMenu.append(new MenuItem({
       label: `Save as Log`,
-      click: () => {
-        const filePath =  dialog.showSaveDialogSync({
+      click: async () => {
+        const savePath = path.join(app.getPath('documents'), `script-tray-buffer-${ formatDate(new Date()) }.log`)
+        const { canceled, filePath } = await dialog.showSaveDialog({
           title: `${appInfo.name} - Saving Buffer Log`,
-          defaultPath: `script-tray-buffer-${ formatDate(new Date()) }.log`,
+          defaultPath: savePath,
           filters: [
             { name: 'Log', extensions: [ 'log' ] },
             { name: 'Text', extensions: [ 'txt' ] } ],
           properties: [ 'createDirectory', 'showOverwriteConfirmation' ]
         })
-        if (filePath === '') return
+        if (canceled) return
         try {
           resBuff.saveLog(filePath, appSettings.encoding)
         } catch (error:any) {

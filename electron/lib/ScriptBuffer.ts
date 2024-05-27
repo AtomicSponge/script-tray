@@ -108,7 +108,7 @@ export class ScriptBuffer extends EventEmitter {
       data += `Stdout:\n${item.out}\n\n`
       data += `Stderr:\n${item.err}\n`
       if(idx < (ScriptBuffer.#buffer.length - 1))
-        data += `\n${'-'.repeat(16)}\n\n`
+        data += `\n${'-'.repeat(20)}\n\n`
     })
     try {
       fs.writeFileSync(filePath, data, {
