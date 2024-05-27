@@ -46,7 +46,11 @@ export class ScriptBuffer extends EventEmitter {
 
     //  Listen for write events
     this.on('script-buffer-write', (data) => {
-      this.#write(data)
+      try {
+        this.#write(data)
+      } catch (error:any) {
+        throw error
+      }
     })
   }
 
