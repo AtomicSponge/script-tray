@@ -89,7 +89,7 @@ export class ScriptBuffer extends EventEmitter {
         JSON.stringify(ScriptBuffer.#buffer, null, 2), {
           encoding: <BufferEncoding>encoding })
     } catch (error:any) {
-      throw error
+      throw new ScriptBufferError(error.message, this.saveJSON)
     }
   }
 
@@ -114,7 +114,7 @@ export class ScriptBuffer extends EventEmitter {
       fs.writeFileSync(filePath, data, {
         encoding: <BufferEncoding>encoding })
     } catch (error:any) {
-      throw error
+      throw new ScriptBufferError(error.message, this.saveLog)
     }
   }
 
@@ -140,7 +140,9 @@ export class ScriptBuffer extends EventEmitter {
     this.#trim()
     try {
       this.#save()
-    } catch (error:any) { throw error }
+    } catch (error:any) {
+      throw new ScriptBufferError(error.message, this.#write)
+    }
     this.emit('script-buffer-updated')
   }
 
