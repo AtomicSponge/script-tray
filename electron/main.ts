@@ -309,7 +309,8 @@ const buildMenu = ():Menu => {
     bufferMenu.append(new MenuItem({
       label: `Save as JSON`,
       click: async () => {
-        const savePath = path.join(app.getPath('documents'), `script-tray-buffer-${ formatDate(new Date()) }.json`)
+        const savePath = path.join(app.getPath('documents'),
+          `script-tray-buffer-${ formatDate(new Date()) }.json`)
         const { canceled, filePath } = await dialog.showSaveDialog({
           title: `${appInfo.name} - Saving Buffer JSON`,
           defaultPath: savePath,
@@ -329,7 +330,8 @@ const buildMenu = ():Menu => {
     bufferMenu.append(new MenuItem({
       label: `Save as Log`,
       click: async () => {
-        const savePath = path.join(app.getPath('documents'), `script-tray-buffer-${ formatDate(new Date()) }.log`)
+        const savePath = path.join(app.getPath('documents'),
+          `script-tray-buffer-${ formatDate(new Date()) }.log`)
         const { canceled, filePath } = await dialog.showSaveDialog({
           title: `${appInfo.name} - Saving Buffer Log`,
           defaultPath: savePath,
