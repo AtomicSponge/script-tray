@@ -1,7 +1,7 @@
 <table align="center">
 <tr>
   <td>
-    <img src="./public/icon/robot.png"/>
+    <img src="./public/icon.png" width="80"/>
   </td>
   <th>
     <h1>Script Tray</h1>
