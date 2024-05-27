@@ -90,6 +90,8 @@ const bufferWindow = ():void => {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
+      images: false,
+      webgl: false,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -128,6 +130,8 @@ const settingsEditorWindow = ():void => {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
+      images: false,
+      webgl: false,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -230,6 +234,8 @@ const inputWindow = (data:InputPromptData):void => {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
+      images: false,
+      webgl: false,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -267,6 +273,8 @@ const jobManagerWindow = ():void => {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
+      images: false,
+      webgl: false,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
