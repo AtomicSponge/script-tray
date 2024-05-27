@@ -36,7 +36,7 @@ process.argv.forEach(arg => {
 /** App information */
 const appInfo = {
   name: 'Script Tray',
-  version: '1.9.9',
+  version: '1.9.0',
   author: 'Matthew Evans',
   websiteURL: 'https://github.com/AtomicSponge/script-tray',
   license: 'MIT',

@@ -1,7 +1,7 @@
 {
   "name": "script-tray",
   "private": true,
-  "version": "1.9.9",
+  "version": "1.9.0",
   "description": "Script Tray System Utility",
   "author": "Matthew Evans",
   "license": "MIT",
