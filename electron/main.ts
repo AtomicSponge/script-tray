@@ -92,6 +92,7 @@ const bufferWindow = ():void => {
       sandbox: true,
       images: false,
       webgl: false,
+      enableWebSQL: false,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -132,6 +133,7 @@ const settingsEditorWindow = ():void => {
       sandbox: true,
       images: false,
       webgl: false,
+      enableWebSQL: false,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -236,6 +238,7 @@ const inputWindow = (data:InputPromptData):void => {
       sandbox: true,
       images: false,
       webgl: false,
+      enableWebSQL: false,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
@@ -275,6 +278,7 @@ const jobManagerWindow = ():void => {
       sandbox: true,
       images: false,
       webgl: false,
+      enableWebSQL: false,
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
