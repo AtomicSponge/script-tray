@@ -1,10 +1,10 @@
 // @see - https://www.electron.build/configuration/configuration
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "YourAppID",
+  "appId": "com.electron.script-tray.app",
   "asar": true,
-  "productName": "YourAppName",
-  "copyright": "Copyright © 2022 ${author}",
+  "productName": "Script-Tray",
+  "copyright": "Copyright © 2024-present ${author}",
   "directories": {
     "output": "release/${version}"
   },
@@ -29,7 +29,7 @@
     "deleteAppDataOnUninstall": false
   },
   "linux": {
-    "target": [ "AppImage" ],
+    "target": [ "AppImage", "deb", "rpm", "pacman" ],
     "artifactName": "${productName}-Linux-${version}.${ext}"
   }
 }
