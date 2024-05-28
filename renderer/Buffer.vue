@@ -21,41 +21,42 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
    * @returns Modified string
    */
   const formatTermColors = (data:string):string => {
+    const reset = `\x1b[0m`
     const colors = [
       //  Foreground Colors
-      { code: `\x1b[30m]`, rgb: `rgb(0, 0, 0)` },        //  Black
-      { code: `\x1b[31m]`, rgb: `rgb(170, 0, 0)` },      //  Red
-      { code: `\x1b[32m]`, rgb: `rgb(0, 170, 0)` },      //  Green
-      { code: `\x1b[33m]`, rgb: `rgb(170, 85, 0)` },     //  Yellow
-      { code: `\x1b[34m]`, rgb: `rgb(0, 0, 170)` },      //  Blue
-      { code: `\x1b[35m]`, rgb: `rgb(170, 0, 170)` },    //  Magenta
-      { code: `\x1b[36m]`, rgb: `rgb(0, 170, 170)` },    //  Cyan
-      { code: `\x1b[37m]`, rgb: `rgb(170, 170, 170)` },  //  White
-      { code: `\x1b[90m]`, rgb: `rgb(85, 85, 85)` },     //  Bright Black (Gray)
-      { code: `\x1b[91m]`, rgb: `rgb(255, 85, 85)` },    //  Bright Red
-      { code: `\x1b[92m]`, rgb: `rgb(85, 255, 85)` },    //  Bright Green
-      { code: `\x1b[93m]`, rgb: `rgb(255, 255, 85)` },   //  Bright Yellow
-      { code: `\x1b[94m]`, rgb: `rgb(85, 85, 255)` },    //  Bright Blue
-      { code: `\x1b[95m]`, rgb: `rgb(255, 0, 255)` },    //  Bright Magenta
-      { code: `\x1b[96m]`, rgb: `rgb(85, 255, 255)` },   //  Bright Cyan
-      { code: `\x1b[97m]`, rgb: `rgb(255, 255, 255)` },  //  Bright White
+      { code: `\x1b[30m`, rgb: `rgb(0, 0, 0)` },        //  Black
+      { code: `\x1b[31m`, rgb: `rgb(170, 0, 0)` },      //  Red
+      { code: `\x1b[32m`, rgb: `rgb(0, 170, 0)` },      //  Green
+      { code: `\x1b[33m`, rgb: `rgb(170, 85, 0)` },     //  Yellow
+      { code: `\x1b[34m`, rgb: `rgb(0, 0, 170)` },      //  Blue
+      { code: `\x1b[35m`, rgb: `rgb(170, 0, 170)` },    //  Magenta
+      { code: `\x1b[36m`, rgb: `rgb(0, 170, 170)` },    //  Cyan
+      { code: `\x1b[37m`, rgb: `rgb(170, 170, 170)` },  //  White
+      { code: `\x1b[90m`, rgb: `rgb(85, 85, 85)` },     //  Bright Black (Gray)
+      { code: `\x1b[91m`, rgb: `rgb(255, 85, 85)` },    //  Bright Red
+      { code: `\x1b[92m`, rgb: `rgb(85, 255, 85)` },    //  Bright Green
+      { code: `\x1b[93m`, rgb: `rgb(255, 255, 85)` },   //  Bright Yellow
+      { code: `\x1b[94m`, rgb: `rgb(85, 85, 255)` },    //  Bright Blue
+      { code: `\x1b[95m`, rgb: `rgb(255, 0, 255)` },    //  Bright Magenta
+      { code: `\x1b[96m`, rgb: `rgb(85, 255, 255)` },   //  Bright Cyan
+      { code: `\x1b[97m`, rgb: `rgb(255, 255, 255)` },  //  Bright White
       //  Background Colors
-      { code: `\x1b[40m]`, rgb: `rgb(0, 0, 0)` },        //  Black
-      { code: `\x1b[41m]`, rgb: `rgb(170, 0, 0)` },      //  Red
-      { code: `\x1b[42m]`, rgb: `rgb(0, 170, 0)` },      //  Green
-      { code: `\x1b[43m]`, rgb: `rgb(170, 85, 0)` },     //  Yellow
-      { code: `\x1b[44m]`, rgb: `rgb(0, 0, 170)` },      //  Blue
-      { code: `\x1b[45m]`, rgb: `rgb(170, 0, 170)` },    //  Magenta
-      { code: `\x1b[46m]`, rgb: `rgb(0, 170, 170)` },    //  Cyan
-      { code: `\x1b[47m]`, rgb: `rgb(170, 170, 170)` },  //  White
-      { code: `\x1b[100m]`, rgb: `rgb(85, 85, 85)` },    //  Bright Black (Gray)
-      { code: `\x1b[101m]`, rgb: `rgb(255, 85, 85)` },   //  Bright Red
-      { code: `\x1b[102m]`, rgb: `rgb(85, 255, 85)` },   //  Bright Green
-      { code: `\x1b[103m]`, rgb: `rgb(255, 255, 85)` },  //  Bright Yellow
-      { code: `\x1b[104m]`, rgb: `rgb(85, 85, 255)` },   //  Bright Blue
-      { code: `\x1b[105m]`, rgb: `rgb(255, 0, 255)` },   //  Bright Magenta
-      { code: `\x1b[106m]`, rgb: `rgb(85, 255, 255)` },  //  Bright Cyan
-      { code: `\x1b[107m]`, rgb: `rgb(255, 255, 255)` }  //  Bright White
+      { code: `\x1b[40m`, rgb: `rgb(0, 0, 0)` },        //  Black
+      { code: `\x1b[41m`, rgb: `rgb(170, 0, 0)` },      //  Red
+      { code: `\x1b[42m`, rgb: `rgb(0, 170, 0)` },      //  Green
+      { code: `\x1b[43m`, rgb: `rgb(170, 85, 0)` },     //  Yellow
+      { code: `\x1b[44m`, rgb: `rgb(0, 0, 170)` },      //  Blue
+      { code: `\x1b[45m`, rgb: `rgb(170, 0, 170)` },    //  Magenta
+      { code: `\x1b[46m`, rgb: `rgb(0, 170, 170)` },    //  Cyan
+      { code: `\x1b[47m`, rgb: `rgb(170, 170, 170)` },  //  White
+      { code: `\x1b[100m`, rgb: `rgb(85, 85, 85)` },    //  Bright Black (Gray)
+      { code: `\x1b[101m`, rgb: `rgb(255, 85, 85)` },   //  Bright Red
+      { code: `\x1b[102m`, rgb: `rgb(85, 255, 85)` },   //  Bright Green
+      { code: `\x1b[103m`, rgb: `rgb(255, 255, 85)` },  //  Bright Yellow
+      { code: `\x1b[104m`, rgb: `rgb(85, 85, 255)` },   //  Bright Blue
+      { code: `\x1b[105m`, rgb: `rgb(255, 0, 255)` },   //  Bright Magenta
+      { code: `\x1b[106m`, rgb: `rgb(85, 255, 255)` },  //  Bright Cyan
+      { code: `\x1b[107m`, rgb: `rgb(255, 255, 255)` }  //  Bright White
     ]
 
     //<span class="color: ;background-color: ;"> ... </span>
