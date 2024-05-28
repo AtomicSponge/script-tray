@@ -63,18 +63,16 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       { code: `\x1b[107m`, style: `background-color: rgb(255, 255, 255);` }  //  Bright White
     ]
 
-    const res = data.match(/\\x1b\[.*?m/gm)  //  Match escape sequences
+    const res = data.match(/\x1b\[.*?m/g)  //  Match escape sequences
     if(res === null) return data
 
-    console.log(data)
-
     //  Do the close span elements first
-    data = data.replace(/\\x1b\[0m/gm, '</span>')
+    data = data.replace(/\x1b\[0m/g, '</span>')
 
     res.forEach(item => {
       termStyleLookup.forEach(style => {
         if(style.code === item)
-          data = data.replace(item, `<span class="${style.style}">"`)
+          data = data.replace(item, `<span style="${style.style}">`)
       })
     })
 
