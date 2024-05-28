@@ -74,7 +74,7 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
        * next to each other in the data.  It then combines grouped results and
        * performs replacement to a HTML span element with CSS from the lookup table.
        */
-      const extraReplace:Array<string> = []
+      const extraReplace:Array<string> = []  //  Tracks extra items to be removed
       let keepMatching = true  //  Flag to keep looking ahead at next element
       let skipIdx = 0  //  Number of elements to skip
       let next = 1  //  Lookahead counter
