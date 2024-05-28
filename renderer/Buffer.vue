@@ -83,12 +83,12 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     const res = data.match(/\x1b\[.*?m/g)
     res?.forEach((item, idx, arr) => {
       /** */
-      let keepMatching = false
+      let keepMatching = true
       while (keepMatching) {
         if(idx < arr.length) {
           if((data.indexOf(arr[idx + 1]) - item.length) === data.indexOf(item)) {
             //
-          }
+          } else keepMatching = false
         }
       }
       /** */
