@@ -71,21 +71,22 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     if (res === null) return data
     for (let idx = 0; idx < res.length; idx++) {
       const extraReplace:Array<string> = []
-      let keepMatching = true
-      let skipIdx = 0
-      let replaceStr = ``
+      let keepMatching = true  //  Flag to keep looking ahead at next element
+      let skipIdx = 0  //  Number of elements to skip
+      let next = 1  //  Lookahead counter
+      let replaceStr = ``  //  CSS replacement string
       if(idx < (res.length - 1)) {  // All but last element
         while (keepMatching) {  //  While the next element is in range
           //  Next element is directly ahead in string
-          if((data.indexOf(res[idx + 1]) - res[idx].length) === data.indexOf(res[idx])) {
+          if((data.indexOf(res[idx + next]) - res[idx].length) === data.indexOf(res[idx])) {
             termStyleLookup.forEach(style => {
               //  Process next element
-              if (style.code === res[idx + 1]) {
+              if (style.code === res[idx + next]) {
                 replaceStr += style.style
-                extraReplace.push(res[idx + 1])
+                extraReplace.push(res[idx + next])
               }
             })
-            skipIdx++
+            skipIdx++; next++
           } else {
             termStyleLookup.forEach(style => {
               //  Process first element
