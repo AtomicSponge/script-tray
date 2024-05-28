@@ -70,8 +70,8 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
      * @throws Abort if the match result is empty
      */
     const firstPass = (data:string):string => {
-      if(data.match(/\x1b\[.*?m/g) === null) throw new Error('abort')
-      return data.replace(/\x1b\[0m/g, '</span>')
+      if(data.match(/\x1b\[.*?m/gi) === null) throw new Error('abort')
+      return data.replace(/\x1b\[0m/gi, '</span>')
     }
 
     try {
@@ -80,23 +80,35 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       return data
     }
 
-    const res = data.match(/\x1b\[.*?m/g)
-    res?.forEach((item, idx, arr) => {
-      /** */
-      let keepMatching = true
+    const res = data.match(/\x1b\[.*?m/gi)
+    if(res === null) return data
+    for (let idx = 0; idx < res.length; idx++) {
+      /*let keepMatching = true
+      let replaceStr = ''
+      let skipIdx = 0
       while (keepMatching) {
-        if(idx < arr.length) {
-          if((data.indexOf(arr[idx + 1]) - item.length) === data.indexOf(item)) {
+        if(idx < (res.length - 1)) {
+          if((data.indexOf(res[idx + 1]) - data.indexOf(res[0])) === data.indexOf(res[0])) {
             //
-          } else keepMatching = false
+          } else {
+            keepMatching = false
+            skipIdx = 0
+          }
+        } else {
+          keepMatching = false
+          termStyleLookup.forEach(style => {
+            if(style.code === res[idx]) {
+              data = data.replace(res[idx], `<span style="${style.style}">`)
+            }
+          })
         }
-      }
-      /** */
+      }*/
       termStyleLookup.forEach(style => {
-        if(style.code === item)
-          data = data.replace(item, `<span style="${style.style}">`)
+        if(style.code === res[idx]) {
+          data = data.replace(res[idx], `<span style="${style.style}">`)
+        }
       })
-    })
+    }
 
     return data
   }
