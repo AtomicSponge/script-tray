@@ -78,7 +78,7 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       if(idx < (res.length - 1)) {  // All but last element
         while (keepMatching) {  //  While the next element is in range
           //  Next element is directly ahead in string
-          if((data.indexOf(res[idx + next]) - res[idx].length) === data.indexOf(res[idx])) {
+          if((data.indexOf(res[idx + next]) - res[idx + skipIdx].length) === data.indexOf(res[idx + skipIdx])) {
             termStyleLookup.forEach(style => {
               //  Process next element
               if (style.code === res[idx + next]) {
