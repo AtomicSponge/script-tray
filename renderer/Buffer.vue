@@ -66,11 +66,16 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     const res = data.match(/\\x1b\[.*?m/gm)  //  Match escape sequences
     if(res === null) return data
 
+    console.log(data)
+
     //  Do the close span elements first
     data = data.replace(/\\x1b\[0m/gm, '</span>')
 
     res.forEach(item => {
-      //
+      termStyleLookup.forEach(style => {
+        if(style.code === item)
+          data = data.replace(item, `<span class="${style.style}">"`)
+      })
     })
 
     return data
