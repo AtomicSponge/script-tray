@@ -23,10 +23,10 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
   const formatTextStyle = (data:string):string => {
     const termStyleLookup = [
       //  Font formatting
-      { code: `\x1b[1m`, style: `font-weight: bold;` },
-      { code: `\x1b[2m`, style: `filter: brightness(50%);` },
-      { code: `\x1b[3m`, style: `font-style: italic;` },
-      { code: `\x1b[4m`, style: `text-decoration: underline;` },
+      { code: `\x1b[1m`, style: `font-weight: bold;` },           //  Bold
+      { code: `\x1b[2m`, style: `filter: brightness(50%);` },     //  Dim
+      { code: `\x1b[3m`, style: `font-style: italic;` },          //  Italic
+      { code: `\x1b[4m`, style: `text-decoration: underline;` },  //  Underline
       //  Foreground Colors
       { code: `\x1b[30m`, style: `color: rgb(0, 0, 0);` },        //  Black
       { code: `\x1b[31m`, style: `color: rgb(170, 0, 0);` },      //  Red
@@ -70,31 +70,40 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     const res = data.match(/\x1b\[.*?m/gi)
     if (res === null) return data
     for (let idx = 0; idx < res.length; idx++) {
-      /*let keepMatching = true
-      let replaceStr = ''
+      const extraReplace:Array<string> = []
+      let keepMatching = true
       let skipIdx = 0
-      while (keepMatching) {
-        if(idx < res.length) {
-          if((data.indexOf(res[idx + 1]) - data.indexOf(res[0])) === data.indexOf(res[0])) {
-            //
+      let replaceStr = ``
+      if(idx < (res.length - 1)) {  // All but last element
+        while (keepMatching) {  //  While the next element is in range
+          //  Next element is directly ahead in string
+          if((data.indexOf(res[idx + 1]) - res[idx].length) === data.indexOf(res[idx])) {
+            termStyleLookup.forEach(style => {
+              //  Process next element
+              if (style.code === res[idx + 1]) replaceStr += style.style
+              extraReplace.push(res[idx + 1])
+            })
+            skipIdx++
           } else {
+            termStyleLookup.forEach(style => {
+              //  Process first element
+              if (style.code === res[idx]) replaceStr += style.style
+            })
             keepMatching = false
-            skipIdx = 0
+            idx = idx + skipIdx
           }
-        } else {
-          keepMatching = false
-          termStyleLookup.forEach(style => {
-            if(style.code === res[idx]) {
-              data = data.replace(res[idx], `<span style="${style.style}">`)
-            }
-          })
         }
-      }*/
-      termStyleLookup.forEach(style => {
-        if (style.code === res[idx]) {
-          data = data.replace(res[idx], `<span style="${style.style}">`)
-        }
+      } else {  // Last element - we should only get here if we didn't pass by skipIdx
+        termStyleLookup.forEach(style => {
+          if (style.code === res[idx]) replaceStr += style.style
+        })
+      }
+      //  Replace items found from the extra matches above
+      extraReplace.forEach(item => {
+        data = data.replace(item, ``)
       })
+      //  Do the main replacement
+      data = data.replace(res[idx], `<span style="${replaceStr}">`)
     }
 
     return data
