@@ -80,8 +80,10 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
           if((data.indexOf(res[idx + 1]) - res[idx].length) === data.indexOf(res[idx])) {
             termStyleLookup.forEach(style => {
               //  Process next element
-              if (style.code === res[idx + 1]) replaceStr += style.style
-              extraReplace.push(res[idx + 1])
+              if (style.code === res[idx + 1]) {
+                replaceStr += style.style
+                extraReplace.push(res[idx + 1])
+              }
             })
             skipIdx++
           } else {
