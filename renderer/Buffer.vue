@@ -67,7 +67,12 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     data = data.replace(/\x1b\[0m/gi, '</span>')  //  Do the close span elements first
 
     const res = data.match(/\x1b\[.*?m/gi)
-    if (res === null) return data  //  Abort if nothing found
+    if (res === null) {  //  Abort if nothing found
+      //  Check for any close span tags with no matching starts
+      const count = (data.match(/<\/span>/g) || []).length
+      //  Append extra spans to the beginning based on count above
+      return data = '<span>'.repeat(count) + data
+    }
     for (let idx = 0; idx < res.length; idx++) {
       /**
        * Takes the escape code results and looks to see if any are directly
@@ -112,6 +117,12 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       //  Do the main replacement
       data = data.replace(res[idx], `<span style="${replaceStr}">`)
     }
+
+    //  Check for exta open/closed span tags and fix
+    const countClosed = (data.match(/<\/span>/g) || []).length 
+    const countOpened = (data.match(/<span/g) || []).length 
+    if(countOpened > countClosed) data += '</span>'.repeat(countOpened - countClosed)
+    if(countClosed > countOpened) data = '<span>'.repeat(countClosed - countOpened) + data
 
     return data
   }
