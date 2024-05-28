@@ -20,7 +20,7 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
    * @param data String to format
    * @returns Modified string
    */
-  const formatTermColors = (data:string):string => {
+  const formatTextStyle = (data:string):string => {
     const termStyleLookup = [
       //  Font formatting
       { code: `\x1b[1m`, style: `font-weight: bold;` },
@@ -63,22 +63,9 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       { code: `\x1b[107m`, style: `background-color: rgb(255, 255, 255);` }  //  Bright White
     ]
 
-    /**
-     * Do the close span elements first & abort if nothing found
-     * @param data String to check and parse
-     * @returns Modified string
-     * @throws Abort if the match result is empty
-     */
-    const firstPass = (data:string):string => {
-      if(data.match(/\x1b\[.*?m/gi) === null) throw new Error('abort')
-      return data.replace(/\x1b\[0m/gi, '</span>')
-    }
-
-    try {
-      data = firstPass(data)
-    } catch (error:any) {
-      return data
-    }
+    //  Do the close span elements first & abort if nothing found
+    if(data.match(/\x1b\[.*?m/gi) === null) return data
+    data = data.replace(/\x1b\[0m/gi, '</span>')
 
     const res = data.match(/\x1b\[.*?m/gi)
     if (res === null) return data
@@ -87,7 +74,7 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       let replaceStr = ''
       let skipIdx = 0
       while (keepMatching) {
-        if(idx < (res.length - 1)) {
+        if(idx < res.length) {
           if((data.indexOf(res[idx + 1]) - data.indexOf(res[0])) === data.indexOf(res[0])) {
             //
           } else {
@@ -116,8 +103,8 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
   bufferData.forEach((data:ScriptBufferData) => {
     data.out = data.out.replace(/(?:\r\n|\r|\n)/g, '<br>')
     data.err = data.err.replace(/(?:\r\n|\r|\n)/g, '<br>')
-    data.out = formatTermColors(data.out)
-    data.err = formatTermColors(data.err)
+    data.out = formatTextStyle(data.out)
+    data.err = formatTextStyle(data.err)
   })
 }
 
