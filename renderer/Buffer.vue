@@ -63,13 +63,35 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       { code: `\x1b[107m`, style: `background-color: rgb(255, 255, 255);` }  //  Bright White
     ]
 
-    const res = data.match(/\x1b\[.*?m/g)  //  Match escape sequences
-    if(res === null) return data
+    /**
+     * Do the close span elements first & abort if nothing found
+     * @param data String to check and parse
+     * @returns Modified string
+     * @throws Abort if the match result is empty
+     */
+    const firstPass = (data:string):string => {
+      if(data.match(/\x1b\[.*?m/g) === null) throw new Error('abort')
+      return data.replace(/\x1b\[0m/g, '</span>')
+    }
 
-    //  Do the close span elements first
-    data = data.replace(/\x1b\[0m/g, '</span>')
+    try {
+      data = firstPass(data)
+    } catch (error:any) {
+      return data
+    }
 
-    res.forEach(item => {
+    const res = data.match(/\x1b\[.*?m/g)
+    res?.forEach((item, idx, arr) => {
+      /** */
+      let keepMatching = false
+      while (keepMatching) {
+        if(idx < arr.length) {
+          if((data.indexOf(arr[idx + 1]) - item.length) === data.indexOf(item)) {
+            //
+          }
+        }
+      }
+      /** */
       termStyleLookup.forEach(style => {
         if(style.code === item)
           data = data.replace(item, `<span style="${style.style}">`)
