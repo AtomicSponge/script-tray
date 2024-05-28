@@ -81,7 +81,7 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     }
 
     const res = data.match(/\x1b\[.*?m/gi)
-    if(res === null) return data
+    if (res === null) return data
     for (let idx = 0; idx < res.length; idx++) {
       /*let keepMatching = true
       let replaceStr = ''
@@ -104,7 +104,7 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
         }
       }*/
       termStyleLookup.forEach(style => {
-        if(style.code === res[idx]) {
+        if (style.code === res[idx]) {
           data = data.replace(res[idx], `<span style="${style.style}">`)
         }
       })
