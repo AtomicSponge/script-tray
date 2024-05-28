@@ -23,55 +23,51 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
   const formatTermColors = (data:string):string => {
     const termStyleLookup = [
       //  Font formatting
-      { code: `0`, style: `</span>` },
-      { code: `1`, style: `font-weight: bold;` },
-      { code: `2`, style: `filter: brightness(50%);` },
-      { code: `3`, style: `font-style: italic;` },
-      { code: `4`, style: `text-decoration: underline;` },
+      { code: `\x1b[0m`, style: `</span>` },
+      { code: `\x1b[1m`, style: `font-weight: bold;` },
+      { code: `\x1b[2m`, style: `filter: brightness(50%);` },
+      { code: `\x1b[3m`, style: `font-style: italic;` },
+      { code: `\x1b[4m`, style: `text-decoration: underline;` },
       //  Foreground Colors
-      { code: `30`, style: `rgb(0, 0, 0)` },          //  Black
-      { code: `31`, style: `rgb(170, 0, 0)` },        //  Red
-      { code: `32`, style: `rgb(0, 170, 0)` },        //  Green
-      { code: `33`, style: `rgb(170, 85, 0)` },       //  Yellow
-      { code: `34`, style: `rgb(0, 0, 170)` },        //  Blue
-      { code: `35`, style: `rgb(170, 0, 170)` },      //  Magenta
-      { code: `36`, style: `rgb(0, 170, 170)` },      //  Cyan
-      { code: `37`, style: `rgb(170, 170, 170)` },    //  White
-      { code: `90`, style: `rgb(85, 85, 85)` },       //  Bright Black (Gray)
-      { code: `91`, style: `rgb(255, 85, 85)` },      //  Bright Red
-      { code: `92`, style: `rgb(85, 255, 85)` },      //  Bright Green
-      { code: `93`, style: `rgb(255, 255, 85)` },     //  Bright Yellow
-      { code: `94`, style: `rgb(85, 85, 255)` },      //  Bright Blue
-      { code: `95`, style: `rgb(255, 0, 255)` },      //  Bright Magenta
-      { code: `96`, style: `rgb(85, 255, 255)` },     //  Bright Cyan
-      { code: `97`, style: `rgb(255, 255, 255)` },    //  Bright White
+      { code: `\x1b[30m`, style: `rgb(0, 0, 0)` },          //  Black
+      { code: `\x1b[31m`, style: `rgb(170, 0, 0)` },        //  Red
+      { code: `\x1b[32m`, style: `rgb(0, 170, 0)` },        //  Green
+      { code: `\x1b[33m`, style: `rgb(170, 85, 0)` },       //  Yellow
+      { code: `\x1b[34m`, style: `rgb(0, 0, 170)` },        //  Blue
+      { code: `\x1b[35m`, style: `rgb(170, 0, 170)` },      //  Magenta
+      { code: `\x1b[36m`, style: `rgb(0, 170, 170)` },      //  Cyan
+      { code: `\x1b[37m`, style: `rgb(170, 170, 170)` },    //  White
+      { code: `\x1b[90m`, style: `rgb(85, 85, 85)` },       //  Bright Black (Gray)
+      { code: `\x1b[91m`, style: `rgb(255, 85, 85)` },      //  Bright Red
+      { code: `\x1b[92m`, style: `rgb(85, 255, 85)` },      //  Bright Green
+      { code: `\x1b[93m`, style: `rgb(255, 255, 85)` },     //  Bright Yellow
+      { code: `\x1b[94m`, style: `rgb(85, 85, 255)` },      //  Bright Blue
+      { code: `\x1b[95m`, style: `rgb(255, 0, 255)` },      //  Bright Magenta
+      { code: `\x1b[96m`, style: `rgb(85, 255, 255)` },     //  Bright Cyan
+      { code: `\x1b[97m`, style: `rgb(255, 255, 255)` },    //  Bright White
       //  Background Colors
-      { code: `40`, style: `rgb(0, 0, 0)` },          //  Black
-      { code: `41`, style: `rgb(170, 0, 0)` },        //  Red
-      { code: `42`, style: `rgb(0, 170, 0)` },        //  Green
-      { code: `43`, style: `rgb(170, 85, 0)` },       //  Yellow
-      { code: `44`, style: `rgb(0, 0, 170)` },        //  Blue
-      { code: `45`, style: `rgb(170, 0, 170)` },      //  Magenta
-      { code: `46`, style: `rgb(0, 170, 170)` },      //  Cyan
-      { code: `47`, style: `rgb(170, 170, 170)` },    //  White
-      { code: `100`, style: `rgb(85, 85, 85)` },      //  Bright Black (Gray)
-      { code: `101`, style: `rgb(255, 85, 85)` },     //  Bright Red
-      { code: `102`, style: `rgb(85, 255, 85)` },     //  Bright Green
-      { code: `103`, style: `rgb(255, 255, 85)` },    //  Bright Yellow
-      { code: `104`, style: `rgb(85, 85, 255)` },     //  Bright Blue
-      { code: `105`, style: `rgb(255, 0, 255)` },     //  Bright Magenta
-      { code: `106`, style: `rgb(85, 255, 255)` },    //  Bright Cyan
-      { code: `107`, style: `rgb(255, 255, 255)` }    //  Bright White
+      { code: `\x1b[40m`, style: `rgb(0, 0, 0)` },          //  Black
+      { code: `\x1b[41m`, style: `rgb(170, 0, 0)` },        //  Red
+      { code: `\x1b[42m`, style: `rgb(0, 170, 0)` },        //  Green
+      { code: `\x1b[43m`, style: `rgb(170, 85, 0)` },       //  Yellow
+      { code: `\x1b[44m`, style: `rgb(0, 0, 170)` },        //  Blue
+      { code: `\x1b[45m`, style: `rgb(170, 0, 170)` },      //  Magenta
+      { code: `\x1b[46m`, style: `rgb(0, 170, 170)` },      //  Cyan
+      { code: `\x1b[47m`, style: `rgb(170, 170, 170)` },    //  White
+      { code: `\x1b[100m`, style: `rgb(85, 85, 85)` },      //  Bright Black (Gray)
+      { code: `\x1b[101m`, style: `rgb(255, 85, 85)` },     //  Bright Red
+      { code: `\x1b[102m`, style: `rgb(85, 255, 85)` },     //  Bright Green
+      { code: `\x1b[103m`, style: `rgb(255, 255, 85)` },    //  Bright Yellow
+      { code: `\x1b[104m`, style: `rgb(85, 85, 255)` },     //  Bright Blue
+      { code: `\x1b[105m`, style: `rgb(255, 0, 255)` },     //  Bright Magenta
+      { code: `\x1b[106m`, style: `rgb(85, 255, 255)` },    //  Bright Cyan
+      { code: `\x1b[107m`, style: `rgb(255, 255, 255)` }    //  Bright White
     ]
 
     //<span class="color: ;background-color: ;"> ... </span>
 
-    const res = data.match(/(?<=\\x1b\[)(.*?)(?=m)/gm)
+    const res = data.match(/\\x1b\[.*?m/gm)
     if(res === null) return data
-
-    res.forEach(item => {
-      //
-    })
 
     return data
   }
