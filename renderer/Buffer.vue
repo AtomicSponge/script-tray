@@ -70,6 +70,11 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     const res = data.match(/\x1b\[.*?m/gi)
     if (res === null) return data
     for (let idx = 0; idx < res.length; idx++) {
+      /**
+       * Takes the escape code results and looks to see if any are directly
+       * next to each other in the data.  It then combines grouped results and
+       * performs replacement to a HTML span element with CSS from the lookup table.
+       */
       const extraReplace:Array<string> = []
       let keepMatching = true  //  Flag to keep looking ahead at next element
       let skipIdx = 0  //  Number of elements to skip
