@@ -23,7 +23,6 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
   const formatTermColors = (data:string):string => {
     const termStyleLookup = [
       //  Font formatting
-      { code: `\x1b[0m`, style: `</span>` },
       { code: `\x1b[1m`, style: `font-weight: bold;` },
       { code: `\x1b[2m`, style: `filter: brightness(50%);` },
       { code: `\x1b[3m`, style: `font-style: italic;` },
@@ -66,8 +65,15 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
 
     //<span class="color: ;background-color: ;"> ... </span>
 
-    const res = data.match(/\\x1b\[.*?m/gm)
+    const res = data.match(/\\x1b\[.*?m/gm)  //  Match escape sequences
     if(res === null) return data
+
+    //  Do the close span elements first
+    data = data.replace(/\\x1b\[0m/gm, '</span>')
+
+    res.forEach(item => {
+      //
+    })
 
     return data
   }
