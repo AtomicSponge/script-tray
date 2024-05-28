@@ -1,4 +1,4 @@
-<table align="center">
+<table align="center" border="0">
 <tr>
   <td>
     <img src="./public/icon-256x256.png" width="80"/>
