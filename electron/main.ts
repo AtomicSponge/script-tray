@@ -202,7 +202,7 @@ ipcMain.on('verify-cwd', (_event, data) => {
    * @param message Message to display
    * @param type Dialog box type
    */
-  const verifyDialog = (message:string, type:string) => {
+  const verifyDialog = (message:string, type:string):void => {
     dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       title: `${appInfo.name}`,
       icon: `${appInfo.icon}`,
