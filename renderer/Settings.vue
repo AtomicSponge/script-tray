@@ -27,6 +27,12 @@ const _menuList = ref()
 /** Total count of all menu items */
 const _itemCount = ref()
 
+/** Tooltip strings used in menu display */
+const _tooltips = {
+  buffer: 'The number of processed commands to store in the buffer',
+  newMenu: 'Add a new item to the selected menu'
+}
+
 /** Allowed encoding types */
 const _encodingTypes = [
   'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
@@ -184,21 +190,21 @@ onMounted(() => {
   </div>
   <footer>
     <div class="left">
-      <select id="menuSelect" v-model="_menuSelect">
+      <select id="menuSelect" v-model="_menuSelect" :title="_tooltips.newMenu" data-toggle="tooltip">
         <option v-for="(_item, _idx) in _menuList" :key=_idx :value=_idx>
           {{ _item.label }}
         </option>
       </select>
-      <select v-model="_newItemSelect">
+      <select v-model="_newItemSelect" :title="_tooltips.newMenu" data-toggle="tooltip">
         <option value="1">Command Launcher</option>
         <option value="2">Sub Menu</option>
         <option value="3">Separator</option>
       </select>
-      <button @click="addItem">Add</button>
+      <button @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</button>
     </div>
     <div class="right">
-      <label for="bufferInput">Buffer Size:</label>
-      <input type="text" id="bufferInput" size="3" v-model="_bufferSize"/>
+      <label for="bufferInput" :title="_tooltips.buffer" data-toggle="tooltip">Buffer Size:</label>
+      <input type="text" id="bufferInput" size="3" v-model="_bufferSize" :title="_tooltips.buffer" data-toggle="tooltip"/>
     </div>
   </footer>
 </section>
