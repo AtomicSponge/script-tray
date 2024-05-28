@@ -21,13 +21,13 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
    * @returns Modified string
    */
   const formatTermColors = (data:string):string => {
-    const styles = {
-      reset: `\x1b[0m`,
-      bold: `\x1b[1m`,
-      dim: `\x1b[2m`,
-      italic: `\x1b[3m`,
-      underline: `\x1b[4m`
-    }
+    const reset = `\x1b[0m`
+    const styles = [
+      { code: `\x1b[1m`, style: `font-weight: bold;` },
+      { code: `\x1b[2m`, style: `filter: brightness(50%);` },
+      { code: `\x1b[3m`, style: `font-style: italic;` },
+      { code: `\x1b[4m`, style: `text-decoration: underline;` }
+    ]
     const colors = [
       //  Foreground Colors
       { code: `\x1b[30m`, rgb: `rgb(0, 0, 0)` },        //  Black
