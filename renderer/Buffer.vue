@@ -28,42 +28,40 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       { code: `\x1b[3m`, style: `font-style: italic;` },
       { code: `\x1b[4m`, style: `text-decoration: underline;` },
       //  Foreground Colors
-      { code: `\x1b[30m`, style: `rgb(0, 0, 0)` },          //  Black
-      { code: `\x1b[31m`, style: `rgb(170, 0, 0)` },        //  Red
-      { code: `\x1b[32m`, style: `rgb(0, 170, 0)` },        //  Green
-      { code: `\x1b[33m`, style: `rgb(170, 85, 0)` },       //  Yellow
-      { code: `\x1b[34m`, style: `rgb(0, 0, 170)` },        //  Blue
-      { code: `\x1b[35m`, style: `rgb(170, 0, 170)` },      //  Magenta
-      { code: `\x1b[36m`, style: `rgb(0, 170, 170)` },      //  Cyan
-      { code: `\x1b[37m`, style: `rgb(170, 170, 170)` },    //  White
-      { code: `\x1b[90m`, style: `rgb(85, 85, 85)` },       //  Bright Black (Gray)
-      { code: `\x1b[91m`, style: `rgb(255, 85, 85)` },      //  Bright Red
-      { code: `\x1b[92m`, style: `rgb(85, 255, 85)` },      //  Bright Green
-      { code: `\x1b[93m`, style: `rgb(255, 255, 85)` },     //  Bright Yellow
-      { code: `\x1b[94m`, style: `rgb(85, 85, 255)` },      //  Bright Blue
-      { code: `\x1b[95m`, style: `rgb(255, 0, 255)` },      //  Bright Magenta
-      { code: `\x1b[96m`, style: `rgb(85, 255, 255)` },     //  Bright Cyan
-      { code: `\x1b[97m`, style: `rgb(255, 255, 255)` },    //  Bright White
+      { code: `\x1b[30m`, style: `color: rgb(0, 0, 0);` },        //  Black
+      { code: `\x1b[31m`, style: `color: rgb(170, 0, 0);` },      //  Red
+      { code: `\x1b[32m`, style: `color: rgb(0, 170, 0);` },      //  Green
+      { code: `\x1b[33m`, style: `color: rgb(170, 85, 0);` },     //  Yellow
+      { code: `\x1b[34m`, style: `color: rgb(0, 0, 170);` },      //  Blue
+      { code: `\x1b[35m`, style: `color: r4gb(170, 0, 170);` },   //  Magenta
+      { code: `\x1b[36m`, style: `color: rgb(0, 170, 170);` },    //  Cyan
+      { code: `\x1b[37m`, style: `color: rgb(170, 170, 170);` },  //  White
+      { code: `\x1b[90m`, style: `color: rgb(85, 85, 85);` },     //  Bright Black (Gray)
+      { code: `\x1b[91m`, style: `color: rgb(255, 85, 85);` },    //  Bright Red
+      { code: `\x1b[92m`, style: `color: rgb(85, 255, 85);` },    //  Bright Green
+      { code: `\x1b[93m`, style: `color: rgb(255, 255, 85);` },   //  Bright Yellow
+      { code: `\x1b[94m`, style: `color: rgb(85, 85, 255);` },    //  Bright Blue
+      { code: `\x1b[95m`, style: `color: rgb(255, 0, 255);` },    //  Bright Magenta
+      { code: `\x1b[96m`, style: `color: rgb(85, 255, 255);` },   //  Bright Cyan
+      { code: `\x1b[97m`, style: `color: rgb(255, 255, 255);` },  //  Bright White
       //  Background Colors
-      { code: `\x1b[40m`, style: `rgb(0, 0, 0)` },          //  Black
-      { code: `\x1b[41m`, style: `rgb(170, 0, 0)` },        //  Red
-      { code: `\x1b[42m`, style: `rgb(0, 170, 0)` },        //  Green
-      { code: `\x1b[43m`, style: `rgb(170, 85, 0)` },       //  Yellow
-      { code: `\x1b[44m`, style: `rgb(0, 0, 170)` },        //  Blue
-      { code: `\x1b[45m`, style: `rgb(170, 0, 170)` },      //  Magenta
-      { code: `\x1b[46m`, style: `rgb(0, 170, 170)` },      //  Cyan
-      { code: `\x1b[47m`, style: `rgb(170, 170, 170)` },    //  White
-      { code: `\x1b[100m`, style: `rgb(85, 85, 85)` },      //  Bright Black (Gray)
-      { code: `\x1b[101m`, style: `rgb(255, 85, 85)` },     //  Bright Red
-      { code: `\x1b[102m`, style: `rgb(85, 255, 85)` },     //  Bright Green
-      { code: `\x1b[103m`, style: `rgb(255, 255, 85)` },    //  Bright Yellow
-      { code: `\x1b[104m`, style: `rgb(85, 85, 255)` },     //  Bright Blue
-      { code: `\x1b[105m`, style: `rgb(255, 0, 255)` },     //  Bright Magenta
-      { code: `\x1b[106m`, style: `rgb(85, 255, 255)` },    //  Bright Cyan
-      { code: `\x1b[107m`, style: `rgb(255, 255, 255)` }    //  Bright White
+      { code: `\x1b[40m`, style: `background-color: rgb(0, 0, 0);` },        //  Black
+      { code: `\x1b[41m`, style: `background-color: rgb(170, 0, 0);` },      //  Red
+      { code: `\x1b[42m`, style: `background-color: rgb(0, 170, 0);` },      //  Green
+      { code: `\x1b[43m`, style: `background-color: rgb(170, 85, 0);` },     //  Yellow
+      { code: `\x1b[44m`, style: `background-color: rgb(0, 0, 170);` },      //  Blue
+      { code: `\x1b[45m`, style: `background-color: rgb(170, 0, 170);` },    //  Magenta
+      { code: `\x1b[46m`, style: `background-color: rgb(0, 170, 170);` },    //  Cyan
+      { code: `\x1b[47m`, style: `background-color: rgb(170, 170, 170);` },  //  White
+      { code: `\x1b[100m`, style: `background-color: rgb(85, 85, 85);` },    //  Bright Black (Gray)
+      { code: `\x1b[101m`, style: `background-color: rgb(255, 85, 85);` },   //  Bright Red
+      { code: `\x1b[102m`, style: `background-color: rgb(85, 255, 85);` },   //  Bright Green
+      { code: `\x1b[103m`, style: `background-color: rgb(255, 255, 85);` },  //  Bright Yellow
+      { code: `\x1b[104m`, style: `background-color: rgb(85, 85, 255);` },   //  Bright Blue
+      { code: `\x1b[105m`, style: `background-color: rgb(255, 0, 255);` },   //  Bright Magenta
+      { code: `\x1b[106m`, style: `background-color: rgb(85, 255, 255);` },  //  Bright Cyan
+      { code: `\x1b[107m`, style: `background-color: rgb(255, 255, 255);` }  //  Bright White
     ]
-
-    //<span class="color: ;background-color: ;"> ... </span>
 
     const res = data.match(/\\x1b\[.*?m/gm)  //  Match escape sequences
     if(res === null) return data
