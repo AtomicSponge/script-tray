@@ -63,12 +63,12 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       { code: `\x1b[107m`, style: `background-color: rgb(255, 255, 255);` }  //  Bright White
     ]
 
-    //  Do the close span elements first & abort if nothing found
-    if(data.match(/\x1b\[.*?m/gi) === null) return data
+    if(data.match(/\x1b\[.*?m/gi) === null) return data  //  Abort if nothing found
+    //  Do the close span elements first
     data = data.replace(/\x1b\[0m/gi, '</span>')
 
     const res = data.match(/\x1b\[.*?m/gi)
-    if (res === null) return data
+    if (res === null) return data  //  Abort if nothing found
     for (let idx = 0; idx < res.length; idx++) {
       /**
        * Takes the escape code results and looks to see if any are directly
