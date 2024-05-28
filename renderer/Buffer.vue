@@ -64,8 +64,7 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     ]
 
     if(data.match(/\x1b\[.*?m/gi) === null) return data  //  Abort if nothing found
-    //  Do the close span elements first
-    data = data.replace(/\x1b\[0m/gi, '</span>')
+    data = data.replace(/\x1b\[0m/gi, '</span>')  //  Do the close span elements first
 
     const res = data.match(/\x1b\[.*?m/gi)
     if (res === null) return data  //  Abort if nothing found
