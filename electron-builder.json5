@@ -10,12 +10,12 @@
   },
   "files": [ "dist", "dist-electron" ],
   "mac": {
-    "icon": "dist/icon.png",
+    "icon": "build/icon-256x256.png",
     "target": [ "dmg" ],
     "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
   },
   "win": {
-    "icon": "dist/icon.png",
+    "icon": "build/icon-256x256.png",
     "target": [
       {
         "target": "nsis",
@@ -31,10 +31,11 @@
     "deleteAppDataOnUninstall": false
   },
   "linux": {
-    "icon": "dist/icon.png",
+    "icon": "build/icon-256x256.png",
     "category": "Utility",
     "maintainer": "https://github.com/AtomicSponge/script-tray/issues",
-    "target": [ "AppImage", "deb", "pacman" ],
+    //"target": [ "AppImage", "deb", "rpm", "pacman" ],
+    "target": [ "AppImage" ],
     "artifactName": "${productName}-Linux-${version}.${ext}"
   }
 }

@@ -42,7 +42,7 @@ const appInfo = {
   websiteURL: 'https://github.com/AtomicSponge/script-tray',
   license: 'MIT',
   licenseURL: 'https://mit-license.org',
-  icon: path.join(process.env.VITE_PUBLIC, 'icon.png'),
+  icon: path.join(process.env.VITE_PUBLIC, 'icon-256x256.png'),
   iconURL: 'http://www.onlinewebfonts.com',
   iconLicenseURL: 'https://creativecommons.org/licenses/by/4.0/'
 }

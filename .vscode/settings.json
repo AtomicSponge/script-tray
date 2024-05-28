@@ -1,8 +1,10 @@
 {
   "files.exclude": {
     "**/.git": true,
+    "**/node_modules": true,
+
     "**/dist": true,
     "**/dist-electron": true,
-    "**/node_modules": true
+    "**/release": true
   }
 }
