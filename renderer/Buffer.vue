@@ -175,7 +175,7 @@ onMounted(() => {
       <tr>
         <td>
           <div class="highlight">Error:</div>
-          <div class="console"><span v-html="item.err"></span></div>
+          <div class="console"><span v-html="item.err" class="error"></span></div>
         </td>
       </tr>
     </table>
@@ -203,4 +203,6 @@ td
   padding-left 8px
 .highlight
   font-weight bold
+.error
+  color rgb(255, 85, 85)
 </style>
