@@ -317,23 +317,6 @@ ipcMain.on('send-term-process', (_event, data) => {
   }
 })
 
-/** About message box */
-const aboutMessageBox = ():void => {
-  dialog.showMessageBox({
-    type: 'info',
-    title: `About ${appInfo.name}`,
-    message: `${appInfo.name}\nVersion:  ${appInfo.version}`,
-    detail:
-      `Author:  ${appInfo.author}\n` +
-      `${appInfo.websiteURL}\n\n` +
-      `License:  ${appInfo.license}\n` +
-      `${appInfo.licenseURL}\n\n\n` +
-      `Icon:  ${appInfo.iconURL}\n` +
-      `License:  ${appInfo.iconLicenseURL}`,
-    icon: appInfo.icon
-  })
-}
-
 /** Builds the system tray menu */
 const buildMenu = ():Menu => {
   /**
@@ -423,7 +406,21 @@ const buildMenu = ():Menu => {
     menu.append(new MenuItem({ type: 'separator' }))
     menu.append(new MenuItem({
       label: `About ${appInfo.name}`,
-      click: () => { aboutMessageBox() }
+      click: () => {
+        dialog.showMessageBox({
+          type: 'info',
+          title: `About ${appInfo.name}`,
+          message: `${appInfo.name}\nVersion:  ${appInfo.version}`,
+          detail:
+            `Author:  ${appInfo.author}\n` +
+            `${appInfo.websiteURL}\n\n` +
+            `License:  ${appInfo.license}\n` +
+            `${appInfo.licenseURL}\n\n` +
+            `Icon:  ${appInfo.iconURL}\n` +
+            `License:  ${appInfo.iconLicenseURL}`,
+          icon: appInfo.icon
+        })
+      }
     }))
     menu.append(new MenuItem({ label: `Close ${appInfo.name}`, role: 'quit' }))
   }
