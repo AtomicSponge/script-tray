@@ -26,6 +26,12 @@ const checkCmd = () => {
   }
 }
 
+/** Tooltip strings used in tray cmd display */
+const _tooltips = {
+  command: 'Enter running command\n\nTo prompt for input arguments, use the variable format:\n?<| varname |>',
+  cwd: 'Current working directory'
+}
+
 /** Verify the current working directory */
 const verifyCwd = () => {
   window.settingsAPI.verifyCwd(_trayCommand.value.cwd)
@@ -40,16 +46,20 @@ const verifyCwd = () => {
     <td><input type="text" v-model="_trayCommand.label" id="cmdLabel"/></td>
   </tr>
   <tr>
-    <td><label for="cmdCommand">Command:</label></td>
-    <td><input type="text" v-model="_trayCommand.command" @input="checkCmd" id="cmdCommand"/></td>
+    <td>
+      <label for="cmdCommand" :title="_tooltips.command" data-toggle="tooltip">Command:</label>
+    </td>
+    <td>
+      <input type="text" v-model="_trayCommand.command" @input="checkCmd" id="cmdCommand" :title="_tooltips.command" data-toggle="tooltip"/>
+    </td>
   </tr>
   <tr v-show="_showCmdWarn" id="cmdWarn">
     <td colspan="2">Warning:  Duplicate variable names detected in command!</td>
   </tr>
   <tr>
-    <td><label for="cmdCwd">CWD:</label></td>
+    <td><label for="cmdCwd" :title="_tooltips.cwd" data-toggle="tooltip">CWD:</label></td>
     <td>
-      <input type="text" v-model="_trayCommand.cwd" id="cmdCwd"/>
+      <input type="text" v-model="_trayCommand.cwd" id="cmdCwd" :title="_tooltips.cwd" data-toggle="tooltip"/>
       <button @click="verifyCwd">Verify</button>
     </td>
   </tr>
