@@ -21,7 +21,8 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
    * @returns Modified string
    */
   const formatTermColors = (data:string):string => {
-    const fg_colors = [                                  //  Foreground Colors
+    const colors = [
+      //  Foreground Colors
       { code: `\x1b[30m]`, rgb: `rgb(0, 0, 0)` },        //  Black
       { code: `\x1b[31m]`, rgb: `rgb(170, 0, 0)` },      //  Red
       { code: `\x1b[32m]`, rgb: `rgb(0, 170, 0)` },      //  Green
@@ -37,9 +38,8 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       { code: `\x1b[94m]`, rgb: `rgb(85, 85, 255)` },    //  Bright Blue
       { code: `\x1b[95m]`, rgb: `rgb(255, 0, 255)` },    //  Bright Magenta
       { code: `\x1b[96m]`, rgb: `rgb(85, 255, 255)` },   //  Bright Cyan
-      { code: `\x1b[97m]`, rgb: `rgb(255, 255, 255)` }   //  Bright White
-    ]
-    const bg_colors = [                                  //  Background Colors
+      { code: `\x1b[97m]`, rgb: `rgb(255, 255, 255)` },  //  Bright White
+      //  Background Colors
       { code: `\x1b[40m]`, rgb: `rgb(0, 0, 0)` },        //  Black
       { code: `\x1b[41m]`, rgb: `rgb(170, 0, 0)` },      //  Red
       { code: `\x1b[42m]`, rgb: `rgb(0, 170, 0)` },      //  Green
@@ -57,6 +57,11 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       { code: `\x1b[106m]`, rgb: `rgb(85, 255, 255)` },  //  Bright Cyan
       { code: `\x1b[107m]`, rgb: `rgb(255, 255, 255)` }  //  Bright White
     ]
+
+    //<span class="color: ;background-color: ;"> ... </span>
+    colors.forEach(item => {
+      //
+    })
 
     return data
   }
