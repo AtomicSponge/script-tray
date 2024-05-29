@@ -36,7 +36,7 @@
     "category": "Utility",
     "maintainer": "https://github.com/AtomicSponge/script-tray/issues",
     //"target": [ "AppImage", "deb", "rpm", "pacman" ],
-    "target": [ "pacman" ],
+    "target": [ "rpm" ],
     "artifactName": "${productName}-Linux-${version}.${ext}"
   },
   //"publish": {
