@@ -17,11 +17,10 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 16
 
       - name: Build/release Electron app
-        # https://github.com/marketplace/actions/electron-builder-action
-        uses: samuelmeuli/action-electron-builder@v1
+        uses: paneron/action-electron-builder@v1.8.1
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
