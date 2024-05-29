@@ -35,7 +35,7 @@ This will compile a package for your platform.
 
 <img src ="./.github/image/screenshot-settings.png" alt="Customizable via in-app settings" width="420"/>
 
-Fully configurable commands with submenus and separators for organization.  Also allows for variables to be used within commands.  These will be propted for durring script execution.  The format for these variables is:  `?<| example |>`
+Fully configurable commands with submenus and separators for organization.  Also allows for variables to be used within commands.  These will be prompted for durring script execution.  The format for these variables is:  `?<| example |>`
 
 ## Output Buffer
 
