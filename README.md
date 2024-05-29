@@ -35,7 +35,7 @@ Viewable output buffer with ANSI styling!  Can also be saved to JSON or Log file
 View running jobs and cancel running or hung scripts.
 
 <sub><sup>
-Created with [Electron](https://www.electronjs.org/) [Vue](https://vuejs.org/) [Electron-Vite](https://electron-vite.github.io/) 
+Created with [Electron](https://www.electronjs.org/) | [Vue](https://vuejs.org/) | [Electron-Vite](https://electron-vite.github.io/) 
 </sup></sub>
 
 <sub><sup>
