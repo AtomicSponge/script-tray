@@ -36,7 +36,9 @@ View running jobs and cancel running or hung scripts.
 
 <sub><sup>
 Created with [Electron](https://www.electronjs.org/) [Vue](https://vuejs.org/) [Electron-Vite](https://electron-vite.github.io/) 
+</sup></sub>
 
+<sub><sup>
 Robot icon made from [Web Fonts](http://www.onlinewebfonts.com)
 is licensed by [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 </sup></sub>
