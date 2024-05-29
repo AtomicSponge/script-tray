@@ -1,7 +1,7 @@
 <table align="center">
 <tr>
   <td>
-    <img src="./public/icon-256x256.png" width="80"/>
+    <img src="./public/icon-512x512.png" width="80"/>
   </td>
   <th>
     <h1>Script Tray</h1>
