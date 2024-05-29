@@ -1,7 +1,7 @@
 {
   "name": "script-tray",
   "private": true,
-  "version": "1.9.0",
+  "version": "2.0.0",
   "description": "Script Tray System Utility",
   "author": "Matthew Evans",
   "license": "MIT",
@@ -17,8 +17,8 @@
   "main": "dist-electron/main.js",
   "scripts": {
     "dev": "vite",
-    "test": "vite build",
-    "build": "vite build && electron-builder"
+    "build": "vite build",
+    "dist": "vite build && electron-builder"
   },
   "dependencies": {
     "vue": "^3.4.27"
