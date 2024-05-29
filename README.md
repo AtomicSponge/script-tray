@@ -10,7 +10,7 @@
 </tr>
 </table>
 
-__:wrench: Script Tray__ is an utility that sits in your system tray and allows you to run preconfigured scripts or commands from a click of a button.  Save yourself some keystrokes and run all your common commands from here!
+__:wrench: Script Tray__ is a utility that sits in your system tray and allows you to run preconfigured scripts or commands from a click of a button.  Save yourself some keystrokes and run all your common commands from here!
 
 <img src ="./.github/image/screenshot-traymenu.png" alt="Run commands directly from your system tray" width="300"/>
 
