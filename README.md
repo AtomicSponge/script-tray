@@ -24,6 +24,10 @@ __Script Tray__
 
 <img src ="./.github/image/screenshot-buffer.png" alt="View previously ran commands via an output buffer" width="300"/>
 
+### Job Manager
+
+<img src ="./.github/image/screenshot-jobmgr.png" alt="View and manage currently running scripts via the job manager" width="300"/>
+
 <sub><sup>
 Robot icon made from <a href="http://www.onlinewebfonts.com">Web Fonts</a>
 is licensed by <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
