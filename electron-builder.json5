@@ -35,14 +35,14 @@
     "icon": "build/icon-512x512.png",
     "category": "Utility",
     "maintainer": "https://github.com/AtomicSponge/script-tray/issues",
-    //"target": [ "AppImage", "deb", "rpm", "pacman" ],
-    "target": [ "AppImage" ],
+    "target": [ "AppImage", "deb", "rpm", "pacman" ],
+    //"target": [ "AppImage" ],
     "artifactName": "${productName}-Linux-${version}.${ext}"
   },
-  "publish": {
-    "provider": "github",
-    "repo": "https://github.com/AtomicSponge/script-tray",
-    "owner": "Matthew Evans",
-    "releaseType": "release"
-  }
+  //"publish": {
+    //"provider": "github",
+    //"repo": "https://github.com/AtomicSponge/script-tray",
+    //"owner": "Matthew Evans",
+    //"releaseType": "release"
+  //}
 }
