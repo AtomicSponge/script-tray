@@ -35,6 +35,8 @@ Viewable output buffer with ANSI styling!  Can also be saved to JSON or Log file
 View running jobs and cancel running or hung scripts.
 
 <sub><sup>
-Robot icon made from <a href="http://www.onlinewebfonts.com">Web Fonts</a>
-is licensed by <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+Created with [Electron](https://www.electronjs.org/) [Vue](https://vuejs.org/) [Electron-Vite](https://electron-vite.github.io/) 
+
+Robot icon made from [Web Fonts](http://www.onlinewebfonts.com)
+is licensed by [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 </sup></sub>
