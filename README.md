@@ -10,23 +10,25 @@
 </tr>
 </table>
 
-__Script Tray__ 
+<img src ="./.github/image/screenshot-traymenu.png" alt="Run commands directly from your system tray" width="300"/>
+
+__Script Tray__ is an utility that sits in your system tray and allows you to run preconfigured scripts or commands from a click of a button.  Save yourself some keystrokes and run all your common commands from here!
 
 ## Features
 
-<img src ="./.github/image/screenshot-traymenu.png" alt="Run commands directly from your system tray" width="200"/>
-
 ### Settings Menu
 
-<img src ="./.github/image/screenshot-settings.png" alt="Customizable via in-app settings" width="300"/>
+<img src ="./.github/image/screenshot-settings.png" alt="Customizable via in-app settings" width="420"/>
+
+Fully configurable commands with submenus and separators for organization.  
 
 ### Output Buffer
 
-<img src ="./.github/image/screenshot-buffer.png" alt="View previously ran commands via an output buffer" width="300"/>
+<img src ="./.github/image/screenshot-buffer.png" alt="View previously ran commands via an output buffer" width="420"/>
 
 ### Job Manager
 
-<img src ="./.github/image/screenshot-jobmgr.png" alt="View and manage currently running scripts via the job manager" width="300"/>
+<img src ="./.github/image/screenshot-jobmgr.png" alt="View and manage currently running scripts via the job manager" width="420"/>
 
 <sub><sup>
 Robot icon made from <a href="http://www.onlinewebfonts.com">Web Fonts</a>
