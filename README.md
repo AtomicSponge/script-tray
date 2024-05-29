@@ -21,6 +21,14 @@ Or you can clone this repository with `git` by running:
 git clone https://github.com/AtomicSponge/script-tray.git
 ```
 
+Build by running:
+```
+cd script-tray
+npm ci
+npm run dist
+```
+This will compile a package for your platform.
+
 # Features
 
 ## Settings Menu
