@@ -41,7 +41,7 @@
   "publish": {
     "provider": "github",
     "repo": "https://github.com/AtomicSponge/script-tray",
-    "owner": "AtomicSponge",
+    "owner": "Matthew Evans",
     "releaseType": "release"
   }
 }
