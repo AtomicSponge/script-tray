@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "dist": "vite build && electron-builder",
+    "dist": "vite build && electron-builder --publish never",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
