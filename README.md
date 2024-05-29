@@ -26,7 +26,7 @@ Fully configurable commands with submenus and separators for organization.  Also
 
 <img src ="./.github/image/screenshot-buffer.png" alt="View previously ran commands via an output buffer" width="420"/>
 
-Viewable output buffer with ANSI styling!  Can also be saved to JSON or Log file (.log or .txt) from the tray menu.
+Viewable output buffer with ANSI styling!  Can also be saved to JSON or Log file *(.log or .txt)* from the tray menu.
 
 ## Job Manager
 
