@@ -10,9 +10,11 @@
 </tr>
 </table>
 
-## WIP
-### Upgrading to TypeScript/Vue and building with Vite
-### See the 'old' repository for the old JavaScript version
+__Script Tray__ 
+
+## Features
+
+### 
 
 <sub><sup>
 Robot icon made from <a href="http://www.onlinewebfonts.com">Web Fonts</a>
