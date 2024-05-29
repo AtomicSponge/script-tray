@@ -14,6 +14,13 @@ __Script Tray__ is an utility that sits in your system tray and allows you to ru
 
 <img src ="./.github/image/screenshot-traymenu.png" alt="Run commands directly from your system tray" width="300"/>
 
+Written in [Electron](https://www.electronjs.org/) and [Vue](https://vuejs.org/), __Script Tray__ is cross platform and will run on Windows, Mac or Linux.  Check the [latest releases](https://github.com/AtomicSponge/script-tray/releases/latest) for binaries of each platform.
+
+Or you can clone this repository with `git` by running:
+```
+git clone https://github.com/AtomicSponge/script-tray.git
+```
+
 # Features
 
 ## Settings Menu
