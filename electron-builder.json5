@@ -35,7 +35,8 @@
     "icon": "build/icon-512x512.png",
     "category": "Utility",
     "maintainer": "https://github.com/AtomicSponge/script-tray/issues",
-    "target": [ "AppImage", "deb", "rpm", "pacman" ],
+    //"target": [ "AppImage", "deb", "rpm", "pacman" ],
+    "target": [ "AppImage" ],
     "artifactName": "${productName}-Linux-${version}.${ext}"
   },
   "publish": {
