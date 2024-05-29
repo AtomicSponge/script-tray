@@ -10,6 +10,7 @@
   },
   "files": [ "dist", "dist-electron" ],
   "mac": {
+    "category": "public.app-category.developer-tools",
     "icon": "build/icon-512x512.png",
     "target": [ "dmg" ],
     "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
@@ -36,5 +37,11 @@
     "maintainer": "https://github.com/AtomicSponge/script-tray/issues",
     "target": [ "AppImage", "deb", "rpm", "pacman" ],
     "artifactName": "${productName}-Linux-${version}.${ext}"
+  },
+  "publish": {
+    "provider": "github",
+    "repo": "script-tray",
+    "owner": "AtomicSponge",
+    "releaseType": "release"
   }
 }
