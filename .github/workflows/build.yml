@@ -1,9 +1,6 @@
 name: Build/release
 
-on:
-  push:
-    tags:
-      - v*.*.*
+on: push
 
 jobs:
   release:
@@ -23,7 +20,7 @@ jobs:
           node-version: 20
 
       - name: Build/release Electron app
-        uses: paneron/action-electron-builder@v1.8.1
+        uses: Yan-Jobs/action-electron-builder@v1.7.0
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
@@ -32,4 +29,3 @@ jobs:
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          package_manager: npm
