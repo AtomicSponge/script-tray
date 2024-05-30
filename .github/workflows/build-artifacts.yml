@@ -31,7 +31,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }} 
       - run: npm ci
       - run: npm run dist
-      # Upload mac
+      # Upload Mac
       - name: Archive Build Artifacts
         if: startsWith(matrix.os, 'macos')
         uses: actions/upload-artifact@v4
