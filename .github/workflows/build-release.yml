@@ -24,11 +24,38 @@ jobs:
       - name: Install libarchive-tools for pacman build
         if: startsWith(matrix.os, 'ubuntu')
         run: sudo apt-get install libarchive-tools
+      # Checkout source & setup NodeJS
       - name: Checkout
         uses: actions/checkout@v4
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }} 
+      # Run the build
       - run: npm ci
       - run: npm run dist
+      - name: Make Release Artifacts
+        run: cat Release.txt
+      # Create Releases
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(matrix.os, 'macos')
+        with:
+          files: 
+            release/*.dmg
+            release/*.pkg
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(matrix.os, 'ubuntu')
+        with:
+          files: 
+            release/*.AppImage
+            release/*.deb
+            release/*.rpm
+            release/*.pacman
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(matrix.os, 'windows')
+        with:
+          files: 
+            release/*.exe

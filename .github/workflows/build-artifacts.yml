@@ -21,12 +21,14 @@ jobs:
       - name: Install libarchive-tools for pacman build
         if: startsWith(matrix.os, 'ubuntu')
         run: sudo apt-get install libarchive-tools
+      # Checkout source & setup NodeJS
       - name: Checkout
         uses: actions/checkout@v4
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }} 
+      # Run the build
       - run: npm ci
       - run: npm run dist
       # Upload Mac
