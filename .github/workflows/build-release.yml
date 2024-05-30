@@ -34,8 +34,8 @@ jobs:
       # Run the build
       - run: npm ci
       - run: npm run dist
-      - name: Make Release Artifacts
-        run: cat Release.txt
+      #- name: Make Release Artifacts
+        #run: cat Release.txt
       # Create Releases
       - name: Release
         uses: softprops/action-gh-release@v2
