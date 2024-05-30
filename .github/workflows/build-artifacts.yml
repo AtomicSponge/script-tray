@@ -38,8 +38,7 @@ jobs:
           overwrite: true
           if-no-files-found: error
           path: |
-            release/*.dmg
-            release/*.pkg
+            release/*.*
       # Upload Linux
       - name: Archive Build Artifacts
         if: startsWith(matrix.os, 'ubuntu')
@@ -49,10 +48,7 @@ jobs:
           overwrite: true
           if-no-files-found: error
           path: |
-            release/*.AppImage
-            release/*.deb
-            release/*.rpm
-            release/*.pacman
+            release/*.*
       # Upload Windows
       - name: Archive Build Artifacts
         if: startsWith(matrix.os, 'windows')
@@ -62,4 +58,4 @@ jobs:
           overwrite: true
           if-no-files-found: error
           path: |
-            release/*.exe
+            release/*.*
