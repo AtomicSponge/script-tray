@@ -6,7 +6,7 @@
   "productName": "Script-Tray",
   "copyright": "Copyright © 2024-present ${author}",
   "directories": {
-    "output": "release/${version}"
+    "output": "release/"
   },
   "files": [ "dist", "dist-electron" ],
   "mac": {
