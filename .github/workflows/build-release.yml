@@ -33,11 +33,20 @@ jobs:
       # Run the build
       - run: npm ci
       - run: npm run dist
-      # Create Releases
+      # Create new latest release
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(matrix.os, 'ubuntu')
+        with:
+          make_latest: true
+          name: Script Tray ${{ github.ref }}
+      # Upload the artifacts to the release
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(matrix.os, 'macos')
         with:
+          append_body: true
+          fail_on_unmatched_files: true
           files: |
             release/*.dmg
             release/*.pkg
@@ -45,6 +54,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(matrix.os, 'ubuntu')
         with:
+          append_body: true
+          fail_on_unmatched_files: true
           files: |
             release/*.AppImage
             release/*.deb
@@ -54,5 +65,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(matrix.os, 'windows')
         with:
+          append_body: true
+          fail_on_unmatched_files: true
           files: |
             release/*.exe
