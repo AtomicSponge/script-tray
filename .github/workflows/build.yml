@@ -36,6 +36,7 @@ jobs:
         if: startsWith(matrix.os, 'macos')
         uses: actions/upload-artifact@v4
         with:
+          name: artifact-mac
           overwrite: true
           if-no-files-found: error
           path: |
@@ -45,6 +46,7 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         uses: actions/upload-artifact@v4
         with:
+          name: artifact-linux
           overwrite: true
           if-no-files-found: error
           path: |
@@ -57,6 +59,7 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         uses: actions/upload-artifact@v4
         with:
+          name: artifact-windows
           overwrite: true
           if-no-files-found: error
           path: |
