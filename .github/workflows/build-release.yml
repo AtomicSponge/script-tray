@@ -1,0 +1,33 @@
+name: Build/release
+
+on:
+  push:
+    tags:
+     - v*.*.*
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 20.x
+
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+    steps:
+      # Related https://github.com/electron-userland/electron-builder/issues/4181
+      - name: Install libarchive-tools for pacman build
+        if: startsWith(matrix.os, 'ubuntu')
+        run: sudo apt-get install libarchive-tools
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }} 
+      - run: npm ci
+      - run: npm run dist
