@@ -31,3 +31,13 @@ jobs:
           node-version: ${{ env.NODE_VERSION }} 
       - run: npm ci
       - run: npm run dist
+      - name: Archive Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            release/*.exe
+            release/*.dmg
+            release/*.AppImage
+            release/*.deb
+            release/*.rpm
+            release/*.pacman
