@@ -12,7 +12,7 @@
   "mac": {
     "category": "public.app-category.developer-tools",
     "icon": "icon-512x512.png",
-    "target": [ "dmg" ],
+    "target": [ "dmg", "pkg" ],
     "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
   },
   "win": {
