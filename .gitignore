@@ -1,4 +1,9 @@
+# Ignore local build artifacts
 node_modules
 dist
 dist-electron
 release
+
+# Ignore temp files for GH Actions
+CHANGELOG.md
+release_notes.md
