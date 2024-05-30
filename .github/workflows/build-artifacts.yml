@@ -1,9 +1,7 @@
+#  Workflow for building and uploading artifacts
 name: Build/artifacts
 
 on:
-  push:
-    tags:
-     - v*.*.*
   workflow_dispatch:
 
 env:
