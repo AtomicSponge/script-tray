@@ -39,6 +39,7 @@ jobs:
           if-no-files-found: error
           path: |
             release/*.dmg
+            release/*.pkg
       # Upload Linux
       - name: Archive Build Artifacts
         if: startsWith(matrix.os, 'ubuntu')
