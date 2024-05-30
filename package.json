@@ -6,7 +6,6 @@
   "author": "Matthew Evans",
   "license": "MIT",
   "homepage": "https://github.com/AtomicSponge/script-tray",
-  "url": "https://github.com/AtomicSponge/script-tray#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AtomicSponge/script-tray.git"
