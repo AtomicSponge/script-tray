@@ -39,7 +39,7 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         with:
           make_latest: true
-          name: Script Tray ${{ github.ref }}
+          name: Script Tray ${{ tag_name }}
       # Upload the artifacts to the release
       - name: Release
         uses: softprops/action-gh-release@v2
