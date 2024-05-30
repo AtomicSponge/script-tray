@@ -40,14 +40,14 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(matrix.os, 'macos')
         with:
-          files: 
+          files: |
             release/*.dmg
             release/*.pkg
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(matrix.os, 'ubuntu')
         with:
-          files: 
+          files: |
             release/*.AppImage
             release/*.deb
             release/*.rpm
@@ -56,5 +56,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(matrix.os, 'windows')
         with:
-          files: 
+          files: |
             release/*.exe
