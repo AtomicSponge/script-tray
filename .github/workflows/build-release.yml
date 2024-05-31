@@ -40,7 +40,7 @@ jobs:
         with:
           make_latest: true
           append_body: true
-          name: Script Tray ${{ github.tag_name }}
+          name: Script Tray ${{ github.ref_name }}
       # Upload the artifacts to the release
       - name: Release
         uses: softprops/action-gh-release@v2
@@ -48,7 +48,6 @@ jobs:
         with:
           append_body: true
           fail_on_unmatched_files: true
-          name: Script Tray ${{ github.tag_name }}
           files: |
             release/*.dmg
             release/*.pkg
@@ -58,7 +57,6 @@ jobs:
         with:
           append_body: true
           fail_on_unmatched_files: true
-          name: Script Tray ${{ github.tag_name }}
           files: |
             release/*.AppImage
             release/*.deb
@@ -70,6 +68,5 @@ jobs:
         with:
           append_body: true
           fail_on_unmatched_files: true
-          name: Script Tray ${{ github.tag_name }}
           files: |
             release/*.exe
