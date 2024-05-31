@@ -8,6 +8,7 @@ on:
 
 env:
   NODE_VERSION: 20.x
+  APP_NAME: Script Tray
 
 jobs:
   build:
@@ -40,7 +41,7 @@ jobs:
         with:
           make_latest: true
           append_body: true
-          name: Script Tray ${{ github.ref_name }}
+          name: $APP_NAME ${{ github.ref_name }}
       # Upload the artifacts to the release
       - name: Release
         uses: softprops/action-gh-release@v2
