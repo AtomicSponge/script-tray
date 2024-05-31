@@ -39,6 +39,7 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         with:
           make_latest: true
+          append_body: true
           name: Script Tray ${{ github.tag_name }}
       # Upload the artifacts to the release
       - name: Release
