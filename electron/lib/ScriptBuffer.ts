@@ -200,13 +200,13 @@ class ScriptBufferError extends Error {
    * @param exitCode Exit code
    */
   constructor(message:string, code:Object, exitCode?:number) {
-		super()
+    super()
 
-		this.name = this.constructor.name
+    this.name = this.constructor.name
     this.message = message
-		this.code = code
-		this.exitCode = exitCode || 1
+    this.code = code
+    this.exitCode = exitCode || 1
 
     this.stack = new Error().stack
-	}
+  }
 }
