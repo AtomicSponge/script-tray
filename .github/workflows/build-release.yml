@@ -41,7 +41,7 @@ jobs:
         with:
           make_latest: true
           append_body: true
-          name: ${{ APP_NAME }} ${{ github.ref_name }}
+          name: ${{ env.APP_NAME }} ${{ github.ref_name }}
       # Upload the artifacts to the release
       - name: Release
         uses: softprops/action-gh-release@v2
