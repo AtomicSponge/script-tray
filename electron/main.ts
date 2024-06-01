@@ -39,7 +39,8 @@ const appInfo = {
   name: 'Script Tray',
   version: '2.0.0',
   author: 'Matthew Evans',
-  websiteURL: 'https://github.com/AtomicSponge/script-tray',
+  websiteURL: 'https://scripttray.wtfsystems.net/',
+  githubURL: 'https://github.com/AtomicSponge/script-tray',
   license: 'MIT',
   licenseURL: 'https://mit-license.org',
   icon: path.join(process.env.VITE_PUBLIC, 'icon-512x512.png'),
@@ -413,7 +414,7 @@ const buildMenu = ():Menu => {
           message: `${appInfo.name}\nVersion:  ${appInfo.version}`,
           detail:
             `Author:  ${appInfo.author}\n` +
-            `${appInfo.websiteURL}\n\n` +
+            `${appInfo.websiteURL}\n${appInfo.githubURL}\n\n` +
             `License:  ${appInfo.license}\n` +
             `${appInfo.licenseURL}\n\n` +
             `Icon:  ${appInfo.iconURL}\n` +
