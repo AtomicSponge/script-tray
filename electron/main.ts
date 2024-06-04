@@ -439,7 +439,7 @@ const buildMenu = ():Menu => {
      */
     const CommandRunner = (execCmd:string, item:TrayCommand):void => {
       const cmdCwd = (() => {
-        if(fs.existsSync(item.cwd)) return item.cwd
+        if (fs.existsSync(item.cwd)) return item.cwd
         else return process.cwd()
       })()
       const execOpts = {
@@ -528,7 +528,7 @@ const buildMenu = ():Menu => {
       //  Item wasn't processed, so there's a problem with the format
       let outErrStr = `Error building menu, incorrect menu item!\n\n`
       for (const key in item) {
-        if(item.hasOwnProperty(key)) outErrStr += `${key} - ${item[key]}\n`
+        if (item.hasOwnProperty(key)) outErrStr += `${key} - ${item[key]}\n`
       }
       dialog.showErrorBox(`${appInfo.name}`, outErrStr)
     })
