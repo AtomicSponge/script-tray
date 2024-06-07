@@ -21,9 +21,6 @@ const sendData = ():void => {
   } else window.inputAPI.sendInput(_argInput.value)
 }
 
-/** Cancel running command */
-const cancelCmd = ():void => { window.close() }
-
 onMounted(() => {
   window.inputAPI.onReceiveData((inputData:InputPromptData) => {
     _inputLabel.value = inputData.label
@@ -47,7 +44,6 @@ onMounted(() => {
   </div>
   <div>
     <button @click="sendData" class="left">Submit</button>
-    <button @click="cancelCmd" class="right">Cancel Command</button>
   </div>
 </section>
 </template>
