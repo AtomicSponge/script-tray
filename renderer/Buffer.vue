@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
-import { replaceNewlines } from '@spongex/regexps';
+import { replaceNewlines } from '@spongex/regexps'
 
 /** Reference for storing the buffer */
 const _buffer = ref()
