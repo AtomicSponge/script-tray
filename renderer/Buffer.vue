@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
+import { replaceNewlines } from '@spongex/regexps';
 
 /** Reference for storing the buffer */
 const _buffer = ref()
@@ -128,10 +129,9 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
   }
 
   bufferData.forEach((data:ScriptBufferData) => {
-    data.out = data.out.replace(/(?:\r\n|\r|\n)/g, '<br>')
-    data.err = data.err.replace(/(?:\r\n|\r|\n)/g, '<br>')
-    data.out = formatTextStyle(data.out)
-    data.err = formatTextStyle(data.err)
+    data.out = formatTextStyle(replaceNewlines(data.out, '<br/>'))
+    data.err = formatTextStyle(replaceNewlines(data.err, '<br/>'))
+
   })
 }
 
