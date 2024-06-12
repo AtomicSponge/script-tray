@@ -533,15 +533,6 @@ const buildMenu = ():Menu => {
   return menu
 }
 
-/* Close tray and windows on exit */
-app.on('before-quit', () => {
-  bufferWin?.destroy()
-  settingsWin?.destroy()
-  inputWin?.destroy()
-  jobMgrWin?.destroy()
-  appTray?.destroy()
-})
-
 /* Make sure app doesn't quit when no windows are open */
 app.on('window-all-closed', () => {})
 
