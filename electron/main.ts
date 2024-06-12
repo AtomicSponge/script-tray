@@ -110,9 +110,6 @@ const bufferWindow = ():void => {
     dialog.showErrorBox(`${appInfo.name}`, `Buffer Event Error:  ${error.message}`)
   })
 
-  bufferWin.on('close', (_event) => {
-    bufferWin?.destroy()
-  })
   {(process.env.VITE_DEV_SERVER_URL) ?
     bufferWin.loadURL(path.posix.join(process.env.VITE_DEV_SERVER_URL, 'html/buffer.html')) :
     bufferWin.loadFile(path.join(RENDERER_DIST, 'html', 'buffer.html'))}
@@ -143,7 +140,6 @@ const settingsEditorWindow = ():void => {
     settingsWin?.webContents.send('send-settings-data', appSettings.getData())
   })
   settingsWin.on('close', (_event) => {
-    settingsWin?.destroy()
     if (flags.trayData) {
       try {
         appSettings.load()
@@ -246,7 +242,6 @@ const inputWindow = (data:InputPromptData):void => {
   })
   inputWin.on('close', (_event) => {
     resolveInputWin.reject(true)
-    inputWin?.destroy()
   })
   inputWin.webContents.on('did-finish-load', () => {
     inputWin?.webContents.send('send-input-data', data)
@@ -258,8 +253,8 @@ const inputWindow = (data:InputPromptData):void => {
 
 /* Event handler for receiving data from the input box */
 ipcMain.on('recieve-input-data', (_event, data) => {
-  resolveInputWin.resolve(data)
   inputWin?.destroy()
+  resolveInputWin.resolve(data)
 })
 
 /** Window for Job Manager */
@@ -296,9 +291,6 @@ const jobManagerWindow = ():void => {
     dialog.showErrorBox(`${appInfo.name}`, `Job Manager Event Error:  ${error.message}`)
   })
 
-  jobMgrWin.on('close', (_event) => {
-    jobMgrWin?.destroy()
-  })
   {(process.env.VITE_DEV_SERVER_URL) ?
     jobMgrWin.loadURL('http://localhost:5176/html/jobmgr.html') :
     jobMgrWin.loadFile(path.join(RENDERER_DIST, 'html', 'jobmgr.html'))}
