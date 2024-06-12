@@ -1,5 +1,8 @@
 # Script Tray Changelog
 
+## Development Branch
+  - Small update to content security policy
+
 ## v2.0.1
   - Removed `close` button from the input window to prevent accidental closure.
   - Added session Content Security to the app windows
