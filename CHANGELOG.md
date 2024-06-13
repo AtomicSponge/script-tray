@@ -2,6 +2,7 @@
 
 ## Development Branch
   - Small update to content security policy
+  - Dependencies bump
 
 ## v2.0.1
   - Removed `close` button from the input window to prevent accidental closure.
