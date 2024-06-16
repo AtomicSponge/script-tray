@@ -21,7 +21,7 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "vue": "^3.4.28"
+    "vue": "^3.4.29"
   },
   "devDependencies": {
     "@spongex/async-for-each": "^1.0.1",
