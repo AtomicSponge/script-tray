@@ -3,6 +3,7 @@
 ## Development Branch
   - Small update to content security policy
   - Dependencies bump
+  - Removed stylus-loader (unnecessary)
 
 ## v2.0.1
   - Removed `close` button from the input window to prevent accidental closure.
