@@ -16,7 +16,7 @@ __:wrench: Script Tray__ is a utility that sits in your system tray and allows y
 
 <img src ="./.github/image/screenshot-traymenu.png" alt="Run commands directly from your system tray" width="300"/>
 
-Written in [Electron](https://www.electronjs.org/) and [Vue](https://vuejs.org/), __:wrench: Script Tray__ is cross platform and will run on Windows, Mac or Linux.  Check the [latest releases](https://github.com/AtomicSponge/script-tray/releases/latest) for binaries of each platform.
+Written in [Electron](https://www.electronjs.org/) and [Vue](https://vuejs.org/), __Script Tray__ is cross platform and will run on Windows, Mac or Linux.  Check the [latest releases](https://github.com/AtomicSponge/script-tray/releases/latest) for binaries of each platform.
 
 Or you can clone this repository with `git` by running:
 ```
@@ -50,6 +50,15 @@ Viewable output buffer with ANSI styling!  Can also be saved to JSON or Log file
 <img src ="./.github/image/screenshot-jobmgr.png" alt="View and manage currently running scripts via the job manager" width="420"/>
 
 View running jobs and cancel running or hung scripts.
+
+# Advanced Options
+Optional command arguments to pass to __Script Tray__ at launch:
+
+`--no-load-traydata` - Skips loading the application settings.
+
+`--no-load-bufferdata` - Skips loading the script buffer.
+
+-----
 
 <sub><sup>
 Created with :heart: and [Electron](https://www.electronjs.org/) | [Vue](https://vuejs.org/) | [Electron-Vite](https://electron-vite.github.io/) 
