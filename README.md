@@ -12,6 +12,8 @@
 
 __:wrench: Script Tray__ is a utility that sits in your system tray and allows you to run preconfigured scripts or commands from a click of a button.  Save yourself some keystrokes and run all your common commands from here!
 
+*Note:  Only non-interactive scripts and commands can be used.*
+
 <img src ="./.github/image/screenshot-traymenu.png" alt="Run commands directly from your system tray" width="300"/>
 
 Written in [Electron](https://www.electronjs.org/) and [Vue](https://vuejs.org/), __:wrench: Script Tray__ is cross platform and will run on Windows, Mac or Linux.  Check the [latest releases](https://github.com/AtomicSponge/script-tray/releases/latest) for binaries of each platform.
