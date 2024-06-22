@@ -31,6 +31,8 @@ npm run dist
 ```
 This will compile a package for your platform.
 
+-----
+
 # Features
 
 ## Settings Menu
@@ -50,6 +52,8 @@ Viewable output buffer with ANSI styling!  Can also be saved to JSON or Log file
 <img src ="./.github/image/screenshot-jobmgr.png" alt="View and manage currently running scripts via the job manager" width="420"/>
 
 View running jobs and cancel running or hung scripts.
+
+-----
 
 # Advanced Options
 Optional command arguments to pass to __Script Tray__ at launch:
