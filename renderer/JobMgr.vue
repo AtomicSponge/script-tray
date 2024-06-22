@@ -60,6 +60,8 @@ table
   border-collapse collapse
   border 1px solid rgb(100, 100, 100, 0.1)
 th
+  resize horizontal
+  overflow auto
   padding 4px
   background-color rgb(80, 80, 80, 0.1)
   text-align left
