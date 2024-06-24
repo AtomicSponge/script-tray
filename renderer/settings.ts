@@ -9,6 +9,6 @@
 
 import { createApp } from 'vue'
 import SettingsApp from './Settings.vue'
-import './style.styl'
+import './style.css'
 
 createApp(SettingsApp).mount('#app')

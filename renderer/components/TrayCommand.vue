@@ -67,19 +67,25 @@ const verifyCwd = () => {
 </section>
 </template>
 
-<style lang="stylus" scoped>
-table
-  table-layout fixed
-#cmdLabel
-  width 200px
-#cmdCommand
-  width 320px
-#cmdCwd
-  width 200px
-#cmdWarn
-  color rgb(255, 0, 0)
-  font-style italic
-button
-  vertical-align top
-  font-size 0.6em
+<style scoped>
+table {
+  table-layout: fixed;
+}
+#cmdLabel {
+  width: 200px;
+}
+#cmdCommand {
+  width: 320px;
+}
+#cmdCwd {
+  width: 200px;
+}
+#cmdWarn {
+  color: rgb(255, 0, 0);
+  font-style: italic;
+}
+button {
+  vertical-align: top;
+  font-size: 0.6em;
+}
 </style>

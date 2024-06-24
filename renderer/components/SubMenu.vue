@@ -18,11 +18,13 @@ const _subMenu:ModelRef<SubMenu> = defineModel({ required: true })
   </div>
 </template>
 
-<style lang="stylus" scoped>
-.submenu
-  margin-top 2px
-  margin-left 2px
-#submenu
-  margin-left 12px
+<style scoped>
+.submenu {
+  margin-top: 2px;
+  margin-left: 2px;
+}
+#submenu {
+  margin-left: 12px;
   width: 200px
+}
 </style>

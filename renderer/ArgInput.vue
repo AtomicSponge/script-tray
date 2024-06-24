@@ -48,23 +48,29 @@ onMounted(() => {
 </section>
 </template>
 
-<style lang="stylus" scoped>
-section
-  display flex
-  flex-flow column
-  align-items stretch
-  height 100vh
-div
-  padding-top 2px
-  padding-left 4px
-  padding-right 8px
-  padding-bottom 4px
-#argInput
-  width 98%
-.highlight
-  font-weight bold
-.left
-  float left
-.right
-  float right
+<style scoped>
+section {
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  height: 100vh;
+}
+div {
+  padding-top: 2px;
+  padding-left: 4px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+}
+#argInput {
+  width: 98%;
+}
+.highlight {
+  font-weight: bold;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
 </style>

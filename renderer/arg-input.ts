@@ -9,6 +9,6 @@
 
 import { createApp } from 'vue'
 import ArgInputApp from './ArgInput.vue'
-import './style.styl'
+import './style.css'
 
 createApp(ArgInputApp).mount('#app')

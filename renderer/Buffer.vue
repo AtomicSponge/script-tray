@@ -182,27 +182,34 @@ onMounted(() => {
   </section>
 </template>
 
-<style lang="stylus" scoped>
-section
-  overflow auto
-  font-size smaller
-  padding-top 4px
-  padding-left 4px
-  padding-right 4px
-  padding-bottom 4px
-table
-  width 100%
-  border-collapse collapse
-  border 1px solid rgb(100, 100, 100, 0.1)
-th
-  padding 3px
-td
-  padding 2px
-  padding-left 4px
-.console
-  padding-left 8px
-.highlight
-  font-weight bold
-.error
-  color rgb(255, 85, 85)
+<style scoped>
+section {
+  overflow: auto;
+  font-size: smaller;
+  padding-top: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid rgb(100, 100, 100, 0.1);
+}
+th {
+  padding: 3px;
+}
+td {
+  padding: 2px;
+  padding-left: 4px;
+}
+.console {
+  padding-left: 8px;
+}
+.highlight {
+  font-weight: bold;
+}
+.error {
+  color: rgb(255, 85, 85);
+}
 </style>

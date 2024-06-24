@@ -6,6 +6,7 @@
   - Removed stylus-loader (unnecessary)
   - Added adjustable columns in the Job Manager
   - Disabled devTools in production mode
+  - Removed Stylus for vanilla CSS
 
 ## v2.0.1
   - Removed `close` button from the input window to prevent accidental closure.

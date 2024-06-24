@@ -16,7 +16,8 @@ const _separator:ModelRef<Separator> = defineModel({ required: true })
   <input v-model="_separator" hidden disabled/>
 </template>
 
-<style lang="stylus" scoped>
-.separator
-  border 4px solid rgb(100, 100, 100, 0.1)
+<style scoped>
+.separator {
+  border: 4px solid rgb(100, 100, 100, 0.1);
+}
 </style>

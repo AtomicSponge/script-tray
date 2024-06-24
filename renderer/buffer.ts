@@ -9,6 +9,6 @@
 
 import { createApp } from 'vue'
 import BufferApp from './Buffer.vue'
-import './style.styl'
+import './style.css'
 
 createApp(BufferApp).mount('#app')

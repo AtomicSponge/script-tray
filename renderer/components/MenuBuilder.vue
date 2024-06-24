@@ -133,28 +133,36 @@ const moveDown = (idx:number):void => {
 </table>
 </template>
 
-<style lang="stylus" scoped>
-button
-  font-size 0.66em
-table
-  margin-left 16px
-  border-collapse collapse
-  border 1px solid rgb(100, 100, 100, 0.1)
-  border-left 8px solid rgb(100, 100, 100, 0.1)
-.itemrow
-  border 1px solid rgb(100, 100, 100, 0.1)
-.subDiv
-  border 1px dashed rgba(255, 255, 255, 0.87)
-.item
-  text-align left
-  padding 6px
-.delBtn
-  text-align right
-  vertical-align top
-  padding 6px
-.moveMenu
-  padding-top 2px
-  font-size 0.66em
-#moveSelect
-  font-size 0.96em
+<style scoped>
+button {
+  font-size: 0.66em;
+}
+table {
+  margin-left: 16px;
+  border-collapse: collapse;
+  border: 1px solid rgb(100, 100, 100, 0.1);
+  border-left: 8px solid rgb(100, 100, 100, 0.1);
+}
+.itemrow {
+  border: 1px solid rgb(100, 100, 100, 0.1);
+}
+.subDiv {
+  border: 1px dashed rgba(255, 255, 255, 0.87);
+}
+.item {
+  text-align: left;
+  padding: 6px;
+}
+.delBtn {
+  text-align: right;
+  vertical-align: top;
+  padding: 6px;
+}
+.moveMenu {
+  padding-top: 2px;
+  font-size: 0.66em;
+}
+#moveSelect {
+  font-size: 0.96em;
+}
 </style>

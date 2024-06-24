@@ -9,6 +9,6 @@
 
 import { createApp } from 'vue'
 import JobMgrApp from './JobMgr.vue'
-import './style.styl'
+import './style.css'
 
 createApp(JobMgrApp).mount('#app')

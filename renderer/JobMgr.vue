@@ -48,36 +48,46 @@ onMounted(() => {
   </section>
 </template>
 
-<style lang="stylus" scoped>
-section
-  overflow auto
-  padding-top 4px
-  padding-left 4px
-  padding-right 4px
-  padding-bottom 4px
-table
-  width 100%
-  border-collapse collapse
-  border 1px solid rgb(100, 100, 100, 0.1)
-th
-  resize horizontal
-  overflow auto
-  padding 4px
-  background-color rgb(80, 80, 80, 0.1)
-  text-align left
-.pid
-  width 60px
-.label
-  width 20%
-.time
-  width 20%
-.term
-  width 50px
-tr:nth-child(odd)
-  background-color rgb(60, 60, 60, 0.1)
-td
-  padding 4px
-button
-  vertical-align top
-  font-size 0.6em
+<style scoped>
+section {
+  overflow: auto;
+  padding-top: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid rgb(100, 100, 100, 0.1);
+}
+th {
+  resize: horizontal;
+  overflow: auto;
+  padding: 4px;
+  background-color: rgb(80, 80, 80, 0.1);
+  text-align: left;
+}
+.pid {
+  width: 60px;
+}
+.label {
+  width: 20%;
+}
+.time {
+  width: 20%;
+}
+.term {
+  width: 50px;
+}
+tr:nth-child(odd) {
+  background-color: rgb(60, 60, 60, 0.1);
+}
+td {
+  padding: 4px;
+}
+button {
+  vertical-align: top;
+  font-size: 0.6em;
+}
 </style>

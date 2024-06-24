@@ -210,30 +210,39 @@ onMounted(() => {
 </section>
 </template>
 
-<style lang="stylus" scoped>
-section
-  display flex
-  flex-flow column
-  align-items stretch
-  height 100vh
-header
-  padding 2px
-  padding-bottom 6px
-#menuContents
-  flex: auto
-  overflow auto
-footer
-  padding 2px
-  padding-top 4px
-.left
-  float left
-.right
-  float right
-select
-  font-size medium
-#menuSelect
-  width 160px
-#bufferInput
-  margin-left 4px
-  margin-right 4px
+<style scoped>
+section {
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  height: 100vh;
+}
+header {
+  padding: 2px;
+  padding-bottom: 6px;
+}
+#menuContents {
+  flex: auto;
+  overflow: auto;
+}
+footer {
+  padding: 2px;
+  padding-top: 4px;
+}
+select {
+  font-size: medium;
+}
+#menuSelect {
+  width: 160px;
+}
+#bufferInput {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
 </style>
