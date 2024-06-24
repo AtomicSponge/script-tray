@@ -88,6 +88,7 @@ const bufferWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
+      devTools: (process.env.VITE_DEV_SERVER_URL) ? true : false,
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
@@ -126,6 +127,7 @@ const settingsEditorWindow = ():void => {
     fullscreenable: false,
     autoHideMenuBar: true,
     webPreferences: {
+      devTools: (process.env.VITE_DEV_SERVER_URL) ? true : false,
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
@@ -230,6 +232,7 @@ const inputWindow = (data:InputPromptData):void => {
     resizable: false,
     autoHideMenuBar: true,
     webPreferences: {
+      devTools: (process.env.VITE_DEV_SERVER_URL) ? true : false,
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
@@ -269,6 +272,7 @@ const jobManagerWindow = ():void => {
     resizable: true,
     autoHideMenuBar: true,
     webPreferences: {
+      devTools: (process.env.VITE_DEV_SERVER_URL) ? true : false,
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
