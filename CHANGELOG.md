@@ -7,6 +7,7 @@
   - Added adjustable columns in the Job Manager
   - Disabled devTools in production mode
   - Removed Stylus for vanilla CSS
+  - Removed CSS injection plug-in for Vite
 
 ## v2.0.1
   - Removed `close` button from the input window to prevent accidental closure.

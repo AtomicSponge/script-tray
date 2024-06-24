@@ -4,14 +4,13 @@ import { defineConfig } from 'vite'
 import electron from 'vite-plugin-electron/simple'
 import multiple from 'vite-plugin-multiple'
 import vue from '@vitejs/plugin-vue'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig(() => {
   fs.rmSync(path.join(__dirname, 'dist-electron'), { recursive: true, force: true })
 
   return {
     plugins: [
-      vue(), cssInjectedByJsPlugin(),
+      vue(),
       electron({
         main: { entry: 'electron/main.ts' },
         preload: { input: path.join(__dirname, 'electron/preload.ts') }
