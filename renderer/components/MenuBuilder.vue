@@ -97,7 +97,7 @@ const moveDown = (idx:number):void => {
         v-model:launch-menu="_launchMenu[idx].sub"
         v-model:menu-list="_menuList"
         @rebuild="$emit('rebuild')"
-        :menu-id=_launchMenu[idx].id>
+        :menu-id="_launchMenu[idx].id">
       </MenuBuilder>
     </td>
     <td v-else-if="item.hasOwnProperty('label') && item.hasOwnProperty('command')" class="item">

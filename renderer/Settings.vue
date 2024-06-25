@@ -190,7 +190,7 @@ onMounted(() => {
       v-model:launch-menu="_launchMenu"
       v-model:menu-list="_menuList"
       @rebuild="buildMenuList"
-      :menu-id=Number.MAX_SAFE_INTEGER>  <!-- Main menu starts at MAX INT -->
+      :menu-id="Number.MAX_SAFE_INTEGER">  <!-- Main menu starts at MAX INT -->
     </MenuBuilder>
   </div>
   <footer>
