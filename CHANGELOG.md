@@ -10,6 +10,7 @@
   - Removed CSS injection plug-in for Vite
   - Added exception checking on AppSettings.getData
   - Added a save check on settings window close
+  - Slight code optimizations
 
 ## v2.0.1
   - Removed `close` button from the input window to prevent accidental closure.
