@@ -459,12 +459,9 @@ const buildMenu = ():Menu => {
      * @param item Menu item calling the run
      */
     const CommandRunner = (execCmd:string, item:TrayCommand):void => {
-      const cmdCwd = (() => {
-        return (fs.existsSync(item.cwd)) ? item.cwd : process.cwd()
-      })()
       const execOpts = {
         encoding: appSettings.encoding,
-        cwd: cmdCwd,
+        cwd: (fs.existsSync(item.cwd)) ? item.cwd : process.cwd(),
         windowsHide: true
       }
       const startDate = new Date().toLocaleString(__locale, { timeZoneName: 'short' })
