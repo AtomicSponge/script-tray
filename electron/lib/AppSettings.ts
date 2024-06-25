@@ -32,7 +32,7 @@ export class AppSettings {
    * @param load Load data or not
    */
   constructor(load:boolean) {
-    if(load) {
+    if (load) {
       try {
         this.load()
       } catch (error:any) {

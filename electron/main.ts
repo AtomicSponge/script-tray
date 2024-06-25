@@ -30,8 +30,8 @@ process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL ? path.join(process.en
 /** Process command arguments */
 const flags = { trayData: true, bufferData: true }
 process.argv.forEach(arg => {
-  if(arg === '--no-load-traydata') flags.trayData = false
-  if(arg === '--no-load-bufferdata') flags.bufferData = false
+  if (arg === '--no-load-traydata') flags.trayData = false
+  if (arg === '--no-load-bufferdata') flags.bufferData = false
 })
 
 /** App information */
@@ -191,7 +191,7 @@ ipcMain.on('save-settings-data', (_event, data) => {
   }
 
   if (data.check) {
-    if(!appSettings.compareData(data)) {
+    if (!appSettings.compareData(data)) {
       saveDataPrompt(data, 'Settings have changed!  Do you want to save?')
     }
   } else {
@@ -460,8 +460,7 @@ const buildMenu = ():Menu => {
      */
     const CommandRunner = (execCmd:string, item:TrayCommand):void => {
       const cmdCwd = (() => {
-        if (fs.existsSync(item.cwd)) return item.cwd
-        else return process.cwd()
+        return (fs.existsSync(item.cwd)) ? item.cwd : process.cwd()
       })()
       const execOpts = {
         encoding: appSettings.encoding,

@@ -35,7 +35,7 @@ export class ScriptBuffer extends EventEmitter {
     ScriptBuffer.#buffer = []
     ScriptBuffer.#size = this.#check(size)
 
-    if(load) {
+    if (load) {
       try {
         this.load()
       } catch (error:any) {
@@ -118,7 +118,7 @@ export class ScriptBuffer extends EventEmitter {
       data += `Duration:  ${item.duration} ms\n\n`
       data += `Stdout:\n${item.out}\n\n`
       data += `Stderr:\n${item.err}\n`
-      if(idx < (ScriptBuffer.#buffer.length - 1))
+      if (idx < (ScriptBuffer.#buffer.length - 1))
         data += `\n${'-'.repeat(20)}\n\n`
     })
     try {
@@ -159,7 +159,7 @@ export class ScriptBuffer extends EventEmitter {
 
   /** Trim the buffer to max size */
   #trim():void {
-    if(ScriptBuffer.#buffer.length > ScriptBuffer.#size)
+    if (ScriptBuffer.#buffer.length > ScriptBuffer.#size)
       ScriptBuffer.#buffer = ScriptBuffer.#buffer.slice(-ScriptBuffer.#size)
   }
 
@@ -169,8 +169,8 @@ export class ScriptBuffer extends EventEmitter {
    * @returns Value adjusted if above max or below min
    */
   #check(val:number) {
-    if(val < ScriptBuffer.#minSize) val = ScriptBuffer.#minSize
-    if(val > ScriptBuffer.#maxSize) val = ScriptBuffer.#maxSize
+    if (val < ScriptBuffer.#minSize) val = ScriptBuffer.#minSize
+    if (val > ScriptBuffer.#maxSize) val = ScriptBuffer.#maxSize
     return val
   }
 
