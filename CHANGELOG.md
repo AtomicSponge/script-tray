@@ -1,7 +1,7 @@
 # Script Tray Changelog
 
 ## Development Branch
-  - Small update to content security policy
+  - Moved CSP to HTML
   - Dependencies bump
   - Removed stylus-loader (unnecessary)
   - Added adjustable columns in the Job Manager

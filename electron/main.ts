@@ -11,7 +11,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { exec } from 'node:child_process'
 
-import { app, dialog, session, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'electron'
+import { app, dialog, ipcMain, BrowserWindow, Menu, MenuItem, Tray } from 'electron'
 import AutoLaunch from 'auto-launch'
 import { asyncForEach } from '@spongex/async-for-each'
 import { AsyncResolver } from '@spongex/async-resolver'
@@ -549,18 +549,6 @@ app.whenReady().then(() => {
   }).catch((error:any) => {
     dialog.showErrorBox(`${appInfo.name}`,
       `Error enabling auto launcher!\n\n${error.message}`)
-  })
-
-  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    callback({
-      responseHeaders: {
-        ...details.responseHeaders,
-        'Content-Security-Policy': [
-          `default-src 'self'; script-src 'self'; style-src 'unsafe-inline'; ` +
-            `font-src 'self'; frame-src 'self'`
-        ]
-      }
-    })
   })
 
   appTray = new Tray(appInfo.icon)
