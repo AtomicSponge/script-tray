@@ -80,6 +80,7 @@ declare global {
     bufferSize:number
     encoding:string
     startup:boolean
+    check:boolean
   }
 
   /** Prompt data passed to the Input window */

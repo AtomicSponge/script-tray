@@ -163,24 +163,33 @@ const settingsEditorWindow = ():void => {
 
 /* Event handler for saving settings */
 ipcMain.on('save-settings-data', (_event, data) => {
-  if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
-    type: 'question',
-    title: `${appInfo.name} - Confirm`,
-    icon: `${appInfo.icon}`,
-    buttons: [ 'Yes', 'No' ],
-    message: 'Do you want to save changes?'
-  }) === 0) {
-    try {
-      appSettings.setData(data)
-      appSettings.save()
-      resBuff.size = appSettings.bufferSize
-      {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
-      appTray?.setContextMenu(buildMenu())
-      settingsWin?.webContents.send('send-settings-data', appSettings.getData())
-    } catch (error:any) {
-      dialog.showErrorBox(`${appInfo.name}`,
-        `Error saving settings!\n\n${error.message}`)
+  const saveDataPrompt = (data:SettingsIpc, message:string) => {
+    if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
+      type: 'question',
+      title: `${appInfo.name} - Confirm`,
+      icon: `${appInfo.icon}`,
+      buttons: [ 'Yes', 'No' ],
+      message: message
+    }) === 0) {
+      try {
+        appSettings.setData(data)
+        appSettings.save()
+        resBuff.size = appSettings.bufferSize
+        {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
+        appTray?.setContextMenu(buildMenu())
+        settingsWin?.webContents.send('send-settings-data', appSettings.getData())
+      } catch (error:any) {
+        dialog.showErrorBox(`${appInfo.name}`,
+          `Error saving settings!\n\n${error.message}`)
+      }
     }
+  }
+  if (data.check) {
+    if(!appSettings.compareData(data)) {
+      saveDataPrompt(data, 'Settings have changed!  Do you want to save?')
+    }
+  } else {
+    saveDataPrompt(data, 'Do you want to save changes?')
   }
 })
 

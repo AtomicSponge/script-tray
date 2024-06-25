@@ -72,7 +72,7 @@ const buildMenuList = ():void => {
 }
 
 /** Parse data from the settings window */
-const parseData = ():SettingsIpc => {
+const parseData = (event:any):SettingsIpc => {
   const minVal:ScriptBufferMin = 10
   const maxVal:ScriptBufferMax = 500
   if(_bufferSize.value < minVal) _bufferSize.value = minVal
@@ -81,7 +81,8 @@ const parseData = ():SettingsIpc => {
     launchMenu: JSON.stringify(_launchMenu.value),
     bufferSize: Number(_bufferSize.value),
     encoding: _encodingSelect.value,
-    startup: Boolean(_startup.value)
+    startup: Boolean(_startup.value),
+    check: (event.type === 'beforeunload') ? true : false
   }
 }
 
@@ -100,8 +101,8 @@ const resetSettings = ():void => {
   buildMenuList()
 }
 /** Save settings button action */
-const saveSettings = ():void => {
-  window.settingsAPI.saveSettings(parseData())
+const saveSettings = (event:any):void => {
+  window.settingsAPI.saveSettings(parseData(event))
 }
 
 /** Add a new item to the launch menu */
@@ -160,7 +161,9 @@ onMounted(() => {
     buildMenuList()
   })
 
-  //window.onbeforeunload = () => { window.settingsAPI.saveSettings(parseData()) }
+  window.onbeforeunload = (event:any) => {
+    window.settingsAPI.saveSettings(parseData(event))
+  }
 })
 </script>
 

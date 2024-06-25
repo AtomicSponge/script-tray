@@ -99,7 +99,8 @@ export class AppSettings {
       launchMenu: tempData,
       bufferSize: AppSettings.#bufferSize,
       encoding: AppSettings.#encoding,
-      startup: AppSettings.#startup
+      startup: AppSettings.#startup,
+      check: false
     }
   }
 
