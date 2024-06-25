@@ -163,6 +163,11 @@ const settingsEditorWindow = ():void => {
 
 /* Event handler for saving settings */
 ipcMain.on('save-settings-data', (_event, data) => {
+  /**
+   * Prompt to save, then save if confirmed
+   * @param data Data to save
+   * @param message Message for dialog box
+   */
   const saveDataPrompt = (data:SettingsIpc, message:string) => {
     if (dialog.showMessageBoxSync(<BrowserWindow>settingsWin, {
       type: 'question',
@@ -184,6 +189,7 @@ ipcMain.on('save-settings-data', (_event, data) => {
       }
     }
   }
+
   if (data.check) {
     if(!appSettings.compareData(data)) {
       saveDataPrompt(data, 'Settings have changed!  Do you want to save?')
