@@ -139,7 +139,12 @@ const settingsEditorWindow = ():void => {
     }
   })
   settingsWin.webContents.on('did-finish-load', () => {
-    settingsWin?.webContents.send('send-settings-data', appSettings.getData())
+    try {
+      settingsWin?.webContents.send('send-settings-data', appSettings.getData())
+    } catch (error:any) {
+      dialog.showErrorBox(`${appInfo.name}`,
+        `Error sending settings!\n\n${error.message}`)
+    }
   })
   settingsWin.on('close', (_event) => {
     if (flags.trayData) {
@@ -190,7 +195,12 @@ ipcMain.on('reset-settings-data', (_event, data) => {
     message: 'Are you sure you want to reset settings?'
   }) === 0) {
     appSettings.reset()
-    settingsWin?.webContents.send('send-settings-data', appSettings.getData())
+    try {
+      settingsWin?.webContents.send('send-settings-data', appSettings.getData())
+    } catch (error:any) {
+      dialog.showErrorBox(`${appInfo.name}`,
+        `Error sending settings!\n\n${error.message}`)
+    }
   }
 })
 

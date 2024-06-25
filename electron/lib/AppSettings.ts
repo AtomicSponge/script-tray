@@ -88,8 +88,15 @@ export class AppSettings {
    * Launch menu seralized as string for Electron
    */
   getData():SettingsIpc {
+    const tempData = (()=>{
+      try {
+        return JSON.stringify(AppSettings.#launchMenu)
+      } catch (error:any) {
+        throw new AppSettingsError(error.message, this.getData)
+      }
+    })()
     return {
-      launchMenu: JSON.stringify(AppSettings.#launchMenu),
+      launchMenu: tempData,
       bufferSize: AppSettings.#bufferSize,
       encoding: AppSettings.#encoding,
       startup: AppSettings.#startup
@@ -104,6 +111,42 @@ export class AppSettings {
    */
   setData(data:SettingsIpc):void {
     try {
+      AppSettings.#checkData(data)
+      AppSettings.#launchMenu = JSON.parse(data.launchMenu)
+      AppSettings.#bufferSize = data.bufferSize
+      AppSettings.#encoding = data.encoding
+      AppSettings.#startup = data.startup
+    } catch (error:any) {
+      throw new AppSettingsError(error.message, this.setData)
+    }
+  }
+
+  /**
+   * Compares passed data to the current data to see if it was changed
+   * @param data Data to compare
+   * @returns True if the data is the same, else false
+   * @throws Error if problems with the data format
+   */
+  compareData(data:SettingsIpc):boolean {
+    try {
+      AppSettings.#checkData(data)
+      if (JSON.stringify(AppSettings.#launchMenu) !== data.launchMenu) return false
+    } catch (error:any) {
+      throw new AppSettingsError(error.message, this.compareData)
+    }
+    if (AppSettings.#bufferSize !== data.bufferSize) return false
+    if (AppSettings.#encoding !== data.encoding) return false
+    if (AppSettings.#startup !== data.startup) return false
+    return true
+  }
+
+  /**
+   * Checks an object for valid app settings format
+   * @param data Data to check
+   * @throws Error if problems with the data format
+   */
+  static #checkData(data:SettingsIpc):void {
+    try {
       if (data === undefined || data === null)
         throw new Error('No data received!')
       if (!data.hasOwnProperty('launchMenu') || typeof data.launchMenu !== 'string')
@@ -114,12 +157,8 @@ export class AppSettings {
         throw new Error('Invalid data format! Missing or incorrect System Encoding!')
       if (!data.hasOwnProperty('startup') || typeof data.startup !== 'boolean')
         throw new Error('Invalid data format! Missing or incorrect Startup flag!')
-      AppSettings.#launchMenu = JSON.parse(data.launchMenu)
-      AppSettings.#bufferSize = data.bufferSize
-      AppSettings.#encoding = data.encoding
-      AppSettings.#startup = data.startup
     } catch (error:any) {
-      throw new AppSettingsError(error.message, this.setData)
+      throw error
     }
   }
 

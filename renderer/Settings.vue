@@ -159,6 +159,8 @@ onMounted(() => {
     _startup.value = settingsData.startup
     buildMenuList()
   })
+
+  //window.onbeforeunload = () => { window.settingsAPI.saveSettings(parseData()) }
 })
 </script>
 
