@@ -3,10 +3,10 @@
 ## Development Branch
   - Moved CSP to HTML
   - Dependencies bump
-  - Removed stylus-loader (unnecessary)
   - Added adjustable columns in the Job Manager
   - Disabled devTools in production mode
   - Removed Stylus for vanilla CSS
+  - Removed stylus-loader (unnecessary)
   - Removed CSS injection plug-in for Vite
 
 ## v2.0.1
