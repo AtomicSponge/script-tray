@@ -8,6 +8,7 @@
   - Removed Stylus for vanilla CSS
   - Removed stylus-loader (unnecessary)
   - Removed CSS injection plug-in for Vite
+  - Added exception checking on AppSettings.getData
 
 ## v2.0.1
   - Removed `close` button from the input window to prevent accidental closure.
