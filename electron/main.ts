@@ -188,6 +188,7 @@ ipcMain.on('save-settings-data', (_event, data) => {
         resBuff.size = appSettings.bufferSize
         {(appSettings.startup) ? autoLauncher.enable() : autoLauncher.disable() }
         appTray?.setContextMenu(buildMenu())
+        settingsWin?.webContents.setZoomFactor(appSettings.zoomFactor)
         settingsWin?.webContents.send('send-settings-data', appSettings.getData())
       } catch (error:any) {
         dialog.showErrorBox(`${appInfo.name}`,
