@@ -133,7 +133,7 @@ const addItem = ():void => {
       return
     case 3:
       if (_itemCount.value < Number.MAX_SAFE_INTEGER)
-      _menuList.value[_menuSelect.value].sub.push({ separator: null })
+        _menuList.value[_menuSelect.value].sub.push({ separator: null })
       else
         window.alert('Maximum items reached!')
       return
