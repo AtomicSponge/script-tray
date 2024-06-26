@@ -80,6 +80,7 @@ declare global {
     bufferSize:number
     encoding:string
     startup:boolean
+    zoomFactor:number
     check:boolean
   }
 

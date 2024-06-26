@@ -99,6 +99,9 @@ const bufferWindow = ():void => {
       preload: path.join(MAIN_DIST, 'preload.js')
     }
   })
+  bufferWin.once('ready-to-show', () => {
+    bufferWin?.webContents.setZoomFactor(appSettings.zoomFactor)
+  })
   bufferWin.webContents.on('did-finish-load', () => {
     bufferWin?.webContents.send('send-buffer-data', resBuff.read())
   })
@@ -137,6 +140,9 @@ const settingsEditorWindow = ():void => {
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
+  })
+  settingsWin.once('ready-to-show', () => {
+    settingsWin?.webContents.setZoomFactor(appSettings.zoomFactor)
   })
   settingsWin.webContents.on('did-finish-load', () => {
     try {
@@ -254,7 +260,7 @@ const inputWindow = (data:InputPromptData):void => {
     height: 128,
     fullscreen: false,
     fullscreenable: false,
-    resizable: false,
+    resizable: true,
     autoHideMenuBar: true,
     webPreferences: {
       devTools: (process.env.VITE_DEV_SERVER_URL) ? true : false,
@@ -267,6 +273,9 @@ const inputWindow = (data:InputPromptData):void => {
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
+  })
+  inputWin.once('ready-to-show', () => {
+    inputWin?.webContents.setZoomFactor(appSettings.zoomFactor)
   })
   inputWin.on('close', (_event) => {
     resolveInputWin.reject(true)
@@ -307,6 +316,9 @@ const jobManagerWindow = ():void => {
       spellcheck: false,
       preload: path.join(MAIN_DIST, 'preload.js')
     }
+  })
+  jobMgrWin.once('ready-to-show', () => {
+    jobMgrWin?.webContents.setZoomFactor(appSettings.zoomFactor)
   })
   jobMgrWin.webContents.on('did-finish-load', () => {
     jobMgrWin?.webContents.send('send-job-data', runningJobs.read())

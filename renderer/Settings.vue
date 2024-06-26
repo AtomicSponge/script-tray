@@ -18,6 +18,8 @@ const _bufferSize = ref()
 const _startup = ref()
 /** Select menu for encoding type */
 const _encodingSelect = ref()
+/** Select menu for zoom factor */
+const _zoomSelect = ref()
 /** Select menu for adding a new item */
 const _newItemSelect = ref(1)
 /** Select menu for menu option when adding a new item */
@@ -30,13 +32,17 @@ const _itemCount = ref()
 /** Tooltip strings used in menu display */
 const _tooltips = {
   buffer: 'The number of processed commands to store in the buffer',
-  newMenu: 'Add a new item to the selected menu'
+  newMenu: 'Add a new item to the selected menu',
+  zoom: 'Sets the application zoom level'
 }
 
 /** Allowed encoding types */
 const _encodingTypes = [
   'utf8', 'ascii', 'base64', 'base64url', 'hex', 'ucs2', 'utf16le', 'binary', 'latin1'
 ]
+
+/** Allowed zoom factors */
+const _zoomLevels = [ 1, 2, 3, 4 ]
 
 /** Build a reference list of submenus */
 const buildMenuList = ():void => {
@@ -82,6 +88,7 @@ const parseData = (event:any):SettingsIpc => {
     bufferSize: Number(_bufferSize.value),
     encoding: _encodingSelect.value,
     startup: Boolean(_startup.value),
+    zoomFactor: Number(_zoomSelect.value),
     check: (event.type === 'beforeunload') ? true : false
   }
 }
@@ -158,6 +165,7 @@ onMounted(() => {
     _bufferSize.value = settingsData.bufferSize
     _encodingSelect.value = settingsData.encoding
     _startup.value = settingsData.startup
+    _zoomSelect.value = settingsData.zoomFactor
     buildMenuList()
   })
 
@@ -169,6 +177,7 @@ onMounted(() => {
 
 <template>
 <section>
+
   <header>
     <div class="left">
       <input type="checkbox" id="startupInput" v-model="_startup"/>
@@ -179,12 +188,14 @@ onMounted(() => {
         <option v-for="item in _encodingTypes" :value=item>{{ item }}</option>
       </select>
     </div>
+
     <div class="right">
       <button @click="resetSettings">Reset Settings</button>
       &nbsp;
       <button @click="saveSettings">Save Settings</button>
     </div>
   </header>
+
   <div id="menuContents">
     <MenuBuilder
       v-model:launch-menu="_launchMenu"
@@ -193,11 +204,12 @@ onMounted(() => {
       :menu-id="Number.MAX_SAFE_INTEGER">  <!-- Main menu starts at MAX INT -->
     </MenuBuilder>
   </div>
+
   <footer>
     <div class="left">
       <select id="menuSelect" v-model="_menuSelect" :title="_tooltips.newMenu" data-toggle="tooltip">
-        <option v-for="(_item, _idx) in _menuList" :key=_idx :value=_idx>
-          {{ _item.label }}
+        <option v-for="(item, idx) in _menuList" :key=idx :value=idx>
+          {{ item.label }}
         </option>
       </select>
       <select v-model="_newItemSelect" :title="_tooltips.newMenu" data-toggle="tooltip">
@@ -207,11 +219,18 @@ onMounted(() => {
       </select>
       <button @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</button>
     </div>
+
     <div class="right">
+      <label for="zoomSelect" :title="_tooltips.zoom" data-toggle="tooltip">Zoom:</label>
+      <select id="zoomSelect" v-model="_zoomSelect" :title="_tooltips.zoom" data-toggle="tooltip">
+        <option v-for="item in _zoomLevels" :value="item">{{ item }}</option>
+      </select>
+      &emsp;&emsp;
       <label for="bufferInput" :title="_tooltips.buffer" data-toggle="tooltip">Buffer Size:</label>
       <input type="text" id="bufferInput" size="3" v-model="_bufferSize" :title="_tooltips.buffer" data-toggle="tooltip"/>
     </div>
   </footer>
+
 </section>
 </template>
 

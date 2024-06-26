@@ -15,6 +15,7 @@ interface AppSettingsSaveData {
   bufferSize:number
   encoding:string
   startup:boolean
+  zoomFactor:number
 }
 
 export class AppSettings {
@@ -26,6 +27,8 @@ export class AppSettings {
   static #encoding:string = 'utf8'
   /** Load on startup */
   static #startup:boolean = false
+  /** Application zoom factor */
+  static #zoomFactor:number = 1
 
   /**
    * Create a new AppSettings object
@@ -55,6 +58,7 @@ export class AppSettings {
           if (temp.hasOwnProperty('bufferSize')) AppSettings.#bufferSize = temp.bufferSize
           if (temp.hasOwnProperty('encoding')) AppSettings.#encoding = temp.encoding
           if (temp.hasOwnProperty('startup')) AppSettings.#startup = temp.startup
+          if (temp.hasOwnProperty('zoomFactor')) AppSettings.#zoomFactor = temp.zoomFactor
         }
       })
     } catch (error:any) { throw new AppSettingsError(error.message, this.load) }
@@ -70,7 +74,8 @@ export class AppSettings {
         'launchMenu': AppSettings.#launchMenu,
         'bufferSize': AppSettings.#bufferSize,
         'encoding': AppSettings.#encoding,
-        'startup': AppSettings.#startup
+        'startup': AppSettings.#startup,
+        'zoomFactor': AppSettings.#zoomFactor
       }, (error) => { if (error) throw error })
     } catch (error:any) { throw new AppSettingsError(error.message, this.save) }
   }
@@ -81,6 +86,7 @@ export class AppSettings {
     AppSettings.#bufferSize = 100
     AppSettings.#encoding = 'utf8'
     AppSettings.#startup = false
+    AppSettings.#zoomFactor = 1
   }
 
   /**
@@ -100,6 +106,7 @@ export class AppSettings {
       bufferSize: AppSettings.#bufferSize,
       encoding: AppSettings.#encoding,
       startup: AppSettings.#startup,
+      zoomFactor: AppSettings.#zoomFactor,
       check: false
     }
   }
@@ -117,6 +124,7 @@ export class AppSettings {
       AppSettings.#bufferSize = data.bufferSize
       AppSettings.#encoding = data.encoding
       AppSettings.#startup = data.startup
+      AppSettings.#zoomFactor = data.zoomFactor
     } catch (error:any) {
       throw new AppSettingsError(error.message, this.setData)
     }
@@ -138,6 +146,7 @@ export class AppSettings {
     if (AppSettings.#bufferSize !== data.bufferSize) return false
     if (AppSettings.#encoding !== data.encoding) return false
     if (AppSettings.#startup !== data.startup) return false
+    if (AppSettings.#zoomFactor !== data.zoomFactor) return false
     return true
   }
 
@@ -158,6 +167,8 @@ export class AppSettings {
         throw new Error('Invalid data format! Missing or incorrect System Encoding!')
       if (!data.hasOwnProperty('startup') || typeof data.startup !== 'boolean')
         throw new Error('Invalid data format! Missing or incorrect Startup flag!')
+      if (!data.hasOwnProperty('zoomFactor') || typeof data.zoomFactor !== 'number')
+        throw new Error('Invalid data format! Missing or incorrect Zoom Factor!')
     } catch (error:any) {
       throw error
     }
@@ -171,6 +182,8 @@ export class AppSettings {
   get encoding():BufferEncoding { return <BufferEncoding>AppSettings.#encoding }
   /** Get the startup flag */
   get startup():boolean { return AppSettings.#startup }
+  /** Get the zoom factor */
+  get zoomFactor():number { return AppSettings.#zoomFactor }
 }
 
 /**

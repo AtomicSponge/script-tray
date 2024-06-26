@@ -2,6 +2,7 @@
 
 ## Development Branch
   - Moved CSP to HTML
+  - Added setting a zoom factor for the application
   - Dependencies bump
   - Added adjustable columns in the Job Manager
   - Disabled devTools in production mode
