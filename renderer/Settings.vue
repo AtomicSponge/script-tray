@@ -75,8 +75,8 @@ const buildMenuList = ():void => {
 const parseData = (event:any):SettingsIpc => {
   const minVal:ScriptBufferMin = 10
   const maxVal:ScriptBufferMax = 500
-  if(_bufferSize.value < minVal) _bufferSize.value = minVal
-  if(_bufferSize.value > maxVal) _bufferSize.value = maxVal
+  if (_bufferSize.value < minVal) _bufferSize.value = minVal
+  if (_bufferSize.value > maxVal) _bufferSize.value = maxVal
   return {
     launchMenu: JSON.stringify(_launchMenu.value),
     bufferSize: Number(_bufferSize.value),
@@ -132,7 +132,7 @@ const addItem = ():void => {
       }
       return
     case 3:
-      if(_itemCount.value < Number.MAX_SAFE_INTEGER)
+      if (_itemCount.value < Number.MAX_SAFE_INTEGER)
       _menuList.value[_menuSelect.value].sub.push({ separator: null })
       else
         window.alert('Maximum items reached!')

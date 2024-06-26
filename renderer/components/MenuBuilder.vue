@@ -39,15 +39,15 @@ const emit = defineEmits<{
  * @param idx Item index
  */
 const deleteItem = (item:any, idx:number):void => {
-  if(item.hasOwnProperty('label') && item.hasOwnProperty('sub')) {
-    if(window.confirm(`Are you sure you want to delete sub-menu '${item.label}' and all of its content?`)) {
+  if (item.hasOwnProperty('label') && item.hasOwnProperty('sub')) {
+    if (window.confirm(`Are you sure you want to delete sub-menu '${item.label}' and all of its content?`)) {
       _launchMenu.value.splice(idx, 1)
       emit('rebuild')
     }
     return
   }
-  if(item.hasOwnProperty('label') && item.hasOwnProperty('command')) {
-    if(window.confirm(`Delete command '${item.label}'?`))
+  if (item.hasOwnProperty('label') && item.hasOwnProperty('command')) {
+    if (window.confirm(`Delete command '${item.label}'?`))
       _launchMenu.value.splice(idx, 1)
     return
   }
@@ -59,7 +59,7 @@ const deleteItem = (item:any, idx:number):void => {
  * @param idx Index of item to move
  */
 const moveUp = (idx:number):void => {
-  if(idx <= 0) return
+  if (idx <= 0) return
   const elem = _launchMenu.value.splice(idx, 1)[0]
   _launchMenu.value.splice(--idx, 0, elem)
 }
@@ -69,7 +69,7 @@ const moveUp = (idx:number):void => {
  * @param idx Index of item to move
  */
 const moveDown = (idx:number):void => {
-  if(idx >= (_launchMenu.value.length - 1)) return
+  if (idx >= (_launchMenu.value.length - 1)) return
   const elem = _launchMenu.value.splice(idx, 1)[0]
   console.log(elem)
   _launchMenu.value.splice(++idx, 0, elem)

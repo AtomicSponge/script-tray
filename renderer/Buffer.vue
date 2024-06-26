@@ -64,7 +64,7 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       { code: `\x1b[107m`, style: `background-color: rgb(255, 255, 255);` }  //  Bright White
     ]
 
-    if(data.match(/\x1b\[.*?m/gi) === null) return data  //  Abort if nothing found
+    if (data.match(/\x1b\[.*?m/gi) === null) return data  //  Abort if nothing found
     data = data.replace(/\x1b\[0m/gi, '</span>')  //  Do the close span elements first
 
     const res = data.match(/\x1b\[.*?m/gi)
@@ -85,10 +85,10 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
       let skipIdx = 0  //  Number of elements to skip
       let next = 1  //  Lookahead counter
       let replaceStr = ``  //  CSS replacement string
-      if(idx < (res.length - 1)) {  // All but last element
+      if (idx < (res.length - 1)) {  // All but last element
         while (keepMatching) {  //  While the next element is in range
           //  Next element is directly ahead in string
-          if((data.indexOf(res[idx + next]) - res[idx + skipIdx].length) === data.indexOf(res[idx + skipIdx])) {
+          if ((data.indexOf(res[idx + next]) - res[idx + skipIdx].length) === data.indexOf(res[idx + skipIdx])) {
             termStyleLookup.forEach(style => {
               //  Process next element
               if (style.code === res[idx + next]) {
@@ -122,8 +122,8 @@ const formatText = (bufferData:Array<ScriptBufferData>):void => {
     //  Check for exta open/closed span tags and fix
     const countClosed = (data.match(/<\/span>/g) || []).length 
     const countOpened = (data.match(/<span/g) || []).length 
-    if(countOpened > countClosed) data += '</span>'.repeat(countOpened - countClosed)
-    if(countClosed > countOpened) data = '<span>'.repeat(countClosed - countOpened) + data
+    if (countOpened > countClosed) data += '</span>'.repeat(countOpened - countClosed)
+    if (countClosed > countOpened) data = '<span>'.repeat(countClosed - countOpened) + data
 
     return data
   }
