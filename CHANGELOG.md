@@ -1,5 +1,8 @@
 # Script Tray Changelog
 
+## Development branch
+  - Dependencies bump
+
 ## v2.0.2
   - Moved CSP to HTML
   - Added setting a zoom factor for the application
