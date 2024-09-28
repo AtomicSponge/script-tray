@@ -21,7 +21,7 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "vue": "^3.4.38"
+    "vue": "^3.5.10"
   },
   "devDependencies": {
     "@spongex/async-for-each": "^1.0.2",
@@ -30,15 +30,15 @@
     "@spongex/system-locale": "^1.0.1",
     "@types/auto-launch": "^5.0.5",
     "@types/electron-json-storage": "^4.5.4",
-    "@vitejs/plugin-vue": "^5.1.2",
+    "@vitejs/plugin-vue": "^5.1.4",
     "auto-launch": "^5.0.6",
-    "electron": "^32.0.1",
-    "electron-builder": "^24.13.3",
+    "electron": "^32.1.2",
+    "electron-builder": "^25.0.5",
     "electron-json-storage": "^4.6.0",
-    "typescript": "^5.5.4",
-    "vite": "^5.4.2",
-    "vite-plugin-electron": "^0.28.7",
-    "vite-plugin-electron-renderer": "^0.14.5",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vite-plugin-electron": "^0.28.8",
+    "vite-plugin-electron-renderer": "^0.14.6",
     "vite-plugin-multiple": "^0.2.0"
   }
 }
