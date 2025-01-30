@@ -32,7 +32,7 @@
     "@types/electron-json-storage": "^4.5.4",
     "@vitejs/plugin-vue": "^5.2.1",
     "auto-launch": "^5.0.6",
-    "electron": "^34.0.1",
+    "electron": "^34.0.2",
     "electron-builder": "^25.1.8",
     "electron-json-storage": "^4.6.0",
     "typescript": "^5.7.3",
