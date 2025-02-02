@@ -114,7 +114,7 @@ const saveSettings = (event:any):void => {
 /** Add a new item to the launch menu */
 const addItem = ():void => {
   //  Make sure array size will never equal MAX INT
-  if(_itemCount.value > Number.MAX_SAFE_INTEGER) {
+  if(_itemCount.value >= Number.MAX_SAFE_INTEGER) {
     window.alert('Maximum items reached!')
     return
   }
