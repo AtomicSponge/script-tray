@@ -140,13 +140,15 @@ const moveDown = (idx:number):void => {
     </v-row>
     <v-row v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
       <v-col>
-        <!-- Recursion call for submenu building, passes emit back to parent -->
-        <MenuBuilder
-          v-model:launch-menu="_launchMenu[idx].sub"
-          v-model:menu-list="_menuList"
-          @rebuild="$emit('rebuild')"
-          :menu-id="_launchMenu[idx].id">
-        </MenuBuilder>
+        <v-sheet color="rgb(36, 36, 36)" border="xl">
+          <!-- Recursion call for submenu building, passes emit back to parent -->
+          <MenuBuilder
+            v-model:launch-menu="_launchMenu[idx].sub"
+            v-model:menu-list="_menuList"
+            @rebuild="$emit('rebuild')"
+            :menu-id="_launchMenu[idx].id">
+          </MenuBuilder>
+        </v-sheet>
       </v-col>
     </v-row>
   </v-container>

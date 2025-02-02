@@ -52,8 +52,10 @@ const verifyCwd = () => {
         v-model="_trayCommand.command"
         @input="checkCmd"></v-text-field>
     </v-row>
-    <v-row v-show="_showCmdWarn" id="cmdWarn">
-      Warning:  Duplicate variable names detected in command!
+    <v-row v-show="_showCmdWarn">
+      <v-sheet border color="error">
+        Warning:  Duplicate variable names detected in command!
+      </v-sheet>
     </v-row>
     <v-row>
       <v-text-field
