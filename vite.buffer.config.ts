@@ -9,7 +9,7 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: false,
     minify: false,
-    rollupOptions: { input: path.join(__dirname, 'html/settings.html') }
+    rollupOptions: { input: path.join(__dirname, 'html/buffer.html') }
   },
   esbuild: {
     target: 'esnext'

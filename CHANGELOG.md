@@ -1,6 +1,8 @@
 # Script Tray Changelog
 
 ## Development branch
+  - Implementing Vuetify
+  - General code improvements
   - Dependencies bump
 
 ## v2.0.2

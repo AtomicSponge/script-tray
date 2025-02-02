@@ -8,7 +8,10 @@
  */
 
 import { createApp } from 'vue'
+import { registerPlugins } from '../plugins'
 import SettingsApp from './Settings.vue'
 import './style.css'
 
-createApp(SettingsApp).mount('#app')
+const app = createApp(SettingsApp)
+registerPlugins(app)
+app.mount('#app')

@@ -8,7 +8,10 @@
  */
 
 import { createApp } from 'vue'
+import { registerPlugins } from '../plugins'
 import JobMgrApp from './JobMgr.vue'
 import './style.css'
 
-createApp(JobMgrApp).mount('#app')
+const app = createApp(JobMgrApp)
+registerPlugins(app)
+app.mount('#app')

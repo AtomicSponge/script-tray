@@ -41,7 +41,7 @@ onMounted(() => {
         <td>{{ item.command }}</td>
         <td>{{ item.start }}</td>
         <td>
-          <button @click="termJob(item.pid)">TERM</button>
+          <v-btn @click="termJob(item.pid)">TERM</v-btn>
         </td>
       </tr>
     </table>

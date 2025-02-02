@@ -21,9 +21,9 @@ const _encodingSelect = ref()
 /** Select menu for zoom factor */
 const _zoomSelect = ref()
 /** Select menu for adding a new item */
-const _newItemSelect = ref(1)
+const _newItemSelect = ref('Command Launcher')
 /** Select menu for menu option when adding a new item */
-const _menuSelect = ref(0)
+const _menuSelect = ref()
 /** Array containing a reference to menu items */
 const _menuList = ref()
 /** Total count of all menu items */
@@ -114,35 +114,27 @@ const saveSettings = (event:any):void => {
 
 /** Add a new item to the launch menu */
 const addItem = ():void => {
-  switch(Number(_newItemSelect.value)) {
-    case 1:
-      if (_itemCount.value < Number.MAX_SAFE_INTEGER) {
-        _menuList.value[_menuSelect.value].sub.push({
-          label: 'New Label', command: 'New Command',
-          args: [], cwd: 'default'
-        })
-      } else {
-        window.alert('Maximum items reached!')
-      }
+  //  Make sure array size will never equal MAX INT
+  if(_itemCount.value > Number.MAX_SAFE_INTEGER) {
+    window.alert('Maximum items reached!')
+    return
+  }
+  switch(_newItemSelect.value) {
+    case 'Command Launcher':
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value.id})].sub.push({
+        label: 'New Label', command: 'New Command',
+        args: [], cwd: 'default'
+      })
       return
-    case 2:
-      //  Make sure array size will never equal MAX INT
-      if (_menuList.value.length < Number.MAX_SAFE_INTEGER &&
-          _itemCount.value < Number.MAX_SAFE_INTEGER) {
-        _menuList.value[_menuSelect.value].sub.push({
-          id: randomFixedInteger(16),
-          label: 'New Sub Menu', sub: []
-        })
-        buildMenuList()
-      } else {
-        window.alert('Maximum items reached!')
-      }
+    case 'Sub Menu':
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value.id})].sub.push({
+        id: randomFixedInteger(16),
+        label: 'New Sub Menu', sub: []
+      })
+      buildMenuList()
       return
-    case 3:
-      if (_itemCount.value < Number.MAX_SAFE_INTEGER)
-        _menuList.value[_menuSelect.value].sub.push({ separator: null })
-      else
-        window.alert('Maximum items reached!')
+    case 'Separator':
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value.id})].sub.push({ separator: null })
       return
     default:
       return
@@ -176,97 +168,33 @@ onMounted(() => {
 </script>
 
 <template>
-<section>
+  <v-container>
+    <v-row>
+      <v-checkbox label="Load on startup" v-model="_startup"></v-checkbox>
+      <v-select label="System Encoding" :items="_encodingTypes" v-model="_encodingSelect"></v-select>
+      <v-spacer></v-spacer>
+      <v-btn @click="resetSettings">Reset Settings</v-btn>
+      <v-btn @click="saveSettings">Save Settings</v-btn>
+    </v-row>
+  </v-container>
 
-  <header>
-    <div class="left">
-      <input type="checkbox" id="startupInput" v-model="_startup"/>
-      <label for="startupInput">Load on startup</label>
-      &emsp;&emsp;
-      <label for="encodingSelect">System Encoding:</label>
-      <select id="encodingSelect" v-model="_encodingSelect">
-        <option v-for="item in _encodingTypes" :value=item>{{ item }}</option>
-      </select>
-    </div>
+  <v-container>
+    <v-row>
+      <v-select label="Menu location" :items="_menuList" :item-title="'label'" v-model="_menuSelect" return-object></v-select>
+      <v-select label="Item type" :items="['Command Launcher', 'Sub Menu', 'Separator']" v-model="_newItemSelect"></v-select>
+      <v-btn @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</v-btn>
+      <v-spacer></v-spacer>
+      <v-select label="Zoom" :items="_zoomLevels" v-model="_zoomSelect"></v-select>
+      <v-text-field label="Buffer Size" v-model="_bufferSize" :title="_tooltips.buffer"></v-text-field>
+    </v-row>
+  </v-container>
 
-    <div class="right">
-      <button @click="resetSettings">Reset Settings</button>
-      &nbsp;
-      <button @click="saveSettings">Save Settings</button>
-    </div>
-  </header>
-
-  <div id="menuContents">
+  <v-container>
     <MenuBuilder
       v-model:launch-menu="_launchMenu"
       v-model:menu-list="_menuList"
       @rebuild="buildMenuList"
       :menu-id="Number.MAX_SAFE_INTEGER">  <!-- Main menu starts at MAX INT -->
     </MenuBuilder>
-  </div>
-
-  <footer>
-    <div class="left">
-      <select id="menuSelect" v-model="_menuSelect" :title="_tooltips.newMenu" data-toggle="tooltip">
-        <option v-for="(item, idx) in _menuList" :key=idx :value=idx>
-          {{ item.label }}
-        </option>
-      </select>
-      <select v-model="_newItemSelect" :title="_tooltips.newMenu" data-toggle="tooltip">
-        <option value="1">Command Launcher</option>
-        <option value="2">Sub Menu</option>
-        <option value="3">Separator</option>
-      </select>
-      <button @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</button>
-    </div>
-
-    <div class="right">
-      <label for="zoomSelect" :title="_tooltips.zoom" data-toggle="tooltip">Zoom:</label>
-      <select id="zoomSelect" v-model="_zoomSelect" :title="_tooltips.zoom" data-toggle="tooltip">
-        <option v-for="item in _zoomLevels" :value="item">{{ item }}</option>
-      </select>
-      &emsp;&emsp;
-      <label for="bufferInput" :title="_tooltips.buffer" data-toggle="tooltip">Buffer Size:</label>
-      <input type="text" id="bufferInput" size="3" v-model="_bufferSize" :title="_tooltips.buffer" data-toggle="tooltip"/>
-    </div>
-  </footer>
-
-</section>
+  </v-container>
 </template>
-
-<style scoped>
-section {
-  display: flex;
-  flex-flow: column;
-  align-items: stretch;
-  height: 100vh;
-}
-header {
-  padding: 2px;
-  padding-bottom: 6px;
-}
-#menuContents {
-  flex: auto;
-  overflow: auto;
-}
-footer {
-  padding: 2px;
-  padding-top: 4px;
-}
-select {
-  font-size: medium;
-}
-#menuSelect {
-  width: 160px;
-}
-#bufferInput {
-  margin-left: 4px;
-  margin-right: 4px;
-}
-.left {
-  float: left;
-}
-.right {
-  float: right;
-}
-</style>

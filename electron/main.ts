@@ -77,48 +77,6 @@ let inputWin:BrowserWindow | null
 let jobMgrWin:BrowserWindow | null
 let appTray:Tray | null
 
-/** Window for output buffer */
-const bufferWindow = ():void => {
-  bufferWin = new BrowserWindow({
-    icon: appInfo.icon,
-    title: `${appInfo.name} - Output Buffer`,
-    width: 800,
-    height: 600,
-    fullscreen: false,
-    fullscreenable: false,
-    autoHideMenuBar: true,
-    webPreferences: {
-      devTools: (process.env.VITE_DEV_SERVER_URL) ? true : false,
-      nodeIntegration: false,
-      contextIsolation: true,
-      sandbox: true,
-      images: false,
-      webgl: false,
-      enableWebSQL: false,
-      spellcheck: false,
-      preload: path.join(MAIN_DIST, 'preload.js')
-    }
-  })
-  bufferWin.once('ready-to-show', () => {
-    bufferWin?.webContents.setZoomFactor(appSettings.zoomFactor)
-  })
-  bufferWin.webContents.on('did-finish-load', () => {
-    bufferWin?.webContents.send('send-buffer-data', resBuff.read())
-  })
-
-  //  Send when the buffer updates
-  resBuff.on('script-buffer-updated', () => {
-    bufferWin?.webContents.send('send-buffer-data', resBuff.read())
-  })
-  resBuff.on('error', (error:any) => {
-    dialog.showErrorBox(`${appInfo.name}`, `Buffer Event Error:  ${error.message}`)
-  })
-
-  {(process.env.VITE_DEV_SERVER_URL) ?
-    bufferWin.loadURL(path.posix.join(process.env.VITE_DEV_SERVER_URL, 'html/buffer.html')) :
-    bufferWin.loadFile(path.join(RENDERER_DIST, 'html', 'buffer.html'))}
-}
-
 /** Window for editing settings */
 const settingsEditorWindow = ():void => {
   settingsWin = new BrowserWindow({
@@ -163,7 +121,7 @@ const settingsEditorWindow = ():void => {
     }
   })
   {(process.env.VITE_DEV_SERVER_URL) ?
-    settingsWin.loadURL('http://localhost:5174/html/settings.html') :
+    settingsWin.loadURL(path.posix.join(process.env.VITE_DEV_SERVER_URL, 'html', 'settings.html')) :
     settingsWin.loadFile(path.join(RENDERER_DIST, 'html', 'settings.html'))}
 }
 
@@ -250,6 +208,48 @@ ipcMain.on('verify-cwd', (_event, data) => {
     verifyDialog(`Path "${data}" does not exist!`, `warning`)
   }
 })
+
+/** Window for output buffer */
+const bufferWindow = ():void => {
+  bufferWin = new BrowserWindow({
+    icon: appInfo.icon,
+    title: `${appInfo.name} - Output Buffer`,
+    width: 800,
+    height: 600,
+    fullscreen: false,
+    fullscreenable: false,
+    autoHideMenuBar: true,
+    webPreferences: {
+      devTools: (process.env.VITE_DEV_SERVER_URL) ? true : false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: true,
+      images: false,
+      webgl: false,
+      enableWebSQL: false,
+      spellcheck: false,
+      preload: path.join(MAIN_DIST, 'preload.js')
+    }
+  })
+  bufferWin.once('ready-to-show', () => {
+    bufferWin?.webContents.setZoomFactor(appSettings.zoomFactor)
+  })
+  bufferWin.webContents.on('did-finish-load', () => {
+    bufferWin?.webContents.send('send-buffer-data', resBuff.read())
+  })
+
+  //  Send when the buffer updates
+  resBuff.on('script-buffer-updated', () => {
+    bufferWin?.webContents.send('send-buffer-data', resBuff.read())
+  })
+  resBuff.on('error', (error:any) => {
+    dialog.showErrorBox(`${appInfo.name}`, `Buffer Event Error:  ${error.message}`)
+  })
+
+  {(process.env.VITE_DEV_SERVER_URL) ?
+    bufferWin.loadURL('http://localhost:5174/html/buffer.html') :
+    bufferWin.loadFile(path.join(RENDERER_DIST, 'html', 'buffer.html'))}
+}
 
 /** Window for argument input */
 const inputWindow = (data:InputPromptData):void => {
