@@ -82,8 +82,8 @@ const settingsEditorWindow = ():void => {
   settingsWin = new BrowserWindow({
     icon: appInfo.icon,
     title: `${appInfo.name} - Settings`,
-    width: 940,
-    height: 740,
+    width: 1024,
+    height: 768,
     fullscreen: false,
     fullscreenable: false,
     autoHideMenuBar: true,

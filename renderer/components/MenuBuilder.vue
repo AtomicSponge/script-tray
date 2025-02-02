@@ -89,7 +89,7 @@ const moveDown = (idx:number):void => {
  */
  const moveMenus = (idx:number):void => {
   const elem = _launchMenu.value.splice(idx, 1)[0]
-  _menuList.value[_moveMenuSelect.value].sub.push(elem)
+  _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _moveMenuSelect.value })].sub.push(elem)
 }
 </script>
 
@@ -140,7 +140,7 @@ const moveDown = (idx:number):void => {
           :item-title="'label'"
           :item-value="'id'"
           :model-value="_moveMenuSelect"></v-select>
-        <v-btn @click="moveMenus">Move</v-btn>
+        <v-btn @click="moveMenus(idx)">Move</v-btn>
       </div>
     </td>
   </tr>
@@ -148,9 +148,6 @@ const moveDown = (idx:number):void => {
 </template>
 
 <style scoped>
-button {
-  font-size: 0.66em;
-}
 table {
   margin-left: 16px;
   border-collapse: collapse;

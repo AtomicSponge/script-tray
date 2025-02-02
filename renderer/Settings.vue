@@ -125,20 +125,20 @@ const addItem = ():void => {
   }
   switch(_newItemSelect.value) {
     case _menuTypes[0]:
-      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value })].sub.push({
         label: 'New Label', command: 'New Command',
         args: [], cwd: 'default'
       })
       return
     case _menuTypes[1]:
-      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value })].sub.push({
         id: randomFixedInteger(16),
         label: 'New Sub Menu', sub: []
       })
       buildMenuList()
       return
     case _menuTypes[2]:
-      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({ separator: null })
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value })].sub.push({ separator: null })
       return
     default:
       return
@@ -195,21 +195,21 @@ onMounted(() => {
         :items="_menuList"
         :item-title="'label'"
         :item-value="'id'"
-        :model-value="_menuSelect"></v-select>
+        v-model="_menuSelect"></v-select>
       <v-select
         label="Item type"
         :items="_menuTypes"
-        :model-value="_newItemSelect"></v-select>
+        v-model="_newItemSelect"></v-select>
       <v-btn @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</v-btn>
       <v-spacer></v-spacer>
       <v-select
         label="Zoom Level"
         :items="_zoomLevels"
-        :model-value="_zoomSelect"></v-select>
+        v-model="_zoomSelect"></v-select>
       <v-text-field
         label="Buffer Size"
         :title="_tooltips.buffer"
-        :model-value="_bufferSize"></v-text-field>
+        v-model="_bufferSize"></v-text-field>
     </v-row>
   </v-container>
 
