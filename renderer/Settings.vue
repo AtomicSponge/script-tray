@@ -32,8 +32,7 @@ const _itemCount = ref()
 /** Tooltip strings used in menu display */
 const _tooltips = {
   buffer: 'The number of processed commands to store in the buffer',
-  newMenu: 'Add a new item to the selected menu',
-  zoom: 'Sets the application zoom level'
+  newMenu: 'Add a new item to the selected menu'
 }
 
 /** Allowed encoding types */
@@ -184,7 +183,7 @@ onMounted(() => {
       <v-select label="Item type" :items="['Command Launcher', 'Sub Menu', 'Separator']" v-model="_newItemSelect"></v-select>
       <v-btn @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</v-btn>
       <v-spacer></v-spacer>
-      <v-select label="Zoom" :items="_zoomLevels" v-model="_zoomSelect"></v-select>
+      <v-select label="Zoom Level" :items="_zoomLevels" v-model="_zoomSelect"></v-select>
       <v-text-field label="Buffer Size" v-model="_bufferSize" :title="_tooltips.buffer"></v-text-field>
     </v-row>
   </v-container>
