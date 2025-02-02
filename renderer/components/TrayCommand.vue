@@ -29,7 +29,7 @@ const checkCmd = () => {
 /** Tooltip strings used in tray cmd display */
 const _tooltips = {
   command: 'Enter running command\n\nTo prompt for input arguments, use the variable format:\n?<| varname |>',
-  cwd: 'Current working directory'
+  cwd: 'Location to run script in'
 }
 
 /** Verify the current working directory */
@@ -39,53 +39,35 @@ const verifyCwd = () => {
 </script>
 
 <template>
-<section>
-<table>
-  <tr>
-    <td><label for="cmdLabel">Label:</label></td>
-    <td><input type="text" v-model="_trayCommand.label" id="cmdLabel"/></td>
-  </tr>
-  <tr>
-    <td>
-      <label for="cmdCommand" :title="_tooltips.command" data-toggle="tooltip">Command:</label>
-    </td>
-    <td>
-      <input type="text" v-model="_trayCommand.command" @input="checkCmd" id="cmdCommand" :title="_tooltips.command" data-toggle="tooltip"/>
-    </td>
-  </tr>
-  <tr v-show="_showCmdWarn" id="cmdWarn">
-    <td colspan="2">Warning:  Duplicate variable names detected in command!</td>
-  </tr>
-  <tr>
-    <td><label for="cmdCwd" :title="_tooltips.cwd" data-toggle="tooltip">CWD:</label></td>
-    <td>
-      <input type="text" v-model="_trayCommand.cwd" id="cmdCwd" :title="_tooltips.cwd" data-toggle="tooltip"/>
-      <button @click="verifyCwd">Verify</button>
-    </td>
-  </tr>
-</table>
-</section>
+<v-container>
+  <v-row>
+    <v-text-field
+      label="Label"  
+      v-model="_trayCommand.label"></v-text-field>
+  </v-row>
+  <v-row>
+    <v-text-field
+      label="Command"
+      :title="_tooltips.command"
+      v-model="_trayCommand.command"
+      @input="checkCmd"></v-text-field>
+  </v-row>
+  <v-row v-show="_showCmdWarn" id="cmdWarn">
+    Warning:  Duplicate variable names detected in command!
+  </v-row>
+  <v-row>
+    <v-text-field
+      label="Working Directory"
+      :title="_tooltips.cwd"
+      v-model="_trayCommand.cwd"></v-text-field>
+    <v-btn @click="verifyCwd">Verify</v-btn>
+  </v-row>
+</v-container>
 </template>
 
 <style scoped>
-table {
-  table-layout: fixed;
-}
-#cmdLabel {
-  width: 200px;
-}
-#cmdCommand {
-  width: 320px;
-}
-#cmdCwd {
-  width: 200px;
-}
 #cmdWarn {
   color: rgb(255, 0, 0);
   font-style: italic;
-}
-button {
-  vertical-align: top;
-  font-size: 0.6em;
 }
 </style>
