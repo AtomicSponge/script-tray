@@ -113,7 +113,7 @@ const moveDown = (idx:number):void => {
           <v-btn v-show="idx < (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</v-btn>
           <v-btn @click="deleteItem(_launchMenu[idx], idx)">Delete</v-btn>
         </v-sheet>
-        <v-sheet v-show="_menuList.length > 1" class="moveMenu">
+        <v-sheet v-show="_menuList.length > 1">
           <!-- Render select for a submenu item -->
           <!--<select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_moveMenuSelect">
             <option v-for="(_item, _idx) in _menuList" v-show="_item.id !== props.menuId && _item.id !== _launchMenu[idx].id" :key=_idx :value=_idx>
@@ -140,7 +140,7 @@ const moveDown = (idx:number):void => {
     </v-row>
     <v-row v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
       <v-col>
-        <v-sheet color="rgb(36, 36, 36)" border="xl">
+        <v-sheet color="rgb(48, 48, 48)" border="xl">
           <!-- Recursion call for submenu building, passes emit back to parent -->
           <MenuBuilder
             v-model:launch-menu="_launchMenu[idx].sub"
