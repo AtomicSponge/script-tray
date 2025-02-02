@@ -53,7 +53,7 @@ const verifyCwd = () => {
         @input="checkCmd"></v-text-field>
     </v-row>
     <v-row v-show="_showCmdWarn">
-      <v-sheet border color="error">
+      <v-sheet color="error">
         Warning:  Duplicate variable names detected in command!
       </v-sheet>
     </v-row>
@@ -66,10 +66,3 @@ const verifyCwd = () => {
     </v-row>
   </v-container>
 </template>
-
-<style scoped>
-#cmdWarn {
-  color: rgb(255, 0, 0);
-  font-style: italic;
-}
-</style>
