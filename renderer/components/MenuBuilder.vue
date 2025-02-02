@@ -95,17 +95,10 @@ const moveDown = (idx:number):void => {
 </script>
 
 <template>
-  <v-container>
-    <v-row v-for="(item, idx) in _launchMenu" :key=idx>
+  <v-container v-for="(item, idx) in _launchMenu" :key=idx>
+    <v-row>
       <v-col v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
         <SubMenu v-model="_launchMenu[idx]"/>
-        <!-- Recursion call for submenu building, passes emit back to parent -->
-        <MenuBuilder
-          v-model:launch-menu="_launchMenu[idx].sub"
-          v-model:menu-list="_menuList"
-          @rebuild="$emit('rebuild')"
-          :menu-id="_launchMenu[idx].id">
-        </MenuBuilder>
       </v-col>
       <v-col v-else-if="item.hasOwnProperty('label') && item.hasOwnProperty('command')">
         <TrayCommand v-model="_launchMenu[idx]"/>
@@ -143,6 +136,17 @@ const moveDown = (idx:number):void => {
             v-model="_moveMenuSelect"></v-select>
           <v-btn @click="moveMenus(idx)">Move</v-btn>
         </v-sheet>
+      </v-col>
+    </v-row>
+    <v-row v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
+      <v-col>
+        <!-- Recursion call for submenu building, passes emit back to parent -->
+        <MenuBuilder
+          v-model:launch-menu="_launchMenu[idx].sub"
+          v-model:menu-list="_menuList"
+          @rebuild="$emit('rebuild')"
+          :menu-id="_launchMenu[idx].id">
+        </MenuBuilder>
       </v-col>
     </v-row>
   </v-container>
