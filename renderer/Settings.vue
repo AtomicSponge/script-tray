@@ -172,7 +172,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-checkbox
         label="Load on startup"
@@ -188,7 +188,7 @@ onMounted(() => {
     </v-row>
   </v-container>
 
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-select
         label="Menu location"
@@ -213,7 +213,7 @@ onMounted(() => {
     </v-row>
   </v-container>
 
-  <v-container>
+  <v-container fluid>
     <MenuBuilder
       v-model:launch-menu="_launchMenu"
       v-model:menu-list="_menuList"

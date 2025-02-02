@@ -95,7 +95,7 @@ const moveDown = (idx:number):void => {
 </script>
 
 <template>
-  <v-container v-for="(item, idx) in _launchMenu" :key=idx>
+  <v-container v-for="(item, idx) in _launchMenu" :key=idx fluid>
     <v-row>
       <v-col v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
         <SubMenu v-model="_launchMenu[idx]"/>
