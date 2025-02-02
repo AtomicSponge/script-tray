@@ -5,7 +5,7 @@
 -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { ModelRef } from 'vue'
 
 import TrayCommand from './TrayCommand.vue'
@@ -24,6 +24,14 @@ const _moveMenuSelect = ref()
  * @prop menuId Reference ID to the current menu being built
  */
 const props = defineProps<{ menuId:number }>()
+
+const _computedMenuListA = computed(() => {
+  return _menuList.value.filter((item:any) => item.id === props.menuId)
+})
+
+const _computedMenuListB = computed(() => {
+  return _menuList.value.filter((item:any) => item.id !== props.menuId)
+})
 
 /**
  * Event emitters
@@ -109,24 +117,30 @@ const moveDown = (idx:number):void => {
     <td v-else class="item">&nbsp;</td>  <!-- Render error handling -->
     <td class="delBtn">
       <div>
-        <button v-show="idx > 0" @click="moveUp(idx)">&#8593;</button>
-        <button v-show="idx < (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</button>
-        <button @click="deleteItem(_launchMenu[idx], idx)">Delete</button>
+        <v-btn v-show="idx > 0" @click="moveUp(idx)">&#8593;</v-btn>
+        <v-btn v-show="idx < (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</v-btn>
+        <v-btn @click="deleteItem(_launchMenu[idx], idx)">Delete</v-btn>
       </div>
       <div v-show="_menuList.length > 0" class="moveMenu">
-        <button @click="moveMenus(idx)">Move</button>
         <!-- Render select for a submenu item -->
-        <select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_moveMenuSelect">
+        <!--<select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_moveMenuSelect">
           <option v-for="(_item, _idx) in _menuList" v-show="_item.id !== props.menuId && _item.id !== _launchMenu[idx].id" :key=_idx :value=_idx>
             {{ _item.label }}
           </option>
-        </select>
+        </select>-->
+        <v-select
+          v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')"
+          :items="_computedMenuListA"
+          :item-title="'label'"
+          :item-value="'id'"
+          :model-value="_moveMenuSelect"></v-select>
         <!-- Render select for all other non submenu items -->
-        <select v-else id="moveSelect" v-model="_moveMenuSelect">
-          <option v-for="(_item, _idx) in _menuList" v-show="_item.id !== props.menuId" :key=_idx :value=_idx>
-            {{ _item.label }}
-          </option>
-        </select>
+        <v-select v-else
+          :items="_computedMenuListB"
+          :item-title="'label'"
+          :item-value="'id'"
+          :model-value="_moveMenuSelect"></v-select>
+        <v-btn @click="moveMenus">Move</v-btn>
       </div>
     </td>
   </tr>

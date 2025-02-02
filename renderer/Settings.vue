@@ -174,8 +174,13 @@ onMounted(() => {
 <template>
   <v-container>
     <v-row>
-      <v-checkbox label="Load on startup" v-model="_startup"></v-checkbox>
-      <v-select label="System Encoding" :items="_encodingTypes" v-model="_encodingSelect"></v-select>
+      <v-checkbox
+        label="Load on startup"
+        v-model="_startup"></v-checkbox>
+      <v-select
+        label="System Encoding"
+        :items="_encodingTypes"
+        v-model="_encodingSelect"></v-select>
       <v-spacer></v-spacer>
       <v-btn @click="resetSettings">Reset Settings</v-btn>
       &nbsp;&nbsp;
@@ -185,12 +190,26 @@ onMounted(() => {
 
   <v-container>
     <v-row>
-      <v-select label="Menu location" :items="_menuList" :item-title="'label'" :item-value="'id'" v-model="_menuSelect"></v-select>
-      <v-select label="Item type" :items="_menuTypes" v-model="_newItemSelect"></v-select>
+      <v-select
+        label="Menu location"
+        :items="_menuList"
+        :item-title="'label'"
+        :item-value="'id'"
+        :model-value="_menuSelect"></v-select>
+      <v-select
+        label="Item type"
+        :items="_menuTypes"
+        :model-value="_newItemSelect"></v-select>
       <v-btn @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</v-btn>
       <v-spacer></v-spacer>
-      <v-select label="Zoom Level" :items="_zoomLevels" v-model="_zoomSelect"></v-select>
-      <v-text-field label="Buffer Size" v-model="_bufferSize" :title="_tooltips.buffer"></v-text-field>
+      <v-select
+        label="Zoom Level"
+        :items="_zoomLevels"
+        :model-value="_zoomSelect"></v-select>
+      <v-text-field
+        label="Buffer Size"
+        :title="_tooltips.buffer"
+        :model-value="_bufferSize"></v-text-field>
     </v-row>
   </v-container>
 
