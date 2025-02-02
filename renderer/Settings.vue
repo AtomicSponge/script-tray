@@ -10,6 +10,7 @@ import { testNumeric } from '@spongex/regexps'
 
 import MenuBuilder from './components/MenuBuilder.vue'
 
+/** Allowed menu types - used in drop-down */
 const _menuTypes = [
   'Command Launcher', 'Sub Menu', 'Separator'
 ]
@@ -27,7 +28,7 @@ const _zoomSelect = ref()
 /** Select menu for adding a new item */
 const _newItemSelect = ref(_menuTypes[0])
 /** Select menu for menu option when adding a new item */
-const _menuSelect = ref()
+const _menuSelect = ref(Number.MAX_SAFE_INTEGER)
 /** Array containing a reference to menu items */
 const _menuList = ref()
 /** Total count of all menu items */
@@ -77,7 +78,7 @@ const buildMenuList = ():void => {
   }
 
   buildMenu(_launchMenu.value)
-  _menuSelect.value = 0
+  //_menuSelect.value = 0
 }
 
 /** Parse data from the settings window */
@@ -177,6 +178,7 @@ onMounted(() => {
       <v-select label="System Encoding" :items="_encodingTypes" v-model="_encodingSelect"></v-select>
       <v-spacer></v-spacer>
       <v-btn @click="resetSettings">Reset Settings</v-btn>
+      &nbsp;&nbsp;
       <v-btn @click="saveSettings">Save Settings</v-btn>
     </v-row>
   </v-container>
