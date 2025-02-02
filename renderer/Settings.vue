@@ -10,6 +10,10 @@ import { testNumeric } from '@spongex/regexps'
 
 import MenuBuilder from './components/MenuBuilder.vue'
 
+const _menuTypes = [
+  'Command Launcher', 'Sub Menu', 'Separator'
+]
+
 /** Entire menu contents for displaying in settings */
 const _launchMenu = ref()
 /** Buffer size amount */
@@ -21,7 +25,7 @@ const _encodingSelect = ref()
 /** Select menu for zoom factor */
 const _zoomSelect = ref()
 /** Select menu for adding a new item */
-const _newItemSelect = ref('Command Launcher')
+const _newItemSelect = ref(_menuTypes[0])
 /** Select menu for menu option when adding a new item */
 const _menuSelect = ref()
 /** Array containing a reference to menu items */
@@ -119,20 +123,20 @@ const addItem = ():void => {
     return
   }
   switch(_newItemSelect.value) {
-    case 'Command Launcher':
+    case _menuTypes[0]:
       _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({
         label: 'New Label', command: 'New Command',
         args: [], cwd: 'default'
       })
       return
-    case 'Sub Menu':
+    case _menuTypes[1]:
       _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({
         id: randomFixedInteger(16),
         label: 'New Sub Menu', sub: []
       })
       buildMenuList()
       return
-    case 'Separator':
+    case _menuTypes[2]:
       _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({ separator: null })
       return
     default:
@@ -180,7 +184,7 @@ onMounted(() => {
   <v-container>
     <v-row>
       <v-select label="Menu location" :items="_menuList" :item-title="'label'" :item-value="'id'" v-model="_menuSelect"></v-select>
-      <v-select label="Item type" :items="['Command Launcher', 'Sub Menu', 'Separator']" v-model="_newItemSelect"></v-select>
+      <v-select label="Item type" :items="_menuTypes" v-model="_newItemSelect"></v-select>
       <v-btn @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</v-btn>
       <v-spacer></v-spacer>
       <v-select label="Zoom Level" :items="_zoomLevels" v-model="_zoomSelect"></v-select>
