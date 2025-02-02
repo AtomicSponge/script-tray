@@ -94,9 +94,9 @@ const moveDown = (idx:number):void => {
 </script>
 
 <template>
-<table>
-  <tr v-for="(item, idx) in _launchMenu" :key=idx class="itemrow">
-    <td v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" class="item">
+<v-container>
+  <v-row v-for="(item, idx) in _launchMenu" :key=idx>
+    <v-col v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
       <hr class="subDiv"/>
       <SubMenu v-model="_launchMenu[idx]"/>
       <hr class="subDiv"/>
@@ -107,15 +107,15 @@ const moveDown = (idx:number):void => {
         @rebuild="$emit('rebuild')"
         :menu-id="_launchMenu[idx].id">
       </MenuBuilder>
-    </td>
-    <td v-else-if="item.hasOwnProperty('label') && item.hasOwnProperty('command')" class="item">
+    </v-col>
+    <v-col v-else-if="item.hasOwnProperty('label') && item.hasOwnProperty('command')">
       <TrayCommand v-model="_launchMenu[idx]"/>
-    </td>
-    <td v-else-if="item.hasOwnProperty('separator')" class="item">
+    </v-col>
+    <v-col v-else-if="item.hasOwnProperty('separator')">
       <Separator v-model="_launchMenu[idx]"/>
-    </td>
-    <td v-else class="item">&nbsp;</td>  <!-- Render error handling -->
-    <td class="delBtn">
+    </v-col>
+    <v-col v-else>&nbsp;</v-col>  <!-- Render error handling -->
+    <v-col>
       <div>
         <v-btn v-show="idx > 0" @click="moveUp(idx)">&#8593;</v-btn>
         <v-btn v-show="idx < (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</v-btn>
@@ -133,47 +133,25 @@ const moveDown = (idx:number):void => {
           :items="_computedMenuListA"
           :item-title="'label'"
           :item-value="'id'"
+          :width="200"
           :model-value="_moveMenuSelect"></v-select>
         <!-- Render select for all other non submenu items -->
         <v-select v-else
           :items="_computedMenuListB"
           :item-title="'label'"
           :item-value="'id'"
+          :width="200"
           :model-value="_moveMenuSelect"></v-select>
         <v-btn @click="moveMenus(idx)">Move</v-btn>
       </div>
-    </td>
-  </tr>
-</table>
+    </v-col>
+  </v-row>
+</v-container>
 </template>
 
 <style scoped>
-table {
-  margin-left: 16px;
-  border-collapse: collapse;
-  border: 1px solid rgb(100, 100, 100, 0.1);
-  border-left: 8px solid rgb(100, 100, 100, 0.1);
-}
-.itemrow {
-  border: 1px solid rgb(100, 100, 100, 0.1);
-}
+
 .subDiv {
   border: 1px dashed rgba(255, 255, 255, 0.87);
-}
-.item {
-  text-align: left;
-  padding: 6px;
-}
-.delBtn {
-  text-align: right;
-  vertical-align: top;
-  padding: 6px;
-}
-.moveMenu {
-  padding-top: 2px;
-  font-size: 0.66em;
-}
-#moveSelect {
-  font-size: 0.96em;
 }
 </style>
