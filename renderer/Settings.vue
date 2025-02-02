@@ -121,20 +121,20 @@ const addItem = ():void => {
   }
   switch(_newItemSelect.value) {
     case 'Command Launcher':
-      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value.id})].sub.push({
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({
         label: 'New Label', command: 'New Command',
         args: [], cwd: 'default'
       })
       return
     case 'Sub Menu':
-      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value.id})].sub.push({
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({
         id: randomFixedInteger(16),
         label: 'New Sub Menu', sub: []
       })
       buildMenuList()
       return
     case 'Separator':
-      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value.id})].sub.push({ separator: null })
+      _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _menuSelect.value})].sub.push({ separator: null })
       return
     default:
       return
@@ -180,7 +180,7 @@ onMounted(() => {
 
   <v-container>
     <v-row>
-      <v-select label="Menu location" :items="_menuList" :item-title="'label'" v-model="_menuSelect" return-object></v-select>
+      <v-select label="Menu location" :items="_menuList" :item-title="'label'" :item-value="'id'" v-model="_menuSelect"></v-select>
       <v-select label="Item type" :items="['Command Launcher', 'Sub Menu', 'Separator']" v-model="_newItemSelect"></v-select>
       <v-btn @click="addItem" :title="_tooltips.newMenu" data-toggle="tooltip">Add</v-btn>
       <v-spacer></v-spacer>
