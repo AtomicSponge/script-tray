@@ -12,19 +12,11 @@ const _subMenu:ModelRef<SubMenu> = defineModel({ required: true })
 </script>
 
 <template>
-  <div class="submenu">
-    <label for="submenu">Submenu:</label>
-    <input type="text" v-model="_subMenu.label" id="submenu"/>
-  </div>
+  <v-container>
+    <v-row>
+      <v-text-field
+        label="Submenu Label"
+        v-model="_subMenu.label"></v-text-field>
+    </v-row>
+  </v-container>
 </template>
-
-<style scoped>
-.submenu {
-  margin-top: 2px;
-  margin-left: 2px;
-}
-#submenu {
-  margin-left: 12px;
-  width: 200px
-}
-</style>

@@ -39,30 +39,30 @@ const verifyCwd = () => {
 </script>
 
 <template>
-<v-container>
-  <v-row>
-    <v-text-field
-      label="Label"  
-      v-model="_trayCommand.label"></v-text-field>
-  </v-row>
-  <v-row>
-    <v-text-field
-      label="Command"
-      :title="_tooltips.command"
-      v-model="_trayCommand.command"
-      @input="checkCmd"></v-text-field>
-  </v-row>
-  <v-row v-show="_showCmdWarn" id="cmdWarn">
-    Warning:  Duplicate variable names detected in command!
-  </v-row>
-  <v-row>
-    <v-text-field
-      label="Working Directory"
-      :title="_tooltips.cwd"
-      v-model="_trayCommand.cwd"></v-text-field>
-    <v-btn @click="verifyCwd">Verify</v-btn>
-  </v-row>
-</v-container>
+  <v-container>
+    <v-row>
+      <v-text-field
+        label="Label"  
+        v-model="_trayCommand.label"></v-text-field>
+    </v-row>
+    <v-row>
+      <v-text-field
+        label="Command"
+        :title="_tooltips.command"
+        v-model="_trayCommand.command"
+        @input="checkCmd"></v-text-field>
+    </v-row>
+    <v-row v-show="_showCmdWarn" id="cmdWarn">
+      Warning:  Duplicate variable names detected in command!
+    </v-row>
+    <v-row>
+      <v-text-field
+        label="Working Directory"
+        :title="_tooltips.cwd"
+        v-model="_trayCommand.cwd"></v-text-field>
+      <v-btn @click="verifyCwd">Verify</v-btn>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>

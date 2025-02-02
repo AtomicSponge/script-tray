@@ -12,8 +12,11 @@ const _separator:ModelRef<Separator> = defineModel({ required: true })
 </script>
 
 <template>
-  <hr class="separator"/>
-  <input v-model="_separator" hidden disabled/>
+  <v-container>
+    <v-sheet>
+      <v-input v-model="_separator" hidden disabled/>
+    </v-sheet>
+  </v-container>
 </template>
 
 <style scoped>
