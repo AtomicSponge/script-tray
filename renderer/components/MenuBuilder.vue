@@ -25,10 +25,12 @@ const _moveMenuSelect = ref()
  */
 const props = defineProps<{ menuId:number }>()
 
+/** Computed menu list for a submenu item */
 const _computedMenuListA = computed(() => {
   return _menuList.value.filter((item:any) => item.id === props.menuId)
 })
 
+/** Computed menu list for other items */
 const _computedMenuListB = computed(() => {
   return _menuList.value.filter((item:any) => item.id !== props.menuId)
 })
