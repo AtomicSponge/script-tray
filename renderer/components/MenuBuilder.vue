@@ -89,8 +89,7 @@ const moveDown = (idx:number):void => {
  * Move an item from one menu to another
  * @param idx Index of item to move relative to current menu
  */
- const moveMenus = (idx:number):void => {
-  alert(_moveMenuSelect.value)
+const moveMenus = (idx:number):void => {
   const elem = _launchMenu.value.splice(idx, 1)[0]
   _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _moveMenuSelect.value })].sub.push(elem)
 }
