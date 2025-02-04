@@ -114,28 +114,23 @@ const moveMenus = (idx:number):void => {
           <v-btn v-show="idx < (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</v-btn>
           <v-btn @click="deleteItem(_launchMenu[idx], idx)">Delete</v-btn>
         </v-sheet>
-        <div v-show="_menuList.length > 1">
-          <v-sheet v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" theme="dark">
-            <!-- Render select for a submenu item -->
-            <v-select
-              :items="_computedMenuListA"
-              :item-title="'label'"
-              :item-value="'id'"
-              :width="200"
-              v-model="_moveMenuSelect[idx]"></v-select>
-            <v-btn @click="moveMenus(idx)">Move</v-btn>
-          </v-sheet>
-          <v-sheet v-else theme="dark">
-            <!-- Render select for all other non submenu items -->
-            <v-select
-              :items="_computedMenuListB"
-              :item-title="'label'"
-              :item-value="'id'"
-              :width="200"
-              v-model="_moveMenuSelect[idx]"></v-select>
-            <v-btn @click="moveMenus(idx)">Move</v-btn>
-          </v-sheet>
-        </div>
+        <v-sheet v-show="_menuList.length > 1" theme="dark">
+          <!-- Render select for a submenu item -->
+          <v-select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" theme="dark"
+            :items="_computedMenuListA"
+            :item-title="'label'"
+            :item-value="'id'"
+            :width="200"
+            v-model="_moveMenuSelect[idx]"></v-select>
+          <!-- Render select for all other non submenu items -->
+          <v-select v-else
+            :items="_computedMenuListB"
+            :item-title="'label'"
+            :item-value="'id'"
+            :width="200"
+            v-model="_moveMenuSelect[idx]"></v-select>
+          <v-btn @click="moveMenus(idx)">Move</v-btn>
+        </v-sheet>
       </v-col>
     </v-row>
     <v-row v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
