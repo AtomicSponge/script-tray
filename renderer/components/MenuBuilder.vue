@@ -27,6 +27,7 @@ const props = defineProps<{ menuId:number }>()
 
 /** Computed menu list for a submenu item */
 const _computedMenuListA = computed(() => {
+  //  TODO:  correct calculation
   return _menuList.value.filter((item:any) => item.id === props.menuId)
 })
 
@@ -134,6 +135,7 @@ const moveMenus = (idx:number):void => {
       </v-col>
     </v-row>
     <v-row v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
+      <v-sheet :width="24" theme="light"></v-sheet>
       <v-col>
         <v-sheet color="rgb(48, 48, 48)" border="xl">
           <!-- Recursion call for submenu building, passes emit back to parent -->
