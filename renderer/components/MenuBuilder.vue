@@ -17,7 +17,7 @@ const _launchMenu:ModelRef<any> = defineModel('launchMenu', { required: true })
 /** The menu referenced passed unmodified to each MenuBuilder instance */
 const _menuList:ModelRef<any> = defineModel('menuList', { required: true })
 /** Select menu for moving an item to another menu */
-const _moveMenuSelect = ref()
+const _moveMenuSelect = ref([])
 
 /**
  * Component properties
@@ -91,7 +91,7 @@ const moveDown = (idx:number):void => {
  */
 const moveMenus = (idx:number):void => {
   const elem = _launchMenu.value.splice(idx, 1)[0]
-  _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _moveMenuSelect.value })].sub.push(elem)
+  _menuList.value[_menuList.value.findIndex((obj:any) => { return obj.id === _moveMenuSelect.value[idx] })].sub.push(elem)
 }
 </script>
 
@@ -114,29 +114,28 @@ const moveMenus = (idx:number):void => {
           <v-btn v-show="idx < (_launchMenu.length - 1)" @click="moveDown(idx)">&#8595;</v-btn>
           <v-btn @click="deleteItem(_launchMenu[idx], idx)">Delete</v-btn>
         </v-sheet>
-        <v-sheet v-show="_menuList.length > 1" theme="dark">
-          <!-- Render select for a submenu item -->
-          <!--<select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" id="moveSelect" v-model="_moveMenuSelect">
-            <option v-for="(_item, _idx) in _menuList" v-show="_item.id !== props.menuId && _item.id !== _launchMenu[idx].id" :key=_idx :value=_idx>
-              {{ _item.label }}
-            </option>
-          </select>-->
-          <v-select
-            v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')"
-            :items="_computedMenuListA"
-            :item-title="'label'"
-            :item-value="'id'"
-            :width="200"
-            v-model="_moveMenuSelect"></v-select>
-          <!-- Render select for all other non submenu items -->
-          <v-select v-else
-            :items="_computedMenuListB"
-            :item-title="'label'"
-            :item-value="'id'"
-            :width="200"
-            v-model="_moveMenuSelect"></v-select>
-          <v-btn @click="moveMenus(idx)">Move</v-btn>
-        </v-sheet>
+        <div v-show="_menuList.length > 1">
+          <v-sheet v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" theme="dark">
+            <!-- Render select for a submenu item -->
+            <v-select
+              :items="_computedMenuListA"
+              :item-title="'label'"
+              :item-value="'id'"
+              :width="200"
+              v-model="_moveMenuSelect[idx]"></v-select>
+            <v-btn @click="moveMenus(idx)">Move</v-btn>
+          </v-sheet>
+          <v-sheet v-else theme="dark">
+            <!-- Render select for all other non submenu items -->
+            <v-select
+              :items="_computedMenuListB"
+              :item-title="'label'"
+              :item-value="'id'"
+              :width="200"
+              v-model="_moveMenuSelect[idx]"></v-select>
+            <v-btn @click="moveMenus(idx)">Move</v-btn>
+          </v-sheet>
+        </div>
       </v-col>
     </v-row>
     <v-row v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')">
