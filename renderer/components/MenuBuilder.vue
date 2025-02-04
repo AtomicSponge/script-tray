@@ -117,7 +117,7 @@ const moveMenus = (idx:number):void => {
         </v-sheet>
         <v-sheet v-show="_menuList.length > 1" theme="dark">
           <!-- Render select for a submenu item -->
-          <v-select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')" theme="dark"
+          <v-select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')"
             :items="_computedMenuListA"
             :item-title="'label'"
             :item-value="'id'"
