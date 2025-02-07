@@ -27,8 +27,7 @@ const props = defineProps<{ menuId:number }>()
 
 /** Computed menu list for a submenu item */
 const _computedMenuListA = computed(() => {
-  //  TODO:  correct calculation
-  return _menuList.value.filter((item:any) => item.id === props.menuId)
+  return (idx:number) => _menuList.value.filter((item:any) => item.id !== props.menuId && item.id !== _launchMenu.value[idx].id)
 })
 
 /** Computed menu list for other items */
@@ -118,7 +117,7 @@ const moveMenus = (idx:number):void => {
         <v-sheet v-show="_menuList.length > 1" theme="dark">
           <!-- Render select for a submenu item -->
           <v-select v-if="item.hasOwnProperty('id') && item.hasOwnProperty('sub')"
-            :items="_computedMenuListA"
+            :items="_computedMenuListA(idx)"
             :item-title="'label'"
             :item-value="'id'"
             :width="200"
