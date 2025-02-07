@@ -34,22 +34,6 @@ input:focus {
   outline: none;
 }
 
-select {
-  color: inherit;
-  background-color: inherit;
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
-  margin-left: 4px;
-  margin-right: 6px;
-}
-select:focus {
-  outline: none;
-}
-option {
-  color: rgb(0, 0, 0);
-}
-
 button {
   border-radius: 16px;
   border: 1px solid transparent;
